@@ -242,7 +242,7 @@ namespace FCG
                 mRayC2 = new GameObject("RayC2").transform;
                 mRayC2.SetParent(transform);
             }
-            else if (!mRayC1)
+            else if (!mRayC2)
                 mRayC2 = transform.Find("RayC2");
 
             mRayC2.localRotation = Quaternion.identity;
