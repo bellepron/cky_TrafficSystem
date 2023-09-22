@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2211907383500271752}
   - component: {fileID: 74343649395529621}
+  - component: {fileID: 4703262292448163768}
   m_Layer: 0
   m_Name: DayNight
   m_TagString: Untagged
@@ -65,28 +66,36 @@ MonoBehaviour:
   - {fileID: 2100000, guid: add3637e037f82640b6c6be5094c1b88, type: 2}
   - {fileID: 2100000, guid: 51e3cf8896e503b47984f524006bf3e4, type: 2}
   - {fileID: 2100000, guid: 20f38d0d2624dd442b62f5e73e72fc23, type: 2}
-  skyBoxDay: {fileID: 2100000, guid: 80a8721c3c7b714448236ada3ef569ad, type: 2}
-  skyBoxNight: {fileID: 2100000, guid: bf0f57d86098fc34ba3f71cc9d491765, type: 2}
+  volumeProfile_Day: {fileID: 11400000, guid: 4b809e1fdcb76ea40aff443e11b59643, type: 2}
+  volumeProfile_Night: {fileID: 11400000, guid: 801da2eb7411f4d4f8d220bf9e77bdee,
+    type: 2}
   directionalLight: {fileID: 0}
   isNight: 0
-  isMoonLight: 1
-  isSpotLights: 1
   night: 0
-  moonLight: 1
-  spotLights: 1
-  intenseMoonLight: 33.63636
-  _intenseMoonLight: 33.63636
-  intenseSunLight: 103.684204
-  _intenseSunLight: 103.684204
-  skyColorDay: {r: 0.6792453, g: 0.66536134, b: 0.63759345, a: 1}
-  equatorColorDay: {r: 0.8207547, g: 0.8207547, b: 0.8207547, a: 1}
-  _skyColorDay: {r: 0.6792453, g: 0.66536134, b: 0.63759345, a: 1}
-  _equatorColorDay: {r: 0.8207547, g: 0.8207547, b: 0.8207547, a: 1}
-  skyColorNight: {r: 0.46462265, g: 0.477095, b: 0.5, a: 1}
-  equatorColorNight: {r: 0.254717, g: 0.254717, b: 0.254717, a: 1}
-  _skyColorNight: {r: 0.46462265, g: 0.477095, b: 0.5, a: 1}
-  _equatorColorNight: {r: 0.254717, g: 0.254717, b: 0.254717, a: 1}
-  sunLightColor: {r: 0.7924528, g: 0.62577266, b: 0.38501248, a: 1}
-  _sunLightColor: {r: 0, g: 0, b: 0, a: 0}
-  moonLightColor: {r: 0.6611339, g: 0.6611339, b: 0.7830189, a: 1}
-  _moonLightColor: {r: 0, g: 0, b: 0, a: 0}
+  isSpotLights: 1
+  _spotLights: 1
+  intenseMoonLight: 800
+  _intenseMoonLight: 800
+  intenseSunLight: 7410.5264
+  _intenseSunLight: 7410.5264
+  temperatureSunLight: 6600
+  _temperatureSunLight: 6600
+  temperatureMoonLight: 9500
+  _temperatureMoonLight: 9500
+--- !u!114 &4703262292448163768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2309671740925911801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: 801da2eb7411f4d4f8d220bf9e77bdee, type: 2}

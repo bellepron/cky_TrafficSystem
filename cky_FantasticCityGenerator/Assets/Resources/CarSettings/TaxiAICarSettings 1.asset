@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: affde098f0a366d469b030b1caffb34a, type: 3}
+  m_Name: TaxiAICarSettings 1
+  m_EditorClassIdentifier: 
+  moveSpeedBase: 20
+  maxSpeed: 24
+  speedRandomness: 0.15
+  speedIncrease: 2
+  speedDecrease: 2
+  allow: 0
+  distanceToCar: 10
+  distanceToSemaphore: 10
+  maxAngleToMoveBreak: 8
+  nextPointThreshold: 3
+  getPathReachDistance_CKY: 10
+  getPathReachDistance_Way: 5
+  getPathReachDistance_WayForBrake: 10

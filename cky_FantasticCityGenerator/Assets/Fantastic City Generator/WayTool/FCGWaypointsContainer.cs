@@ -2,7 +2,6 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEditor;
 
 namespace FCG
@@ -16,12 +15,12 @@ namespace FCG
         public bool oneway = false;
         public bool doubleLine = false;
 
-        [Range(1, 5)]
+        [Range(1, 25)]
         public float width = 2f;
 
         public FCGWaypointsContainer[] doNotConnectTo;
 
-        [Range(10, 40)]
+        [Range(5, 100)]
         public float limitNodeDistance = 30;  //Maximum distance between the end of one lane to the bridge of the other for automatic linking
 
 
@@ -68,7 +67,6 @@ namespace FCG
 
         public void NextWaysCloseOnly()
         {
-
             for (int idx = 1; idx >= 0; idx--)
             {
 
@@ -121,14 +119,9 @@ namespace FCG
                             wpData.tsParent[i].directConnectSide[0] = this;
 
                         break;
-
-
                     }
-
                 }
-
             }
-
         }
 
         public void ResetWay()
@@ -143,12 +136,10 @@ namespace FCG
             directConnectSide[1] = null;
 
             width = Mathf.Abs(width);
-
         }
 
         public void NextWays()
         {
-
             for (int idx = 1; idx >= 0; idx--)
             {
 
@@ -266,8 +257,6 @@ namespace FCG
 
             //Block path that has no exit
             bloked = ((!oneway && (nextWay0.Length < 1 || nextWay1.Length < 1)) || (oneway && (nextWay0.Length < 1 && nextWay1.Length < 1)));   // If one of my ends is not linked to another route, ban me
-
-
         }
 
         public bool TestDoNotConnectTo(FCGWaypointsContainer t)
@@ -282,23 +271,18 @@ namespace FCG
             }
 
             return false;
-
         }
 
         private float GetAngulo180(Transform origem, Vector3 target)
         {
-
             return Vector3.Angle(target - origem.position, origem.forward);
-
         }
 
 
         public void InvertNodesDirection(int hand_Right)
         {
-
             rightHand = hand_Right;
             widthToUse = (rightHand == 0) ? Mathf.Abs(width) : -Mathf.Abs(width);
-
         }
 
 
@@ -308,7 +292,6 @@ namespace FCG
 
         public void RefreshAllWayPoints()
         {
-
             if (Time.time - _timer < 0.2f) return;
             _timer = Time.time;
 
@@ -326,7 +309,6 @@ namespace FCG
             }
 
             trafficSystem.UpdateAllWayPoints();
-
         }
 
 
@@ -334,9 +316,6 @@ namespace FCG
 
         void OnDrawGizmos()
         {
-
-
-
             if (!oneway) doubleLine = false;
 
             bool isPlay = Application.isPlaying;
@@ -355,7 +334,6 @@ namespace FCG
 
             if (!isPlay && wCount > 1)
             {
-
                 if ((waypoints[wCount - 1].localPosition != nodeEnd) || (waypoints[0].localPosition != nodeBegin))
                 {
                     if (UnityEditor.Selection.activeGameObject)
@@ -366,14 +344,12 @@ namespace FCG
 
                 nodeBegin = waypoints[0].localPosition;
                 nodeEnd = waypoints[wCount - 1].localPosition;
-
             }
 
             widthToUse = (oneway && !doubleLine) ? 0.1f : (rightHand == 0) ? Mathf.Abs(width) : -Mathf.Abs(width); ;
 
             for (int i = 0; i < wCount; i++)
             {
-
                 Gizmos.color = new Color(0.0f, 0.7f, 0.7f, 1.0f);
                 Gizmos.DrawSphere(waypoints[i].transform.position, 0.6f);
 
@@ -400,7 +376,6 @@ namespace FCG
                         for (int t = 0; t < nextWay0.Length; t++)
                             if (!oneway || rightHand != 0)
                                 Gizmos.DrawLine(Node(0, wCount - 1), nextWay0[t].Node(nextWaySide0[t], 0));
-
 
 
                         if (!isPlay)
@@ -437,9 +412,6 @@ namespace FCG
                     }
 
 
-
-
-
                     if (!oneway || doubleLine)
                     {
 
@@ -452,20 +424,15 @@ namespace FCG
                         Gizmos.DrawLine(waypoints[i].position - offset, waypoints[i + 1].position - offsetTo);
 
                     }
-
-
-
                 }
                 else
                 {
-
                     // Last node
 
                     Vector3 offset = waypoints[i].transform.right * widthToUse;
 
                     Gizmos.color = new Color(0.0f, 1.0f, 0.0f, 0.5f);
                     Gizmos.DrawLine(waypoints[i].position + offset, waypoints[i].position - offset);
-
 
                     if (!isPlay)
                     {
@@ -499,7 +466,6 @@ namespace FCG
                     }
 
 
-
                     Gizmos.color = Gizmos.color = new Color(1f, 1f, 1f, 0.7f);
 
                     for (int t = 0; t < nextWay1.Length; t++)
@@ -519,7 +485,6 @@ namespace FCG
 
 
             }
-
 
             /*
             Gizmos.color = Color.cyan;
@@ -557,14 +522,11 @@ namespace FCG
 
         public Transform GetNodeZeroOldWay(int side)
         {
-
             return (side == 0) ? nodeZeroCar0.GetComponent<TrafficCar>().myOldWay : nodeZeroCar1.GetComponent<TrafficCar>().myOldWay;
-
         }
 
         public bool SetNodeZero(int side, Transform nodeWay, Transform nodeCar, bool force = false)
         {
-
             if (side == 0)
             {
                 if (nodeZeroCar0 == null || force)
@@ -583,12 +545,10 @@ namespace FCG
                 }
                 return nodeZeroCar1 == nodeCar;
             }
-
         }
 
         public bool UnSetNodeZero(int side, Transform carTransform, bool force = false)
         {
-
             if (side == 0)
             {
                 if (nodeZeroCar0 == carTransform || force)
@@ -607,17 +567,14 @@ namespace FCG
                 }
                 return nodeZeroCar1 == null;
             }
-
         }
 
 
 
         public bool BookNodeZero(TrafficCar trafficCar)
         {
-
             if (trafficCar.sideAtual == 0)
             {
-
                 if (SetNodeZero(0, trafficCar.myOldWay, trafficCar.transform))
                     return true;
                 else
@@ -630,11 +587,9 @@ namespace FCG
                     //The starting node of the path is already reserved for another car. So the car that called this procedure must wait.
                     return ((nodeZeroCar0 == trafficCar.transform) || (nodeZeroWay0 == trafficCar.myOldWay && trafficCar.myOldSideAtual == nodeZeroCar0.GetComponent<TrafficCar>().myOldSideAtual));
                 }
-
             }
             else
             {
-
                 if (SetNodeZero(1, trafficCar.myOldWay, trafficCar.transform))
                     return true;
                 else
@@ -647,9 +602,7 @@ namespace FCG
                     //The starting node of the path is already reserved for another car. So the car that called this procedure must wait.                
                     return ((nodeZeroCar1 == trafficCar.transform) || (nodeZeroWay1 == trafficCar.myOldWay && trafficCar.myOldSideAtual == nodeZeroCar1.GetComponent<TrafficCar>().myOldSideAtual));
                 }
-
             }
-
         }
 
 
@@ -671,13 +624,10 @@ namespace FCG
             {
                 return waypoints[idx].position + (waypoints[idx].transform.forward * mts) + (waypoints[idx].transform.right * ((doubleLine && side == 0) ? -widthToUse : widthToUse));
             }
-
-
         }
 
         public Quaternion NodeRotation(int side, int idx)
         {
-
             if ((!oneway && side == 1) || (oneway && rightHand == 0))     // 0 = do Inicio para o fim  e   1 = do fim para o inicio
                 return Quaternion.LookRotation(waypoints[idx + 1].position - waypoints[idx].position);
             else
@@ -685,7 +635,6 @@ namespace FCG
                 int i = (waypoints.Count - 1) - idx;
                 return Quaternion.LookRotation(waypoints[i - 1].position - waypoints[i].position);
             }
-
         }
 
         public Vector3 Node(int side, int idx, float nodeSteerCarefully = 0)
@@ -721,16 +670,12 @@ namespace FCG
                 else
                     return waypoints[i].position + waypoints[i].transform.right * ((side == 1) ? widthToUse : -widthToUse);
             }
-
-
-
         }
 
 
 
         public void GetWaypoints()
         {
-
             waypoints = new List<Transform>();
 
             Transform[] allTransforms = transform.GetComponentsInChildren<Transform>();
@@ -744,15 +689,11 @@ namespace FCG
             }
 
             WaypointsSetAngle();
-
-
         }
 
 
         public void WaypointsSetAngle()
         {
-
-
             int wCount = waypoints.Count;
 
             if (wCount > 1)
@@ -767,11 +708,5 @@ namespace FCG
             }
 
         }
-
-
-
-
-
     }
-
 }

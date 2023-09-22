@@ -148,7 +148,7 @@ public class FCityGenerator : EditorWindow
     {
 
         LoadAssets();
-        
+
         cityGenerator.GenerateCity(size, withSatteliteCity, borderFlat);
 
         if (trafficSystem)
@@ -281,14 +281,14 @@ public class FCityGenerator : EditorWindow
             cityGenerator.GenerateAllBuildings(withDowntownArea, downTownSize);
             enableUpdate = 1;
 
+
+
         }
 
 
         if (GUILayout.Button("Clear Buildings"))
         {
             if (!GameObject.Find("Marcador")) return;
-            
-            
             cityGenerator.DestroyBuildings();
             //DestroyImmediate(GameObject.Find("CarContainer"));
         }

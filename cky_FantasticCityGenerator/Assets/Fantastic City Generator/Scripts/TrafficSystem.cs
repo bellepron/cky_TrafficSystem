@@ -6,13 +6,9 @@ using System.Linq;
 
 namespace FCG
 {
-
     public class TrafficSystem : MonoBehaviour
     {
-
-
         public Transform player = null;
-
 
         [Header("Traffic Light:  0=Right  1=Left  2=Japan")]
         [Range(0, 2)]
@@ -25,12 +21,12 @@ namespace FCG
         public int nVehicles = 0;
         public int maxVehiclesWithPlayer = 50;
 
-        [Range(100, 200)]
+        [Range(100, 1000)]
         public float around = 150;
 
         private ArrayList spawnsPoints;
 
-        bool firstTime = true;
+        bool _isFirstTime = true;
 
         [System.Serializable]
         public class WpData
@@ -44,7 +40,7 @@ namespace FCG
         }
 
         //[HideInInspector]
-        private WpData wpData = new WpData();
+        private WpData _wpData = new WpData();
 
         [System.Serializable]
         public class WpDataSpawn
@@ -60,13 +56,16 @@ namespace FCG
         [HideInInspector]
         //public WpDataSpawn[] wpDataSpawn;
 
-        private List<WpDataSpawn> wpDataSpawn;
+        private List<WpDataSpawn> _wpDataSpawn;
 
-
+        private void Awake()
+        {
+            var s = Resources.Load("Canvas/TrafficSystemController");
+            Instantiate(s, transform);
+        }
 
         public void UpdateAllWayPoints()
         {
-
             FCGWaypointsContainer[] tArray = GameObject.FindObjectsOfType<FCGWaypointsContainer>();
 
             for (int f = 0; f < tArray.Length; f++)
@@ -79,7 +78,7 @@ namespace FCG
 
             for (int f = 0; f < tArray.Length; f++)
                 if (tArray[f].transform.childCount > 1)
-                    tArray[f].wpData = wpData;
+                    tArray[f].wpData = _wpData;
 
 
             for (int f = 0; f < tArray.Length; f++)
@@ -89,66 +88,58 @@ namespace FCG
             for (int f = 0; f < tArray.Length; f++)
                 if (tArray[f].transform.childCount > 1)
                     tArray[f].NextWays();
-
-
         }
 
 
 
         public void GetWpData()
         {
-
             FCGWaypointsContainer[] ts = FindObjectsOfType<FCGWaypointsContainer>();
 
-            wpData.tsActive = new bool[ts.Length * 2];
-            wpData.tf01 = new Vector3[ts.Length * 2];
-            wpData.tsParent = new FCGWaypointsContainer[ts.Length * 2];
-            wpData.tsOneway = new bool[ts.Length * 2];
-            wpData.tsOnewayDoubleLine = new bool[ts.Length * 2];
-            wpData.tsSide = new int[ts.Length * 2];
+            _wpData.tsActive = new bool[ts.Length * 2];
+            _wpData.tf01 = new Vector3[ts.Length * 2];
+            _wpData.tsParent = new FCGWaypointsContainer[ts.Length * 2];
+            _wpData.tsOneway = new bool[ts.Length * 2];
+            _wpData.tsOnewayDoubleLine = new bool[ts.Length * 2];
+            _wpData.tsSide = new int[ts.Length * 2];
 
             int t = -1;
 
             for (int i = 0; i < ts.Length; i++)
             {
-
                 if (ts[i].waypoints.Count > 1)
                 {
                     t++;
 
                     if (!ts[i].oneway || ts[i].doubleLine)
                     {
-                        wpData.tsActive[t] = true;
-                        wpData.tf01[t] = ts[i].Node(0, 0);
-                        wpData.tsParent[t] = ts[i];
-                        wpData.tsSide[t] = 0;
-                        wpData.tsOneway[t] = ts[i].oneway;
-                        wpData.tsOnewayDoubleLine[t] = ts[i].oneway && ts[i].doubleLine;
+                        _wpData.tsActive[t] = true;
+                        _wpData.tf01[t] = ts[i].Node(0, 0);
+                        _wpData.tsParent[t] = ts[i];
+                        _wpData.tsSide[t] = 0;
+                        _wpData.tsOneway[t] = ts[i].oneway;
+                        _wpData.tsOnewayDoubleLine[t] = ts[i].oneway && ts[i].doubleLine;
                     }
                     else
-                        wpData.tsActive[t] = false;
+                        _wpData.tsActive[t] = false;
 
                     t++;
-                    wpData.tsActive[t] = true;
-                    wpData.tf01[t] = ts[i].Node(1, 0);
-                    wpData.tsParent[t] = ts[i];
-                    wpData.tsSide[t] = 1;
-                    wpData.tsOneway[t] = ts[i].oneway;
-                    wpData.tsOnewayDoubleLine[t] = ts[i].oneway && ts[i].doubleLine;
+                    _wpData.tsActive[t] = true;
+                    _wpData.tf01[t] = ts[i].Node(1, 0);
+                    _wpData.tsParent[t] = ts[i];
+                    _wpData.tsSide[t] = 1;
+                    _wpData.tsOneway[t] = ts[i].oneway;
+                    _wpData.tsOnewayDoubleLine[t] = ts[i].oneway && ts[i].doubleLine;
 
                 }
                 else
                 {
                     t++;
-                    wpData.tsActive[t] = false;
+                    _wpData.tsActive[t] = false;
                     t++;
-                    wpData.tsActive[t] = false;
+                    _wpData.tsActive[t] = false;
                 }
-
-
-
             }
-
         }
 
 
@@ -156,7 +147,6 @@ namespace FCG
 
         void Start()
         {
-
             /*
              if (!player)
                  if(GameObject.FindGameObjectWithTag("MainCamera"))
@@ -168,15 +158,14 @@ namespace FCG
             else
                 downTowmPosition = null;
 
-
-
             LoadCars(trafficLightHand);
-
         }
+
+        [SerializeField] private float ckyMinDist = 10.0f;
+        [SerializeField] private float ckyDist = 40.0f;
 
         public void LoadCars(int right_Hand)
         {
-
             if (maxVehiclesWithPlayer == 0)
             {
                 Debug.LogError("You need to set the maximum number of vehicles in the Traffic System");
@@ -222,29 +211,64 @@ namespace FCG
 
             DeffineDirection(right_Hand);
 
-            wpDataSpawn = new List<WpDataSpawn>();
+            _wpDataSpawn = new List<WpDataSpawn>();
 
             ts = FindObjectsOfType<FCGWaypointsContainer>();
             n = ts.Length;
 
             for (int i = 0; i < n; i++)
             {
-
                 if (!ts[i].bloked && ts[i].waypoints.Count > 1)
                 {
                     for (int nSide = 0; nSide <= 1; nSide++)
                     {
-
                         if ((!ts[i].oneway || ts[i].doubleLine) || (nSide == 1 && trafficLightHand == 0) || (nSide == 0 && trafficLightHand != 0))
                         {
                             for (int node = 0; node < ts[i].waypoints.Count - 1; node++)
                             {
-
                                 float dist = Vector3.Distance(ts[i].Node(nSide, node), ts[i].Node(nSide, node + 1));
 
-                                if (dist > 20)
-                                    PlaceSpawnPoint(ts[i], nSide, node, dist / 2);
+                                // Bu vardı.
+                                //if (dist > ckyDist) // TODO: cky 20ydi.
+                                //    PlaceSpawnPoint(ts[i], nSide, node, dist / 2);
 
+
+                                // Bu yoktu.
+                                if (dist < ckyDist)
+                                {
+                                    if (dist >= ckyMinDist)
+                                    {
+                                        /*if (ckyPerThousand(800))*/
+                                        if (ahmet % ahmetLimit == 0)
+                                        {
+                                            ahmet = 0;
+                                            PlaceSpawnPoint(ts[i], nSide, node, dist * (0.50f + ckyRandom(0.1f)));
+                                        }
+                                        ahmet++;
+                                    }
+                                }
+                                else if (dist >= ckyDist && dist < ckyDist * 3)
+                                {
+                                    PlaceSpawnPoint(ts[i], nSide, node, dist * (0.50f + ckyRandom(0.3f)));
+                                }
+                                else if (dist >= ckyDist * 3 && dist < ckyDist * 4)
+                                {
+                                    PlaceSpawnPoint(ts[i], nSide, node, dist * (0.33f + ckyRandom(0.25f)));
+                                    PlaceSpawnPoint(ts[i], nSide, node, dist * (0.66f + ckyRandom(0.25f)));
+                                }
+                                else if (dist >= ckyDist * 4 && dist < ckyDist * 5)
+                                {
+                                    if (ckyPerThousand(900)) PlaceSpawnPoint(ts[i], nSide, node, dist * (0.25f + ckyRandom(0.2f)));
+                                    if (ckyPerThousand(900)) PlaceSpawnPoint(ts[i], nSide, node, dist * (0.50f + ckyRandom(0.2f)));
+                                    if (ckyPerThousand(900)) PlaceSpawnPoint(ts[i], nSide, node, dist * (0.75f + ckyRandom(0.2f)));
+                                }
+                                else if (dist >= ckyDist * 5)
+                                {
+                                    if (ckyPerThousand(800)) PlaceSpawnPoint(ts[i], nSide, node, dist * (0.20f + ckyRandom(0.125f)));
+                                    if (ckyPerThousand(800)) PlaceSpawnPoint(ts[i], nSide, node, dist * (0.40f + ckyRandom(0.125f)));
+                                    if (ckyPerThousand(800)) PlaceSpawnPoint(ts[i], nSide, node, dist * (0.60f + ckyRandom(0.125f)));
+                                    if (ckyPerThousand(800)) PlaceSpawnPoint(ts[i], nSide, node, dist * (0.80f + ckyRandom(0.125f)));
+                                }
 
                             }
 
@@ -256,11 +280,8 @@ namespace FCG
 
             }
 
-
-
             if (!Application.isPlaying)
-                firstTime = true;
-
+                _isFirstTime = true;
 
             if (player && Application.isPlaying)
             {
@@ -268,38 +289,43 @@ namespace FCG
             }
             else
                 LoadCars2();
+        }
 
+        private int ahmet = 0;
+        [SerializeField] private int ahmetLimit = 4;
+        private float ckyRandom(float b) => UnityEngine.Random.Range(-b, b);
+        private bool ckyPerThousand(int percentage)
+        {
+            if (percentage > UnityEngine.Random.Range(0, 1000))
+                return true;
+
+            return false;
         }
 
         private void PlaceSpawnPoint(FCGWaypointsContainer f, int side, int node, float locate)
         {
-
-            wpDataSpawn.Add(new WpDataSpawn { locateZ = locate, position = f.AvanceNode(side, node, locate), rotation = f.NodeRotation(side, node), side = side, node = node, wayScript = f });
-
+            _wpDataSpawn.Add(new WpDataSpawn { locateZ = locate, position = f.AvanceNode(side, node, locate), rotation = f.NodeRotation(side, node), side = side, node = node, wayScript = f });
         }
 
 
         public void LoadCars2()
         {
-
-
-            if (!player && !firstTime)
+            if (!player && !_isFirstTime)
                 return;
 
-            if (firstTime && player && nVehicles > 0)
+            if (_isFirstTime && player && nVehicles > 0)
             {
-                   
-                    TrafficCar[] vcles = FindObjectsOfType<TrafficCar>();
-                    int nvcles = vcles.Length;
-                    for (int i = 0; i < nvcles; i++)
-                    {
-                        vcles[i].GetComponent<TrafficCar>().distanceToSelfDestroy = around;
-                        vcles[i].GetComponent<TrafficCar>().player = player;
-                        vcles[i].GetComponent<TrafficCar>().tSystem = this;
-                        vcles[i].GetComponent<TrafficCar>().SelfDestructWhenAwayFromThePlayerInit();
+                TrafficCar[] vcles = FindObjectsOfType<TrafficCar>();
+                int nvcles = vcles.Length;
+                for (int i = 0; i < nvcles; i++)
+                {
+                    var tCar = vcles[i].GetComponent<TrafficCar>();
 
-                    }
-
+                    tCar.distanceToSelfDestroy = around;
+                    tCar.player = player;
+                    tCar.tSystem = this;
+                    tCar.SelfDestructWhenAwayFromThePlayerInit();
+                }
             }
 
             GameObject CarContainer = GameObject.Find("CarContainer");
@@ -308,19 +334,19 @@ namespace FCG
             else
                 nVehicles = 0;
 
-            
-            if (firstTime && nVehicles > 0)
+
+            if (_isFirstTime && nVehicles > 0)
             {
-                firstTime = false;
+                _isFirstTime = false;
                 return;
             }
-            
+
             if (player && nVehicles >= maxVehiclesWithPlayer)
                 return;
 
             GameObject vehicle;
 
-            int n = wpDataSpawn.Count;
+            int n = _wpDataSpawn.Count;
 
             int _nVehicles = nVehicles;
 
@@ -330,7 +356,6 @@ namespace FCG
 
             for (int j = 0; j < n; j++)
             {
-
                 int i = (invert) ? n - 1 - j : j;
                 //int i = j;
 
@@ -340,58 +365,50 @@ namespace FCG
                 }
                 else
                 {
-
                     if (player)
                     {
-                        float dist = Vector3.Distance(wpDataSpawn[i].position, player.position);
+                        float dist = Vector3.Distance(_wpDataSpawn[i].position, player.position);
 
-                        if (player && (dist > around || (!firstTime && dist < 80)))
+                        if (player && (dist > around || (!_isFirstTime && dist < 80)))
                             continue;
 
-                        if (!firstTime && InTheFieldOfVision(player.position, wpDataSpawn[i].position))
+                        if (!_isFirstTime && InTheFieldOfVision(player.position, _wpDataSpawn[i].position))
                             continue;
-
                     }
 
                     bool go = false;
                     RaycastHit obsRay2;
 
                     // Check for a vehicle at the spawn point
-                    if (firstTime)
+                    if (_isFirstTime)
                         go = true; //|| !player;
                     else
-                        go = !Physics.Linecast(wpDataSpawn[i].wayScript.Node(wpDataSpawn[i].side, wpDataSpawn[i].node + 1) + Vector3.up * 1f,
-                                               wpDataSpawn[i].wayScript.Node(wpDataSpawn[i].side, wpDataSpawn[i].node) + Vector3.up * 1f, out obsRay2);
-
+                        go = !Physics.Linecast(_wpDataSpawn[i].wayScript.Node(_wpDataSpawn[i].side, _wpDataSpawn[i].node + 1) + Vector3.up * 1f,
+                                               _wpDataSpawn[i].wayScript.Node(_wpDataSpawn[i].side, _wpDataSpawn[i].node) + Vector3.up * 1f, out obsRay2);
 
                     if (go)
                     {
 
-                        vehicle = (GameObject)Instantiate(IaCars[Mathf.Clamp(Random.Range(0, IaCars.Length), 0, IaCars.Length - 1)], wpDataSpawn[i].position + Vector3.up * 0.1f, wpDataSpawn[i].rotation); ;
+                        vehicle = (GameObject)Instantiate(IaCars[Mathf.Clamp(Random.Range(0, IaCars.Length), 0, IaCars.Length - 1)], _wpDataSpawn[i].position + Vector3.up * 0.1f, _wpDataSpawn[i].rotation); ;
                         vehicle.transform.SetParent(CarContainer.transform);
-                        vehicle.GetComponent<TrafficCar>().sideAtual = (wpDataSpawn[i].wayScript.oneway && wpDataSpawn[i].wayScript.doubleLine && wpDataSpawn[i].wayScript.rightHand != 0) ? ((wpDataSpawn[i].side == 1) ? 0 : 1) : wpDataSpawn[i].side;
-                        vehicle.GetComponent<TrafficCar>().atualWay = wpDataSpawn[i].wayScript.transform;
-                        vehicle.GetComponent<TrafficCar>().atualWayScript = wpDataSpawn[i].wayScript;
-                        vehicle.GetComponent<TrafficCar>().currentNode = wpDataSpawn[i].node + 1;
+
+                        var tCar = vehicle.GetComponent<TrafficCar>();
+                        tCar.sideAtual = (_wpDataSpawn[i].wayScript.oneway && _wpDataSpawn[i].wayScript.doubleLine && _wpDataSpawn[i].wayScript.rightHand != 0) ? ((_wpDataSpawn[i].side == 1) ? 0 : 1) : _wpDataSpawn[i].side;
+                        tCar.atualWay = _wpDataSpawn[i].wayScript.transform;
+                        tCar.atualWayScript = _wpDataSpawn[i].wayScript;
+                        tCar.currentNode = _wpDataSpawn[i].node + 1;
 
                         if (player)
                         {
-                            vehicle.GetComponent<TrafficCar>().distanceToSelfDestroy = around;
-                            vehicle.GetComponent<TrafficCar>().player = player;
-                            vehicle.GetComponent<TrafficCar>().tSystem = this;
-                            vehicle.GetComponent<TrafficCar>().ActivateSelfDestructWhenAwayFromThePlayer();
+                            tCar.distanceToSelfDestroy = around;
+                            tCar.player = player;
+                            tCar.tSystem = this;
+                            tCar.ActivateSelfDestructWhenAwayFromThePlayer();
                         }
 
                         nVehicles++;
-
                     }
-
-
                 }
-
-
-
-
             }
 
             if (Application.isPlaying)
@@ -399,10 +416,9 @@ namespace FCG
             else
                 DestroyImmediate(test.gameObject);
 
-
             if (nVehicles > 0)
             {
-                firstTime = false;
+                _isFirstTime = false;
             }
             else
             {
@@ -412,10 +428,7 @@ namespace FCG
                 {
                     Debug.Log("Need to generate the city again to use the updated traffic system");
                 }
-
             }
-
-
         }
 
 
@@ -445,12 +458,10 @@ namespace FCG
             RaycastHit obsRay2;
 
             return (!(Physics.Linecast(source + Vector3.up * 4f, target + Vector3.up * 4f, out obsRay2)) || !(Physics.Linecast(source + Vector3.up * 1f, target + Vector3.up * 1f, out obsRay2)));
-
         }
 
         public void DeffineDirection(int hand_Right)
         {
-
             trafficLightHand = hand_Right;
 
             //Inverse Traffic-Lights 
@@ -481,10 +492,7 @@ namespace FCG
                     roadMark[i].transform.Find("RoadMarkRev").gameObject.SetActive(trafficLightHand != 0);
 
             UpdateAllWayPoints();
-
         }
-
-
     }
 
 }

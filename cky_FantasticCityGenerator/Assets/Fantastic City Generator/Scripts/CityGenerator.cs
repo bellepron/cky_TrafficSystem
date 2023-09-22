@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
-//using System.Collections;
-//using System.Collections.Generic;
+using System.Collections;
+using System.Collections.Generic;
 //using System;
-//using System.IO;
+using System.IO;
 using System.Linq;
-using UnityEditor;
 
 namespace FCG
 {
@@ -267,10 +266,11 @@ namespace FCG
             }
 
 
-
+            
             DayNight dayNight = FindObjectOfType<DayNight>();
             if (dayNight)
                 dayNight.ChangeMaterial();
+            
 
         }
 
@@ -281,24 +281,6 @@ namespace FCG
                 return GameObject.Find("ExitCity").transform;
             else
                 return null;
-
-        }
-
-        private GameObject InstantiatePrefab (GameObject gameObject, Vector3 pos, Quaternion rot, Transform parent)
-        {
-
-            GameObject obj;
-
-#if UNITY_EDITOR
-            obj = PrefabUtility.InstantiatePrefab(gameObject, parent) as GameObject;
-#else
-            obj = Instantiate(gameObject, parent) as GameObject;
-#endif
-            
-            obj.transform.position = pos;
-            obj.transform.rotation = rot;
-
-            return obj;
 
         }
 
@@ -546,7 +528,9 @@ namespace FCG
 
             if (!satteliteCity)
             {
+
                 ClearCity();
+
                 cityMaker = new GameObject("City-Maker");
             }
 
@@ -741,18 +725,18 @@ namespace FCG
 
 
 
-            //Debug.ClearDeveloperConsole();
+            Debug.ClearDeveloperConsole();
             Debug.Log(nB + " buildings were created");
 
 
             DestroyImmediate(pB);
-
+            
             DayNight dayNight = FindObjectOfType<DayNight>();
             if(dayNight)
             {
                 dayNight.ChangeMaterial();
             }
-
+            
 
 
         }
@@ -911,7 +895,6 @@ namespace FCG
 
 
             pBuilding = (GameObject)Instantiate(pB, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0));
-            
 
             if (notAnyone && !TestBaseBuildindCornerOnTheSlope(pBuilding.transform))
             {
@@ -1043,9 +1026,7 @@ namespace FCG
 
                         _BK[numB] += 1;
 
-
                         Instantiate(BK[numB], bk.position, bk.rotation, bk);
-                        
                         nB++;
 
                     }
@@ -1117,7 +1098,6 @@ namespace FCG
                     _SB[numB] += 1;
 
                     Instantiate(SB[numB], bk.position, bk.rotation, bk);
-                    
                     nB++;
 
 
@@ -1325,11 +1305,9 @@ namespace FCG
                     nB++;
 
                     //pBuilding[index].name = pBuilding[index].name;
-
-                    pBuilding[index] = (GameObject)Instantiate(pB, new Vector3(0, 0, init + (pWidth * 0.5f)), Quaternion.Euler(0, angulo, 0), line.transform);
-                    
-
+                    pBuilding[index] = (GameObject)Instantiate(pB, new Vector3(0, 0, init + (pWidth * 0.5f)), Quaternion.Euler(0, angulo, 0));
                     pBuilding[index].transform.SetParent(line.transform);
+
                     pBuilding[index].transform.localPosition = new Vector3(0, 0, init + (pWidth * 0.5f));
                     pBuilding[index].transform.localRotation = Quaternion.Euler(0, angulo, 0);
 
@@ -1443,8 +1421,6 @@ namespace FCG
                     index++;
 
                     pBuilding[index] = (GameObject)Instantiate(MB[numB], new Vector3(0, 0, 0), Quaternion.Euler(0, 90, 0), line.transform);
-                    
-
                     nB++;
 
                     pBuilding[index].name = "building";
@@ -1504,8 +1480,6 @@ namespace FCG
                         } while (wl > limit / 2);
 
                         GameObject e = (GameObject)Instantiate(DC[numB], line.transform.position, line.transform.rotation, line.transform);
-                        
-
                         nB++;
 
                         do
@@ -1515,8 +1489,6 @@ namespace FCG
                         } while (wl2 > limit - (wl + 26));
 
                         e = (GameObject)Instantiate(DC[numB], line.transform.position, line.rotation, line.transform);
-
-
                         e.transform.SetParent(line.transform);
                         e.transform.localPosition = new Vector3(0, 0, -limit);
                         e.transform.localRotation = Quaternion.Euler(0, 180, 0);

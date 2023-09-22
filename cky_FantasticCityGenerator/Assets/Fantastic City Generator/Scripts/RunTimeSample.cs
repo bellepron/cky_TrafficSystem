@@ -13,6 +13,7 @@ public class RunTimeSample : MonoBehaviour
     private bool withDownTownArea = true;
     private bool rightHand = true;
 
+    private bool isNight = false;
 
     void Awake()
     {

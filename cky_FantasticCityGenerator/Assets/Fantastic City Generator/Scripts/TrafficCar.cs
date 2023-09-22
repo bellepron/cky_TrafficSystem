@@ -1,13 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using System.Linq;
 
 namespace FCG
 {
     public class TrafficCar : MonoBehaviour
     {
-
         public enum StatusCar
         {
             transitingNormally,
@@ -16,9 +13,9 @@ namespace FCG
             bloked, // It's on a dead end street, stand still
             Undefined,
             crashed,
-
         }
 
+        [SerializeField] private TrafficCarSettings _settings;
 
         [HideInInspector]
         public StatusCar status;
@@ -104,10 +101,10 @@ namespace FCG
         private bool toSignalRight = false;
         private Transform behind = null;
 
-        //[HideInInspector]
+        [HideInInspector]
         public Transform player;
 
-        //[HideInInspector]
+        [HideInInspector]
         public TrafficSystem tSystem;
 
         //[HideInInspector]
@@ -117,7 +114,6 @@ namespace FCG
         [System.Serializable]
         public class CarWheelsTransform
         {
-
             public Transform frontRight;
             public Transform frontLeft;
 
@@ -126,7 +122,6 @@ namespace FCG
 
             public Transform backRight2;
             public Transform backLeft2;
-
         }
 
         public CarSetting carSetting;
@@ -156,10 +151,6 @@ namespace FCG
 
             [Range(-1, 1)]
             public float curveAdjustment = 0.0f; // make tighter or more open turns
-
-
-
-
         }
 
         private Vector3 shiftCentre = new Vector3(0.0f, -0.05f, 0.0f);
@@ -174,13 +165,11 @@ namespace FCG
                 return wt[0].transform;
             else
                 return null;
-
         }
 
 
         public void Configure()
         {
-
             if (!wheelsTransforms.frontRight)
                 wheelsTransforms.frontRight = GetTransformWheel("FR");
 
@@ -203,8 +192,8 @@ namespace FCG
             if (!transform.GetComponent<Rigidbody>())
                 transform.gameObject.AddComponent<Rigidbody>();
 
-            if (transform.gameObject.GetComponent<Rigidbody>().mass < 4000f)
-                transform.gameObject.GetComponent<Rigidbody>().mass = 4000f;
+            if (transform.gameObject.GetComponent<Rigidbody>().mass < 1000f)
+                transform.gameObject.GetComponent<Rigidbody>().mass = 1000f;
 
             transform.gameObject.GetComponent<Rigidbody>().interpolation = RigidbodyInterpolation.Interpolate;
 
@@ -237,7 +226,6 @@ namespace FCG
 
             DestroyImmediate(testC.gameObject);
 
-
             if (!transform.Find("RayC1"))
             {
                 mRayC1 = new GameObject("RayC1").transform;
@@ -265,11 +253,9 @@ namespace FCG
             wheel = new Transform[4];
             wCollider = new WheelCollider[4];
 
-
             GameObject center = new GameObject("Center");
             Vector3[] centerPos = new Vector3[4];
             Vector3 nCenter = new Vector3(0, 0, 0);
-
 
             wheel[0] = wheelsTransforms.frontRight;
             wheel[1] = wheelsTransforms.frontLeft;
@@ -286,18 +272,15 @@ namespace FCG
                 centerPos[i] = center.transform.localPosition -= new Vector3(0, wCollider[i].radius, 0);
                 nCenter += centerPos[i];
 
+                wCollider[i].gameObject.transform.localScale = Vector3.one;
             }
 
             shiftCentre = (nCenter / 4);
             DestroyImmediate(center);
-
-
-
         }
 
         private WheelCollider SetWheelComponent(int w)
         {
-
             WheelCollider result;
 
             Transform wheelCol = transform.Find(wheel[w].name + " - WheelCollider");
@@ -333,13 +316,11 @@ namespace FCG
             col.mass = 2000;
 
             return result;
-
         }
 
 
         void Start()
         {
-
             timeStoped = Time.time;
 
             float p = wheelsTransforms.frontRight.localPosition.z + 0.6f;
@@ -354,7 +335,6 @@ namespace FCG
             else if (!mRayC1)
                 mRayC1 = transform.Find("RayC1");
 
-
             if (!transform.Find("RayC2"))
             {
                 mRayC2 = new GameObject("RayC2").transform;
@@ -365,28 +345,20 @@ namespace FCG
             else if (!mRayC1)
                 mRayC2 = transform.Find("RayC2");
 
-
             myReference = new GameObject("myReference").transform;
             myReference.SetParent(transform);
             myReference.localPosition = new Vector3(0, 0, wheelsTransforms.frontRight.localPosition.z * 0.6f);
             myReference.localRotation = Quaternion.identity;
 
-
-            
-            if(player && !FindObjectOfType<TrafficSystem>())
+            if (player && !FindObjectOfType<TrafficSystem>())
                 Debug.LogError("The Traffic System.prefab not found in the Hierarchy");
-
 
             if (atualWay)
                 Init();
-
-
         }
 
         public void Init()
         {
-
-
             atualWayScript = atualWay.GetComponent<FCGWaypointsContainer>();
 
             myRigidbody = transform.GetComponent<Rigidbody>();
@@ -407,20 +379,15 @@ namespace FCG
             if (BreakLight) BreakLight.SetActive(false);
             if (LightLeft) LightLeft.SetActive(false);
             if (LightRight) LightRight.SetActive(false);
-
-
-
         }
 
         public void ActivateSelfDestructWhenAwayFromThePlayer()
         {
-
             if (tSystem && player)
             {
                 if (distanceToSelfDestroy == 0) distanceToSelfDestroy = 200;
-                InvokeRepeating(nameof(SelfDestructWhenAwayFromThePlayer), 5f, 5f);
+                InvokeRepeating(nameof(SelfDestructWhenAwayFromThePlayer), 5f, _settings.checkingAwayFromPlayerRepeatRate);
             }
-
         }
 
 
@@ -442,7 +409,6 @@ namespace FCG
 
         bool CheckBookAllPathOptions(FCGWaypointsContainer wayScript, int side)
         {
-
             int total;
             int wSide;
             FCGWaypointsContainer wScript;
@@ -451,7 +417,6 @@ namespace FCG
 
             for (int i = 0; i < total; i++)
             {
-
                 if (side == 0)
                 {
                     wScript = wayScript.nextWay0[i];
@@ -476,13 +441,10 @@ namespace FCG
             }
 
             return true;
-
-
         }
 
         bool BookAllPathOptions(FCGWaypointsContainer wayScript, int side, bool book = true)
         {
-
             int total;
             int wSide;
             FCGWaypointsContainer wScript;
@@ -496,7 +458,6 @@ namespace FCG
                 {
                     wScript = wayScript.nextWay0[i];
                     wSide = wayScript.nextWaySide0[i];
-
                 }
                 else
                 {
@@ -512,22 +473,16 @@ namespace FCG
                 }
                 else
                 {
-
                     wScript.UnSetNodeZero(wSide, transform);
-
                 }
-
-
             }
 
             return true;
-
         }
 
 
         void MoveCar()
         {
-
             if (status == StatusCar.bloked)
                 return;
 
@@ -547,36 +502,26 @@ namespace FCG
                         LightLeft.SetActive(false);
                         LightRight.SetActive(false);
                     }
-
                 }
             }
-
-
-
 
             speed = myRigidbody.velocity.magnitude * 3.6f;
 
             VerificaPoints();
 
-
-
             distanceToNode = Vector3.Distance(atualWayScript.Node(sideAtual, currentNode), myReference.position + myReference.forward * (carSetting.curveAdjustment * 0.5f));
 
             if (_avanceNode != Vector3.zero)
             {
-
                 //Debug.DrawLine(transform.position + Vector3.up * 2f, _avanceNode + Vector3.up * 2f, Color.cyan);
-
 
                 relativeVector = transform.InverseTransformPoint(_avanceNode);
 
                 if (Vector3.Distance(_avanceNode, myReference.position) < 4)
                     _avanceNode = Vector3.zero;
-
             }
             else
             {
-
                 //Debug.DrawLine(transform.position + Vector3.up * 0.2f, atualWayScript.Node(sideAtual, currentNode, (currentNode == 0 && nodeSteerCarefully) ? 3 : 0) + Vector3.up * 0.2f, Color.cyan);
 
                 relativeVector = transform.InverseTransformPoint(atualWayScript.Node(sideAtual, currentNode, (currentNode == 0 && nodeSteerCarefully) ? 3 : 0));
@@ -590,7 +535,6 @@ namespace FCG
             iRC++;
             if (iRC >= 4)
             {
-
                 iRC = 0;
 
                 //nodeSteerCarefully :  true if I'm turning to the side that has opposite traffic (Right hand and turning left) Or (Left hand and turning right)
@@ -612,20 +556,15 @@ namespace FCG
 
                             b2 = CheckBookAllPathOptions(myOldWayScript, myOldSideAtual) && BookAllPathOptions(myOldWayScript, myOldSideAtual, true);
                             brake2 = (b1 && b2) ? 0 : 4000;
-
                         }
                         else
                             brake2 = 0;
-
                     }
                     else
                         brake2 = 4000;
-
                 }
                 else
                     brake2 = 0;
-
-
 
                 if (speed > 2)
                     status = StatusCar.transitingNormally;
@@ -635,24 +574,16 @@ namespace FCG
                 else
                     status = StatusCar.waitingForAnotherVehicleToPass;
 
-
                 if (speed < 2 && (status != StatusCar.stoppedAtTrafficLights || status != StatusCar.waitingForAnotherVehicleToPass))
                 {
-
-
-                    if (Time.time > timeStoped + 50)
+                    if (Time.time > timeStoped + _settings.timeToStayStill2)
                     {
-                        Destroy(transform.gameObject);
+                        DestroyObject();
                         return;
                     }
-
-
                 }
                 else
                     timeStoped = Time.time;
-
-
-
             }
 
             brake = (brake2 > brake) ? brake2 : brake;
@@ -668,7 +599,6 @@ namespace FCG
 
             for (int k = 0; k < 4; k++)
             {
-
                 if (brake == 0)
                     wCollider[k].brakeTorque = 0;
                 else
@@ -676,7 +606,6 @@ namespace FCG
                     wCollider[k].motorTorque = 0;
                     wCollider[k].brakeTorque = carSetting.brakePower * brake;
                 }
-
 
                 if (k < 2)
                 {
@@ -688,7 +617,6 @@ namespace FCG
                 wCollider[k].GetWorldPose(out Vector3 _pos, out Quaternion _rot);
                 wheel[k].position = _pos;
                 wheel[k].rotation = _rot;
-
             }
 
             if (wheelsTransforms.backRight2)
@@ -700,17 +628,13 @@ namespace FCG
             //steeringwheel movement
             if (carSetting.carSteer)
                 carSetting.carSteer.localEulerAngles = new Vector3(steerCurAngle.x, steerCurAngle.y, steerCurAngle.z - steer);  //carSetting.carSteer.localEulerAngles = new Vector3(steerCurAngle.x, steerCurAngle.y, steerCurAngle.z + ((steer / 180) * -30.0f));
-
-
         }
 
 
         private void VerificaPoints()
         {
-
             if (distanceToNode < 5)
             {
-
                 if (currentNode < countWays - 1)
                 {
                     currentNode++;
@@ -737,13 +661,9 @@ namespace FCG
                             if (LightRight) LightRight.SetActive(false);
                         }
                     }
-
                 }
                 else
                 {
-
-
-
                     int t = TestWay();
 
                     //True if the chosen path was the only option
@@ -791,8 +711,6 @@ namespace FCG
                     else
                         nodeSteerCarefully = (atualWayScript.rightHand == 0 && a < 340 && a > 270) || (atualWayScript.rightHand != 0 && a > 20 && a < 90);
 
-
-
                     if (lightDirection)
                     {
                         toSignalLeft = (a < 340 && a > 270);
@@ -803,16 +721,9 @@ namespace FCG
                     {
                         _avanceNode = myOldWayScript.AvanceNode(myOldSideAtual, myOldWayScript.waypoints.Count - 1, 7);
                     }
-
-
                 }
-
             }
-
-
-
         }
-
 
 
         public Transform GetBehind()
@@ -823,9 +734,8 @@ namespace FCG
 
         float FixedRaycasts()
         {
-
             RaycastHit hit;
-            float wdist = 6;
+            float wdist = _settings.rayLength;
             float wdist2 = (speed < 3) ? (wdist / 1.5f) : wdist;
 
             float rStop;
@@ -859,7 +769,6 @@ namespace FCG
 
             if (rStop > 0 && speed < 2)
             {
-
                 if (status == StatusCar.stoppedAtTrafficLights || status == StatusCar.waitingForAnotherVehicleToPass || status == StatusCar.Undefined)
                 { }
                 else if (hit.transform.name == "Stop")
@@ -869,39 +778,30 @@ namespace FCG
                     StatusCar st = hit.transform.GetComponent<TrafficCar>().status;
                     status = (st == StatusCar.stoppedAtTrafficLights || st == StatusCar.waitingForAnotherVehicleToPass) ? st : StatusCar.Undefined;
                 }
-
             }
 
             if (rStop == 0)
                 return 0;
             else
                 return (rStop < 1 || speed < 0.5f) ? 20000 : (speed * 6) * ((wdist / rStop) * 6);
-
-
-
         }
 
 
         void DefineNewPath()
         {
-
             nodes = new Transform[atualWay.childCount];
             int n = 0;
             foreach (Transform child in atualWay)
                 nodes[n++] = child;
 
             countWays = nodes.Length;
-
-
         }
 
 
         int TestWay()
         {
-
             //Check if the path drawn for me is a good option (based on traffic) "VerifyTraffic"
             //Also check if the selected path has been blocked "CheckStoped"
-
 
             int total = 0;
 
@@ -911,7 +811,6 @@ namespace FCG
                 total = atualWayScript.nextWay1.Length;
 
             int t = Random.Range(0, total); // Sort one of the available paths
-
 
             if (total > 1) // If there are more path options to choose from
             {
@@ -937,18 +836,12 @@ namespace FCG
                                     t = i;
                                 }
                             }
-
                         }
-
-
                     }
-
                 }
-
             }
 
             return t;
-
         }
 
         private Vector3 GetNodeNextWay(int way, int node = 0)
@@ -961,7 +854,6 @@ namespace FCG
                 return atualWayScript.nextWay0[way].Node(atualWayScript.nextWaySide0[way], node);
             else
                 return atualWayScript.nextWay1[way].Node(atualWayScript.nextWaySide1[way], node);
-
         }
 
         private bool CheckStoped(int way)
@@ -972,14 +864,12 @@ namespace FCG
                 return atualWayScript.nextWay0[way].bloked;
             else
                 return atualWayScript.nextWay1[way].bloked;
-
         }
-
 
         /*
         bool VerifyDoubleOneWayOption(int t)
         {
-
+        
             //Vector3 node0 = GetNodeNextWay(t, 0);
             //nodeSteerCarefully2 = (myOldSideAtual == 0 && a > 20 && a < 90) || (myOldSideAtual == 1 && a < 340 && a > 270);
             return true;    
@@ -994,21 +884,19 @@ namespace FCG
                 return (sideAtual == 0 && a > 20 && a < 90) || (sideAtual == 1 && a < 340 && a > 270);
 
             }
-            return false;
 
+            return false;
         }
 
 
         float VerifyTraffic(int t, float mts = 12)
         {
-
             //Checks if the specified path is a good choice, it may be congested
 
             RaycastHit hit2;
 
             Vector3 node0 = GetNodeNextWay(t, 0) + new Vector3(0, 0.5f, 0);
             Vector3 node1 = GetNodeNextWay(t, 1) + new Vector3(0, 0.5f, 0);
-
 
             if (Physics.Raycast(node0, node1 - node0, out hit2, mts))
                 if (hit2.transform.GetComponent<TrafficCar>())
@@ -1020,7 +908,6 @@ namespace FCG
                 }
 
             return mts;
-
         }
 
         private void Pause(Vector3 position)
@@ -1038,56 +925,56 @@ namespace FCG
 
         void SelfDestructWhenAwayFromThePlayer()
         {
-
-            if (speed < 2 && status != StatusCar.stoppedAtTrafficLights && (Time.time > timeStoped + 30) & InTheFieldOfVision(transform.position, player))
+            if (speed < 2 && status != StatusCar.stoppedAtTrafficLights && (Time.time > timeStoped + _settings.timeToStayStill) & InTheFieldOfVision(transform.position, player))
             {
-
-                tSystem.nVehicles--;
-                Destroy(this.gameObject);
-
+                DestroyObject();
             }
             else if (Vector3.Distance(transform.position, player.position) < distanceToSelfDestroy || InTheFieldOfVision(transform.position, player))
+            {
                 countC = 0;
+            }
             else
             {
+                Debug.Log("? ? ?");
                 countC++;
 
                 if (countC >= 2)
                 {
-                    tSystem.nVehicles--;
-                    Destroy(this.gameObject);
+                    DestroyObject();
                 }
-
             }
-
-
         }
 
         public void SelfDestructWhenAwayFromThePlayerInit()
         {
             if (tSystem && player)
+            {
                 if (Vector3.Distance(transform.position, player.position) > distanceToSelfDestroy && !InTheFieldOfVision(transform.position, player))
                 {
-                    tSystem.nVehicles--;
-                    Destroy(this.gameObject);
+                    DestroyObject();
                 }
                 else
+                {
                     ActivateSelfDestructWhenAwayFromThePlayer();
-
-
+                }
+            }
         }
-           
+
+        private void DestroyObject()
+        {
+            tSystem.nVehicles--;
+            Destroy(this.gameObject);
+        }
+
 
         bool InTheFieldOfVision(Vector3 source, Transform target)
         {
-
             // the IACar wants to disappear without it being seen by the camera/player
 
             RaycastHit obsRay2;
 
             if (Physics.Linecast(source + Vector3.up * 1f, target.position + Vector3.up * 1f, out obsRay2)) //, ~(1 << LayerMask.NameToLayer("Lattice"))))
             {
-
                 if (obsRay2.transform == target || obsRay2.transform.root == target)
                 {
                     //Debug.DrawLine(source, target.position, Color.red);
@@ -1098,18 +985,13 @@ namespace FCG
                     //Debug.DrawLine(source, target.position, Color.green);
                     return false;
                 }
-
             }
             else
             {
                 //Debug.DrawLine(source, target.position, Color.blue);
                 return true;
             }
-
-
         }
-
-
 
 
         private float GetAngulo(Transform origem, Vector3 target)
@@ -1124,11 +1006,8 @@ namespace FCG
             r = compass.transform.localEulerAngles.y;
 
             DestroyImmediate(compass);
+
             return r;
-
         }
-
-
     }
-
 }
