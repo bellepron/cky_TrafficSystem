@@ -1,29 +1,25 @@
-using System.Linq;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace FCG.Pedestrians
 {
     public class TrafficPedestrian : MonoBehaviour
     {
-        public enum StatusCar
-        {
-            transitingNormally,
-            waitingForAnotherVehicleToPass,
-            stoppedAtTrafficLights,
-            bloked, // It's on a dead end street, stand still
-            Undefined,
-            crashed,
-        }
+        //public enum StatusPedestrian
+        //{
+        //    transitingNormally,
+        //    waitingForAnotherVehicleToPass,
+        //    stoppedAtTrafficLights,
+        //    bloked, // It's on a dead end street, stand still
+        //    Undefined,
+        //    crashed,
+        //}
 
         [SerializeField] private TrafficPedestrianSettings _settings;
 
-        [HideInInspector]
-        public StatusCar status;
+        NavMeshAgent _agent;
 
-        [HideInInspector]
-        public Transform mRayC1;
-        [HideInInspector]
-        public Transform mRayC2;
+        //public StatusPedestrian status;
 
         private Vector3 mRayCenter;
 
@@ -33,21 +29,10 @@ namespace FCG.Pedestrians
         [HideInInspector]
         public int currentNode = 0;
 
-        [HideInInspector]
-        public float distanceToNode;
+        private float distanceToNode;
 
-        private float steer = 0.0f;
 
         private float speed;
-
-        private float brake = 0;
-
-        private float motorTorque = 0;
-
-        private Vector3 steerCurAngle = Vector3.zero;
-
-        private Rigidbody myRigidbody;
-
 
         private Vector3 relativeVector;
 
@@ -83,14 +68,12 @@ namespace FCG.Pedestrians
 
         private Vector3 _avanceNode = Vector3.zero; //private Position where an additional and momentary node can be added
 
-        private float countTimeToSignal = 0;
-        bool toSignal = false;
-        private bool toSignalLeft = false;
-        private bool toSignalRight = false;
         private Transform behind = null;
 
         //[HideInInspector]
         public Transform player;
+        private Transform cameraTr;
+        public Vector3 agentHeight = new Vector3(0, 2.0f, 0);
 
         //[HideInInspector]
         public PedestrianTrafficSystem tSystem;
@@ -98,42 +81,11 @@ namespace FCG.Pedestrians
         //[HideInInspector]
         public float distanceToSelfDestroy = 0; //0 = Do not autodestroy with player distance
 
-        public CarSetting carSetting;
-
-        [System.Serializable]
-        public class CarSetting
-        {
-            public Transform carSteer;
-
-            [Range(10000, 60000)]
-            public float springs = 25000.0f;
-
-            [Range(1000, 6000)]
-            public float dampers = 1500.0f;
-
-            [Range(60, 200)]
-            public float carPower = 120f;
-
-            [Range(5, 10)]
-            public float brakePower = 8f;
-
-            [Range(20, 30)]
-            public float limitSpeed = 30.0f;
-
-            [Range(30, 72)]
-            public float maxSteerAngle = 40.0f; //Maximum wheel curvature angle
-
-            [Range(-1, 1)]
-            public float curveAdjustment = 0.0f; // make tighter or more open turns
-        }
-
-        private Vector3 shiftCentre = new Vector3(0.0f, -0.05f, 0.0f);
+        public float curveAdjustment = 0.0f;
 
 
         public void Configure()
         {
-            transform.gameObject.GetComponent<Rigidbody>().interpolation = RigidbodyInterpolation.Interpolate;
-
             //    
             float p = transform.localPosition.z + 0.6f;
             float l = transform.localPosition.x;
@@ -156,33 +108,14 @@ namespace FCG.Pedestrians
             }
 
             DestroyImmediate(testC.gameObject);
-
-            if (!transform.Find("RayC1"))
-            {
-                mRayC1 = new GameObject("RayC1").transform;
-                mRayC1.SetParent(transform);
-            }
-            else if (!mRayC1)
-                mRayC1 = transform.Find("RayC1");
-
-            mRayC1.localRotation = Quaternion.identity;
-            mRayC1.localPosition = new Vector3(-l, 0.8f, p);
-
-            if (!transform.Find("RayC2"))
-            {
-                mRayC2 = new GameObject("RayC2").transform;
-                mRayC2.SetParent(transform);
-            }
-            else if (!mRayC1)
-                mRayC2 = transform.Find("RayC2");
-
-            mRayC2.localRotation = Quaternion.identity;
-            mRayC2.localPosition = new Vector3(l, 0.8f, p);
         }
 
 
         void Start()
         {
+            _agent = GetComponent<NavMeshAgent>();
+            cameraTr = Camera.main.transform;
+
             timeStoped = Time.time;
 
             thisTr = transform;
@@ -203,26 +136,22 @@ namespace FCG.Pedestrians
         {
             atualWayScript = atualWay.GetComponent<FCGPedestrianWaypointsContainer>();
 
-            myRigidbody = transform.GetComponent<Rigidbody>();
-
-            myRigidbody.centerOfMass = shiftCentre;
-
             DefineNewPath();
 
             if (currentNode == 0) currentNode = 1;
 
-            distanceToNode = Vector3.Distance(atualWayScript.Node(sideAtual, currentNode), thisTr.position + thisTr.forward * (carSetting.curveAdjustment * 0.5f));
+            distanceToNode = Vector3.Distance(atualWayScript.Node(sideAtual, currentNode), thisTr.position + thisTr.forward * (curveAdjustment * 0.5f));
 
-            InvokeRepeating(nameof(MoveCar), 0.02f, 0.02f);
+            InvokeRepeating(nameof(Move), 0.02f, 0.02f);
 
-            status = StatusCar.transitingNormally;
+            //status = StatusPedestrian.transitingNormally;
         }
 
         public void ActivateSelfDestructWhenAwayFromThePlayer()
         {
             if (tSystem && player)
             {
-                if (distanceToSelfDestroy == 0) distanceToSelfDestroy = 200;
+                if (distanceToSelfDestroy == 0) distanceToSelfDestroy = _settings.distanceToSelfDestroyDefault;
                 InvokeRepeating(nameof(SelfDestructWhenAwayFromThePlayer), 5f, _settings.checkingAwayFromPlayerRepeatRate);
             }
         }
@@ -269,7 +198,7 @@ namespace FCG.Pedestrians
 
                 if (wScript)
                 {
-                    if ((wScript.GetNodeZeroCar(wSide) != null && wScript.GetNodeZeroCar(wSide) != transform) && wScript.GetNodeZeroOldWay(wSide) != myOldWay && (!Get_avanceNode() || !wScript.GetNodeZeroCar(wSide).GetComponent<TrafficCar>().Get_avanceNode()))
+                    if ((wScript.GetNodeZeroCar(wSide) != null && wScript.GetNodeZeroCar(wSide) != transform) && wScript.GetNodeZeroOldWay(wSide) != myOldWay && (!Get_avanceNode() || !wScript.GetNodeZeroCar(wSide).GetComponent<TrafficPedestrian>().Get_avanceNode()))
                         return false;
                 }
                 else
@@ -304,7 +233,7 @@ namespace FCG.Pedestrians
 
                 if (book)
                 {
-                    bool force = wScript.GetNodeZeroCar(wSide) && wScript.GetNodeZeroCar(wSide).GetComponent<TrafficCar>().Get_avanceNode();
+                    bool force = wScript.GetNodeZeroCar(wSide) && wScript.GetNodeZeroCar(wSide).GetComponent<TrafficPedestrian>().Get_avanceNode();
                     if (!wScript.SetNodeZero(wSide, wayScript.transform, transform, force))
                         return false;
                 }
@@ -317,129 +246,25 @@ namespace FCG.Pedestrians
             return true;
         }
 
-
-        void MoveCar()
+        void Move()
         {
-            if (status == StatusCar.bloked)
-                return;
-
-            speed = myRigidbody.velocity.magnitude * 3.6f;
+            //if (status == StatusPedestrian.bloked)
+            //    return;
 
             VerificaPoints();
 
-            distanceToNode = Vector3.Distance(atualWayScript.Node(sideAtual, currentNode), thisTr.position + thisTr.forward * (carSetting.curveAdjustment * 0.5f));
+            var targetPoint = atualWayScript.Node(sideAtual, currentNode);
+            targetPoint.y = thisTr.position.y;
 
-            if (_avanceNode != Vector3.zero)
-            {
-                //Debug.DrawLine(transform.position + Vector3.up * 2f, _avanceNode + Vector3.up * 2f, Color.cyan);
+            distanceToNode = Vector3.Distance(targetPoint, thisTr.position + thisTr.forward * (curveAdjustment * 0.5f));
 
-                relativeVector = transform.InverseTransformPoint(_avanceNode);
-
-                if (Vector3.Distance(_avanceNode, thisTr.position) < 4)
-                    _avanceNode = Vector3.zero;
-            }
-            else
-            {
-                //Debug.DrawLine(transform.position + Vector3.up * 0.2f, atualWayScript.Node(sideAtual, currentNode, (currentNode == 0 && nodeSteerCarefully) ? 3 : 0) + Vector3.up * 0.2f, Color.cyan);
-
-                relativeVector = transform.InverseTransformPoint(atualWayScript.Node(sideAtual, currentNode, (currentNode == 0 && nodeSteerCarefully) ? 3 : 0));
-            }
-
-            steer = ((relativeVector.x / relativeVector.magnitude) * carSetting.maxSteerAngle);
-
-            bool b1 = true;
-            bool b2;
-
-            iRC++;
-            if (iRC >= 4)
-            {
-                iRC = 0;
-
-                //nodeSteerCarefully :  true if I'm turning to the side that has opposite traffic (Right hand and turning left) Or (Left hand and turning right)
-
-                if (currentNode == 0)
-                {
-                    // Decide whether I should wait for another car to pass and then proceed
-                    if (behind == null && atualWayScript.BookNodeZero(this))
-                    {
-                        // The way I was was not oneWay, and I'm turning to the side that has opposite traffic
-                        // Decide whether I should wait for another car to pass and then proceed
-                        if ((nodeSteerCarefully && !myOldWayScript.oneway) || (nodeSteerCarefully2))
-                        {
-                            //Reserve the node next to mine in my previous lane, so as not to come by car in the opposite direction.
-                            if (!nodeSteerCarefully2)
-                                b1 = myOldWayScript.SetNodeZero((myOldSideAtual == 1) ? 0 : 1, myOldWay, transform);
-
-                            b2 = CheckBookAllPathOptions(myOldWayScript, myOldSideAtual) && BookAllPathOptions(myOldWayScript, myOldSideAtual, true);
-                            brake2 = (b1 && b2) ? 0 : 4000;
-                        }
-                        else
-                            brake2 = 0;
-                    }
-                    else
-                        brake2 = 4000;
-                }
-                else
-                    brake2 = 0;
-
-                if (speed > 2)
-                    status = StatusCar.transitingNormally;
-
-                if (brake2 <= 0 || behind)
-                    brake = FixedRaycasts();
-                else
-                    status = StatusCar.waitingForAnotherVehicleToPass;
-
-                if (speed < 2 && (status != StatusCar.stoppedAtTrafficLights || status != StatusCar.waitingForAnotherVehicleToPass))
-                {
-                    if (Time.time > timeStoped + _settings.timeToStayStill2)
-                    {
-                        DestroyObject();
-                        return;
-                    }
-                }
-                else
-                {
-                    timeStoped = Time.time;
-                }
-            }
-
-            brake = (brake2 > brake) ? brake2 : brake;
-
-            float bk = 0;
-
-            if (speed > carSetting.limitSpeed)  // Keep the speed at the set limit
-                bk = Mathf.Lerp(100, 1000, (speed - carSetting.limitSpeed) / 10);
-
-            if (bk > brake) brake = bk;
-
-            //for (int k = 0; k < 4; k++)
-            //{
-            //    if (brake == 0)
-            //        wCollider[k].brakeTorque = 0;
-            //    else
-            //    {
-            //        wCollider[k].motorTorque = 0;
-            //        wCollider[k].brakeTorque = carSetting.brakePower * brake;
-            //    }
-
-            //    if (k < 2)
-            //    {
-            //        motorTorque = Mathf.Lerp(carSetting.carPower * 30, 0, speed / carSetting.limitSpeed);
-            //        wCollider[k].motorTorque = motorTorque;
-            //        wCollider[k].steerAngle = steer;
-            //    }
-
-            //    wCollider[k].GetWorldPose(out Vector3 _pos, out Quaternion _rot);
-            //}
-
-            transform.position = Vector3.MoveTowards(transform.position, atualWayScript.Node(sideAtual, currentNode), 5 * Time.deltaTime);
+            _agent.destination = targetPoint;
         }
 
 
         private void VerificaPoints()
         {
-            if (distanceToNode < 5)
+            if (distanceToNode < _settings.reachDistanceToNode)
             {
                 if (currentNode < countWays - 1)
                 {
@@ -448,7 +273,7 @@ namespace FCG.Pedestrians
                     if (currentNode == 1)
                     {
                         atualWayScript.UnSetNodeZero(sideAtual, transform);  // Release the node so that the cars that were waiting for me to pass can proceed
-                        status = StatusCar.transitingNormally;
+                        //status = StatusPedestrian.transitingNormally;
 
                         if (nodeSteerCarefully || nodeSteerCarefully2)
                         {
@@ -488,8 +313,8 @@ namespace FCG.Pedestrians
                     if (verify && atualWayScript.bloked)
                     {
                         myOldWayScript.bloked = true;
-                        brake2 = 6000;
-                        status = StatusCar.bloked;
+
+                        //status = StatusPedestrian.bloked;
                     }
 
                     DefineNewPath();
@@ -518,67 +343,57 @@ namespace FCG.Pedestrians
         }
 
 
+        public Transform GetBehind() => behind;
 
-        public Transform GetBehind()
+        private void FixedUpdate()
         {
-            return behind;
+            FixedRaycasts();
         }
-
-
-        float FixedRaycasts()
+        void FixedRaycasts()
         {
             RaycastHit hit;
             float wdist = _settings.rayLength;
-            float wdist2 = (speed < 3) ? (wdist / 1.5f) : wdist;
 
-            float rStop;
+            Debug.DrawRay(thisTr.position + agentHeight, thisTr.forward * wdist, Color.yellow);
 
-            mRayC1.localRotation = Quaternion.Euler(0, steer, 0);
-            mRayC2.localRotation = mRayC1.localRotation;
-
-            Debug.DrawRay((mRayC1.position + mRayC2.position) * 0.5f, mRayC1.forward * wdist2, Color.yellow);
-            Debug.DrawRay(mRayC1.position, mRayC1.forward * wdist2, Color.yellow);
-            Debug.DrawRay(mRayC2.position, mRayC2.forward * wdist2, Color.yellow);
-
-            if (Physics.Raycast((mRayC1.position + mRayC2.position) * 0.5f, mRayC1.forward, out hit, wdist2))
+            if (Physics.Raycast(thisTr.position + agentHeight, thisTr.forward, out hit, wdist))
             {
-                Debug.DrawRay((mRayC1.position + mRayC2.position) * 0.5f, mRayC1.forward * wdist2, Color.red);
-                rStop = hit.distance;
-            }
-            else if (Physics.Raycast(mRayC1.position, mRayC1.forward, out hit, wdist2))
-            {
-                Debug.DrawRay(mRayC1.position, mRayC1.forward * wdist2, Color.red);
-                rStop = hit.distance;
-            }
-            else if (Physics.Raycast(mRayC2.position, mRayC2.forward, out hit, wdist2))
-            {
-                Debug.DrawRay(mRayC2.position, mRayC2.forward * wdist2, Color.red);
-                rStop = hit.distance;
-            }
-            else
-                rStop = 0;
+                Debug.DrawRay(thisTr.position + agentHeight, thisTr.forward * wdist, Color.red);
 
-            behind = (rStop == 0) ? null : hit.transform;
-
-            if (rStop > 0 && speed < 2)
-            {
-
-                if (status == StatusCar.stoppedAtTrafficLights || status == StatusCar.waitingForAnotherVehicleToPass || status == StatusCar.Undefined)
-                { }
-                else if (hit.transform.name == "Stop")
-                    status = StatusCar.stoppedAtTrafficLights;
-                else if (hit.transform.GetComponent<TrafficPedestrian>())
+                if (hit.transform.CompareTag("PeopleSemaphore"))
                 {
-                    StatusCar st = hit.transform.GetComponent<TrafficPedestrian>().status;
-                    status = (st == StatusCar.stoppedAtTrafficLights || st == StatusCar.waitingForAnotherVehicleToPass) ? st : StatusCar.Undefined;
+                    _agent.isStopped = true;
+                    //status = StatusPedestrian.stoppedAtTrafficLights;
                 }
-
+                else
+                {
+                    _agent.isStopped = false;
+                    //status = StatusPedestrian.transitingNormally;
+                }
+            }
+            else
+            {
+                _agent.isStopped = false;
+                //status = StatusPedestrian.transitingNormally;
             }
 
-            if (rStop == 0)
-                return 0;
-            else
-                return (rStop < 1 || speed < 0.5f) ? 20000 : (speed * 6) * ((wdist / rStop) * 6);
+
+
+            //if (rStop > 0 /*&& speed < 2*/)
+            //{
+            //    if (status == StatusPedestrian.stoppedAtTrafficLights || status == StatusPedestrian.waitingForAnotherVehicleToPass || status == StatusPedestrian.Undefined)
+            //    {
+            //    }
+            //    else if (hit.transform.name == "Stop")
+            //    {
+            //        status = StatusPedestrian.stoppedAtTrafficLights;
+            //    }
+            //    else if (hit.transform.GetComponent<TrafficPedestrian>())
+            //    {
+            //        StatusPedestrian st = hit.transform.GetComponent<TrafficPedestrian>().status;
+            //        status = (st == StatusPedestrian.stoppedAtTrafficLights || st == StatusPedestrian.waitingForAnotherVehicleToPass) ? st : StatusPedestrian.Undefined;
+            //    }
+            //}
         }
 
 
@@ -694,9 +509,9 @@ namespace FCG.Pedestrians
 
 
             if (Physics.Raycast(node0, node1 - node0, out hit2, mts))
-                if (hit2.transform.GetComponent<TrafficCar>())
+                if (hit2.transform.GetComponent<TrafficPedestrian>())
                 {
-                    if (hit2.transform.GetComponent<TrafficCar>().GetSpeed() < 8)
+                    if (hit2.transform.GetComponent<TrafficPedestrian>().GetSpeed() < 8)
                         return hit2.distance;
                     else
                         return mts - 1;
@@ -705,46 +520,46 @@ namespace FCG.Pedestrians
             return mts;
         }
 
-        private void Pause(Vector3 position)
-        {
-#if UNITY_EDITOR
-            if (GameObject.Find("CubePause"))
-            {
-                GameObject.Find("CubePause").transform.position = position;
-                UnityEditor.EditorApplication.isPaused = true;
-            }
-#endif
-        }
-
         private int countC = 0;
 
         void SelfDestructWhenAwayFromThePlayer()
         {
-            if (speed < 2 && status != StatusCar.stoppedAtTrafficLights && (Time.time > timeStoped + _settings.timeToStayStill) & InTheFieldOfVision(transform.position, player))
+            var a = thisTr.position; a.y = 0;
+            var b = player.position; b.y = 0;
+            var dist = Vector3.Distance(a, b);
+            if (dist > distanceToSelfDestroy && /*(Time.time > timeStoped + _settings.timeToStayStill)&*/ !InTheFieldOfVision(thisTr.position, cameraTr))
             {
                 DestroyObject();
             }
-            else if (Vector3.Distance(transform.position, player.position) < distanceToSelfDestroy || InTheFieldOfVision(transform.position, player))
-            {
-                countC = 0;
-            }
-            else
-            {
-                Debug.Log("? ? ?");
-                countC++;
 
-                if (countC >= 2)
-                {
-                    DestroyObject();
-                }
-            }
+            //if (speed < 2 && status != StatusPedestrian.stoppedAtTrafficLights && (Time.time > timeStoped + _settings.timeToStayStill) & InTheFieldOfVision(thisTr.position, cameraTr))
+            //{
+            //    DestroyObject();
+            //}
+            //else if (Vector3.Distance(thisTr.position, player.position) < distanceToSelfDestroy || InTheFieldOfVision(thisTr.position, cameraTr))
+            //{
+            //    countC = 0;
+            //}
+            //else
+            //{
+            //    Debug.Log("? ? ?");
+            //    countC++;
+
+            //    if (countC >= 2)
+            //    {
+            //        DestroyObject();
+            //    }
+            //}
         }
 
         public void SelfDestructWhenAwayFromThePlayerInit()
         {
             if (tSystem && player)
             {
-                if (Vector3.Distance(transform.position, player.position) > distanceToSelfDestroy && !InTheFieldOfVision(transform.position, player))
+                var a = thisTr.position; a.y = 0;
+                var b = player.position; b.y = 0;
+                var dist = Vector3.Distance(a, b);
+                if (dist > distanceToSelfDestroy && !InTheFieldOfVision(transform.position, cameraTr))
                 {
                     DestroyObject();
                 }
@@ -767,25 +582,26 @@ namespace FCG.Pedestrians
             // the IACar wants to disappear without it being seen by the camera/player
 
             RaycastHit obsRay2;
+            Vector3 rayStartPos = source + agentHeight;
+            Vector3 targetPos = target.position;
 
-            if (Physics.Linecast(source + Vector3.up * 1f, target.position + Vector3.up * 1f, out obsRay2)) //, ~(1 << LayerMask.NameToLayer("Lattice"))))
+            if (Physics.Linecast(rayStartPos, targetPos, out obsRay2)) //, ~(1 << LayerMask.NameToLayer("Lattice"))))
             {
-
-                if (obsRay2.transform == target || obsRay2.transform.root == target)
+                var oRay2Tr = obsRay2.transform;
+                if (oRay2Tr == target || oRay2Tr.root == target)
                 {
-                    //Debug.DrawLine(source, target.position, Color.red);
+                    //Debug.DrawLine(rayStartPos, targetPos, Color.red);
                     return true;
                 }
                 else
                 {
-                    //Debug.DrawLine(source, target.position, Color.green);
+                    //Debug.DrawLine(rayStartPos, targetPos, Color.green);
                     return false;
                 }
-
             }
             else
             {
-                //Debug.DrawLine(source, target.position, Color.blue);
+                //Debug.DrawLine(rayStartPos, targetPos, Color.blue);
                 return true;
             }
         }
@@ -804,7 +620,6 @@ namespace FCG.Pedestrians
 
             DestroyImmediate(compass);
             return r;
-
         }
     }
 }

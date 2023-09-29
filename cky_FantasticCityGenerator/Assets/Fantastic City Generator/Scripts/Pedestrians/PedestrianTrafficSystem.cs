@@ -1,3 +1,4 @@
+using cky.FCG.Pedestrian.StateMachine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,6 +52,8 @@ namespace FCG.Pedestrians
         }
 
         List<WpDataSpawn> _wpDataSpawn;
+
+        [SerializeField] private float intervalLoadPedestrian = 2;
 
         public void UpdateAllWayPoints()
         {
@@ -145,6 +148,8 @@ namespace FCG.Pedestrians
                  if(GameObject.FindGameObjectWithTag("MainCamera"))
                      player = GameObject.FindGameObjectWithTag("MainCamera").transform;
             */
+
+            player = GameObject.FindWithTag("Player").transform;
 
             if (GameObject.Find("DTPosition"))
                 downTowmPosition = GameObject.Find("DTPosition").transform;
@@ -273,7 +278,7 @@ namespace FCG.Pedestrians
 
             if (player && Application.isPlaying)
             {
-                InvokeRepeating(nameof(LoadPedestrians2), 0f, 5);
+                InvokeRepeating(nameof(LoadPedestrians2), 0f, intervalLoadPedestrian);
             }
             else
                 LoadPedestrians2();
@@ -305,16 +310,15 @@ namespace FCG.Pedestrians
             if (_isFirstTime && player && nPedestrians > 0)
             {
 
-                TrafficPedestrian[] vcles = FindObjectsOfType<TrafficPedestrian>();
+                PedestrianStateMachine[] vcles = FindObjectsOfType<PedestrianStateMachine>();
                 int nvcles = vcles.Length;
                 for (int i = 0; i < nvcles; i++)
                 {
-                    var tPedestrian = vcles[i].GetComponent<TrafficPedestrian>();
+                    var tPedestrian = vcles[i].GetComponent<PedestrianStateMachine>();
 
                     tPedestrian.distanceToSelfDestroy = around;
                     tPedestrian.player = player;
                     tPedestrian.tSystem = this;
-                    tPedestrian.SelfDestructWhenAwayFromThePlayerInit();
                 }
             }
 
@@ -355,7 +359,6 @@ namespace FCG.Pedestrians
                 }
                 else
                 {
-
                     if (player)
                     {
                         float dist = Vector3.Distance(_wpDataSpawn[i].position, player.position);
@@ -365,7 +368,6 @@ namespace FCG.Pedestrians
 
                         if (!_isFirstTime && InTheFieldOfVision(player.position, _wpDataSpawn[i].position))
                             continue;
-
                     }
 
                     bool go = false;
@@ -378,14 +380,12 @@ namespace FCG.Pedestrians
                         go = !Physics.Linecast(_wpDataSpawn[i].wayScript.Node(_wpDataSpawn[i].side, _wpDataSpawn[i].node + 1) + Vector3.up * 1f,
                                                _wpDataSpawn[i].wayScript.Node(_wpDataSpawn[i].side, _wpDataSpawn[i].node) + Vector3.up * 1f, out obsRay2);
 
-
                     if (go)
                     {
-
-                        human = (GameObject)Instantiate(pedestrianPrefabs[Mathf.Clamp(Random.Range(0, pedestrianPrefabs.Length), 0, pedestrianPrefabs.Length - 1)], _wpDataSpawn[i].position + Vector3.up * 0.1f, _wpDataSpawn[i].rotation); ;
+                        human = (GameObject)Instantiate(pedestrianPrefabs[Mathf.Clamp(Random.Range(0, pedestrianPrefabs.Length), 0, pedestrianPrefabs.Length - 1)], _wpDataSpawn[i].position, _wpDataSpawn[i].rotation); ;
                         human.transform.SetParent(PedestrianContainer.transform);
 
-                        var tPedestrian = human.GetComponent<TrafficPedestrian>();
+                        var tPedestrian = human.GetComponent<PedestrianStateMachine>();
                         tPedestrian.sideAtual = (_wpDataSpawn[i].wayScript.oneway && _wpDataSpawn[i].wayScript.doubleLine && _wpDataSpawn[i].wayScript.rightHand != 0) ? ((_wpDataSpawn[i].side == 1) ? 0 : 1) : _wpDataSpawn[i].side;
                         tPedestrian.atualWay = _wpDataSpawn[i].wayScript.transform;
                         tPedestrian.atualWayScript = _wpDataSpawn[i].wayScript;
@@ -396,14 +396,11 @@ namespace FCG.Pedestrians
                             tPedestrian.distanceToSelfDestroy = around;
                             tPedestrian.player = player;
                             tPedestrian.tSystem = this;
-                            tPedestrian.ActivateSelfDestructWhenAwayFromThePlayer();
                         }
 
                         nPedestrians++;
-
                     }
                 }
-
             }
 
             if (Application.isPlaying)
@@ -424,7 +421,6 @@ namespace FCG.Pedestrians
                 {
                     Debug.Log("Need to generate the city again to use the updated traffic system");
                 }
-
             }
         }
 

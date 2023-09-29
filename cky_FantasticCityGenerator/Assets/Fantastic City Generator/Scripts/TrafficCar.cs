@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Linq;
+using cky.UTS.Helpers;
+using Unity.VisualScripting;
 
 namespace FCG
 {
@@ -15,7 +17,7 @@ namespace FCG
             crashed,
         }
 
-        [SerializeField] private TrafficCarSettings _settings;
+        [SerializeField] private TrafficCarSettings Settings;
 
         [HideInInspector]
         public StatusCar status;
@@ -124,34 +126,9 @@ namespace FCG
             public Transform backLeft2;
         }
 
-        public CarSetting carSetting;
+        public Transform carSteer;
 
-        [System.Serializable]
-        public class CarSetting
-        {
-            public Transform carSteer;
-
-            [Range(10000, 60000)]
-            public float springs = 25000.0f;
-
-            [Range(1000, 6000)]
-            public float dampers = 1500.0f;
-
-            [Range(60, 200)]
-            public float carPower = 120f;
-
-            [Range(5, 10)]
-            public float brakePower = 8f;
-
-            [Range(20, 30)]
-            public float limitSpeed = 30.0f;
-
-            [Range(30, 72)]
-            public float maxSteerAngle = 40.0f; //Maximum wheel curvature angle
-
-            [Range(-1, 1)]
-            public float curveAdjustment = 0.0f; // make tighter or more open turns
-        }
+        #region Configuration
 
         private Vector3 shiftCentre = new Vector3(0.0f, -0.05f, 0.0f);
 
@@ -242,13 +219,13 @@ namespace FCG
                 mRayC2 = new GameObject("RayC2").transform;
                 mRayC2.SetParent(transform);
             }
-            else if (!mRayC2)
+            else if (!mRayC1)
                 mRayC2 = transform.Find("RayC2");
 
             mRayC2.localRotation = Quaternion.identity;
             mRayC2.localPosition = new Vector3(l, 0.8f, p);
 
-            carSetting.maxSteerAngle = (int)Mathf.Clamp(Vector3.Distance(wheelsTransforms.frontRight.transform.position, wheelsTransforms.backRight.transform.position) * 12, 35, 72);
+            Settings.maxSteerAngle = (int)Mathf.Clamp(Vector3.Distance(wheelsTransforms.frontRight.transform.position, wheelsTransforms.backRight.transform.position) * 12, 35, 72);
 
             wheel = new Transform[4];
             wCollider = new WheelCollider[4];
@@ -307,8 +284,8 @@ namespace FCG
 
             JointSpring js = col.suspensionSpring;
 
-            js.spring = carSetting.springs;
-            js.damper = carSetting.dampers;
+            js.spring = Settings.springs;
+            js.damper = Settings.dampers;
             col.suspensionSpring = js;
 
             col.suspensionDistance = 0.05f;
@@ -317,6 +294,8 @@ namespace FCG
 
             return result;
         }
+
+        #endregion
 
 
         void Start()
@@ -369,7 +348,7 @@ namespace FCG
 
             if (currentNode == 0) currentNode = 1;
 
-            distanceToNode = Vector3.Distance(atualWayScript.Node(sideAtual, currentNode), myReference.position + myReference.forward * (carSetting.curveAdjustment * 0.5f));
+            distanceToNode = Vector3.Distance(atualWayScript.Node(sideAtual, currentNode), myReference.position + myReference.forward * (Settings.curveAdjustment * 0.5f));
 
             InvokeRepeating(nameof(MoveCar), 0.02f, 0.02f);
 
@@ -386,7 +365,7 @@ namespace FCG
             if (tSystem && player)
             {
                 if (distanceToSelfDestroy == 0) distanceToSelfDestroy = 200;
-                InvokeRepeating(nameof(SelfDestructWhenAwayFromThePlayer), 5f, _settings.checkingAwayFromPlayerRepeatRate);
+                InvokeRepeating(nameof(SelfDestructWhenAwayFromThePlayer), 5f, Settings.checkingAwayFromPlayerRepeatRate);
             }
         }
 
@@ -509,7 +488,7 @@ namespace FCG
 
             VerificaPoints();
 
-            distanceToNode = Vector3.Distance(atualWayScript.Node(sideAtual, currentNode), myReference.position + myReference.forward * (carSetting.curveAdjustment * 0.5f));
+            distanceToNode = Vector3.Distance(atualWayScript.Node(sideAtual, currentNode), myReference.position + myReference.forward * (Settings.curveAdjustment * 0.5f));
 
             if (_avanceNode != Vector3.zero)
             {
@@ -527,7 +506,7 @@ namespace FCG
                 relativeVector = transform.InverseTransformPoint(atualWayScript.Node(sideAtual, currentNode, (currentNode == 0 && nodeSteerCarefully) ? 3 : 0));
             }
 
-            steer = ((relativeVector.x / relativeVector.magnitude) * carSetting.maxSteerAngle);
+            steer = ((relativeVector.x / relativeVector.magnitude) * Settings.maxSteerAngle);
 
             bool b1 = true;
             bool b2;
@@ -576,7 +555,7 @@ namespace FCG
 
                 if (speed < 2 && (status != StatusCar.stoppedAtTrafficLights || status != StatusCar.waitingForAnotherVehicleToPass))
                 {
-                    if (Time.time > timeStoped + _settings.timeToStayStill2)
+                    if (Time.time > timeStoped + Settings.timeToStayStill2)
                     {
                         DestroyObject();
                         return;
@@ -592,8 +571,8 @@ namespace FCG
 
             float bk = 0;
 
-            if (speed > carSetting.limitSpeed)  // Keep the speed at the set limit
-                bk = Mathf.Lerp(100, 1000, (speed - carSetting.limitSpeed) / 10);
+            if (speed > Settings.limitSpeed)  // Keep the speed at the set limit
+                bk = Mathf.Lerp(100, 1000, (speed - Settings.limitSpeed) / 10);
 
             if (bk > brake) brake = bk;
 
@@ -604,12 +583,12 @@ namespace FCG
                 else
                 {
                     wCollider[k].motorTorque = 0;
-                    wCollider[k].brakeTorque = carSetting.brakePower * brake;
+                    wCollider[k].brakeTorque = Settings.brakePower * brake;
                 }
 
                 if (k < 2)
                 {
-                    motorTorque = Mathf.Lerp(carSetting.carPower * 30, 0, speed / carSetting.limitSpeed);
+                    motorTorque = Mathf.Lerp(Settings.carPower * 30, 0, speed / Settings.limitSpeed);
                     wCollider[k].motorTorque = motorTorque;
                     wCollider[k].steerAngle = steer;
                 }
@@ -626,8 +605,8 @@ namespace FCG
             }
 
             //steeringwheel movement
-            if (carSetting.carSteer)
-                carSetting.carSteer.localEulerAngles = new Vector3(steerCurAngle.x, steerCurAngle.y, steerCurAngle.z - steer);  //carSetting.carSteer.localEulerAngles = new Vector3(steerCurAngle.x, steerCurAngle.y, steerCurAngle.z + ((steer / 180) * -30.0f));
+            if (carSteer)
+                carSteer.localEulerAngles = new Vector3(steerCurAngle.x, steerCurAngle.y, steerCurAngle.z - steer);  //carSetting.carSteer.localEulerAngles = new Vector3(steerCurAngle.x, steerCurAngle.y, steerCurAngle.z + ((steer / 180) * -30.0f));
         }
 
 
@@ -732,52 +711,102 @@ namespace FCG
         }
 
 
+        private bool insideSemaphore;
+        public bool INSIDE { get { return insideSemaphore; } set { insideSemaphore = value; } }
+
         float FixedRaycasts()
         {
             RaycastHit hit;
-            float wdist = _settings.rayLength;
+            float wdist = Settings.rayLength;
             float wdist2 = (speed < 3) ? (wdist / 1.5f) : wdist;
+
+            var mRayCM = (mRayC1.position + mRayC2.position) * 0.5f;
 
             float rStop;
 
             mRayC1.localRotation = Quaternion.Euler(0, steer, 0);
             mRayC2.localRotation = mRayC1.localRotation;
 
-            Debug.DrawRay((mRayC1.position + mRayC2.position) * 0.5f, mRayC1.forward * wdist2, Color.yellow);
+            Debug.DrawRay(mRayCM, mRayC1.forward * wdist2, Color.yellow);
             Debug.DrawRay(mRayC1.position, mRayC1.forward * wdist2, Color.yellow);
             Debug.DrawRay(mRayC2.position, mRayC2.forward * wdist2, Color.yellow);
 
-            if (Physics.Raycast((mRayC1.position + mRayC2.position) * 0.5f, mRayC1.forward, out hit, wdist2))
-            {
+            if (Physics.Raycast(mRayCM, mRayC1.forward, out hit, wdist2))
                 Debug.DrawRay((mRayC1.position + mRayC2.position) * 0.5f, mRayC1.forward * wdist2, Color.red);
-                rStop = hit.distance;
-            }
             else if (Physics.Raycast(mRayC1.position, mRayC1.forward, out hit, wdist2))
-            {
                 Debug.DrawRay(mRayC1.position, mRayC1.forward * wdist2, Color.red);
-                rStop = hit.distance;
-            }
             else if (Physics.Raycast(mRayC2.position, mRayC2.forward, out hit, wdist2))
-            {
                 Debug.DrawRay(mRayC2.position, mRayC2.forward * wdist2, Color.red);
-                rStop = hit.distance;
-            }
-            else
-                rStop = 0;
+            else rStop = 0;
+
+            rStop = hit.distance;
 
             behind = (rStop == 0) ? null : hit.transform;
 
-            if (rStop > 0 && speed < 2)
+            //if (rStop > 0 && speed < 2)
+            //{
+            //    if (status == StatusCar.stoppedAtTrafficLights || status == StatusCar.waitingForAnotherVehicleToPass || status == StatusCar.Undefined)
+            //    { }
+            //    else if (hit.transform.name == "Stop")
+            //    {
+            //        status = StatusCar.stoppedAtTrafficLights;
+            //    }
+            //    else if (hit.transform.GetComponent<TrafficCar>())
+            //    {
+            //        StatusCar st = hit.transform.GetComponent<TrafficCar>().status;
+            //        status = (st == StatusCar.stoppedAtTrafficLights || st == StatusCar.waitingForAnotherVehicleToPass) ? st : StatusCar.Undefined;
+            //    }
+            //}
+
+            //if (rStop == 0)
+            //    return 0;
+            //else
+            //    return (rStop < 1 || speed < 0.5f) ? 20000 : (speed * 6) * ((wdist / rStop) * 6);
+
+
+            var hitTransform = hit.transform;
+
+            if (hitTransform == null)
+                return 0;
+
+            if (hitTransform.CompareTag(TagHelper.TAG_CAR))
             {
-                if (status == StatusCar.stoppedAtTrafficLights || status == StatusCar.waitingForAnotherVehicleToPass || status == StatusCar.Undefined)
-                { }
-                else if (hit.transform.name == "Stop")
-                    status = StatusCar.stoppedAtTrafficLights;
-                else if (hit.transform.GetComponent<TrafficCar>())
+                StatusCar st = hit.transform.GetComponent<TrafficCar>().status;
+                status = (st == StatusCar.stoppedAtTrafficLights || st == StatusCar.waitingForAnotherVehicleToPass) ? st : StatusCar.Undefined;
+            }
+            else if (hitTransform.CompareTag(TagHelper.TAG_PEOPLESEMAPHORE))
+            {
+                if (hitTransform.TryGetComponent<SemaphoreMovementSide>(out var semaphore))
                 {
-                    StatusCar st = hit.transform.GetComponent<TrafficCar>().status;
-                    status = (st == StatusCar.stoppedAtTrafficLights || st == StatusCar.waitingForAnotherVehicleToPass) ? st : StatusCar.Undefined;
+                    if (semaphore.PassersbiesOnCrosswalk > 0)
+                    {
+
+                    }
+                    else
+                    {
+                        rStop = 0;
+
+                        //if (semaphore.flicker)
+                        //{
+                        //    if (!insideSemaphore)
+                        //    {
+                        //        rStop = 0;
+                        //    }
+                        //}
+                        //else
+                        //{
+                        //    rStop = 0;
+                        //}
+                    }
                 }
+            }
+            else if (hitTransform.CompareTag(TagHelper.TAG_PLAYER) || hitTransform.CompareTag(TagHelper.TAG_PEOPLE))
+            {
+
+            }
+            else
+            {
+                rStop = 0;
             }
 
             if (rStop == 0)
@@ -786,6 +815,8 @@ namespace FCG
                 return (rStop < 1 || speed < 0.5f) ? 20000 : (speed * 6) * ((wdist / rStop) * 6);
         }
 
+
+        #region T T T T T T T
 
         void DefineNewPath()
         {
@@ -925,7 +956,7 @@ namespace FCG
 
         void SelfDestructWhenAwayFromThePlayer()
         {
-            if (speed < 2 && status != StatusCar.stoppedAtTrafficLights && (Time.time > timeStoped + _settings.timeToStayStill) & InTheFieldOfVision(transform.position, player))
+            if (speed < 2 && status != StatusCar.stoppedAtTrafficLights && (Time.time > timeStoped + Settings.timeToStayStill) & InTheFieldOfVision(transform.position, player))
             {
                 DestroyObject();
             }
@@ -1009,5 +1040,89 @@ namespace FCG
 
             return r;
         }
+
+
+
+
+        #endregion
+
+
+        //public VehiclesAllow allow;
+        //private void PushRay()
+        //{
+        //    RaycastHit hit;
+
+        //    var trPos = transform.position;
+        //    var trForward = transform.forward;
+        //    var trRight = transform.right;
+        //    var trUp = transform.up;
+        //    var bcTransform = bc.transform;
+        //    var bcCenter = bc.center;
+        //    var mRayCM = (mRayC1.position + mRayC2.position) * 0.5f;
+
+        //    Ray fwdRay = new Ray(mRayCM, trForward * 20);
+        //    Ray LRay = new Ray(mRayC1.position, trForward * 20);
+        //    Ray RRay = new Ray(mRayC2.position, trForward * 20);
+
+        //    if (Physics.Raycast(fwdRay, out hit, 20) || Physics.Raycast(LRay, out hit, 20) || Physics.Raycast(RRay, out hit, 20))
+        //    {
+        //        float distance = Vector3.Distance((mRayC1.position + mRayC2.position) * 0.5f, hit.point);
+
+        //        var hitTransform = hit.transform;
+
+        //        if (hitTransform.CompareTag(TagHelper.TAG_CAR))
+        //        {
+        //            var isTrailer = hitTransform.GetComponentInParent<ParentOfTrailer>();
+
+        //            var car = isTrailer ? isTrailer.PAR : hitTransform.gameObject;
+
+        //            if (car.TryGetComponent<MovePath>(out var MP))
+        //            {
+        //                //GameObject car = hitTransform.GetComponentInChildren<ParentOfTrailer>() ? hitTransform.GetComponent<ParentOfTrailer>().PAR : hit.transform.gameObject;
+
+        //                if (car != null)
+        //                {
+        //                    if (MP.w == movePath.w)
+        //                    {
+        //                        ReasonsStoppingCars.CarInView(car, rigbody, distance, startSpeed, ref moveSpeed, ref tempStop, settings.distanceToCar);
+        //                    }
+        //                }
+        //            }
+        //            else
+        //            {
+        //                ReasonsStoppingCars.PlayerCarInView(hitTransform, distance, startSpeed, ref moveSpeed, ref tempStop);
+        //            }
+        //        }
+        //        else if (hitTransform.CompareTag(TagHelper.TAG_BCYCLE))
+        //        {
+        //            ReasonsStoppingCars.BcycleGyroInView(hitTransform.GetComponentInChildren<BcycleGyroController>(), rigbody, distance, startSpeed, ref moveSpeed, ref tempStop);
+        //        }
+        //        else if (hitTransform.CompareTag(TagHelper.TAG_PEOPLESEMAPHORE))
+        //        {
+        //            ReasonsStoppingCars.SemaphoreInView(hitTransform.GetComponent<SemaphoreMovementSide>(), allow, distance, startSpeed, insideSemaphore, ref moveSpeed, ref tempStop, settings.distanceToSemaphore);
+        //        }
+        //        else if (hitTransform.CompareTag(TagHelper.TAG_PLAYER) || hitTransform.CompareTag(TagHelper.TAG_PEOPLE))
+        //        {
+        //            ReasonsStoppingCars.PlayerInView(hitTransform, distance, startSpeed, ref moveSpeed, ref tempStop);
+        //        }
+        //        else
+        //        {
+        //            if (!moveBrake)
+        //            {
+        //                moveSpeed = startSpeed;
+        //            }
+        //            tempStop = false;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        if (!moveBrake)
+        //        {
+        //            moveSpeed = startSpeed;
+        //        }
+
+        //        tempStop = false;
+        //    }
+        //}
     }
 }

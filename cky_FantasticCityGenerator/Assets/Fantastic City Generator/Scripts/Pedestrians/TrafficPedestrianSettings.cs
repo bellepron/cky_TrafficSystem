@@ -10,5 +10,7 @@ namespace FCG.Pedestrians
         public float checkingAwayFromPlayerRepeatRate = 5.0f;
         public float timeToStayStill = 20.0f;
         public float timeToStayStill2 = 40.0f;
+
+        public float reachDistanceToNode = 5.0f;
     }
 }
