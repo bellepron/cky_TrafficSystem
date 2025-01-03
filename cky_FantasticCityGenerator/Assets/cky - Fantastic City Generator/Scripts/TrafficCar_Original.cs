@@ -525,7 +525,6 @@ namespace FCG
 
         void MoveCar()
         {
-
             if (status == StatusCar.bloked)
                 return;
 
@@ -549,32 +548,23 @@ namespace FCG
                 }
             }
 
-
-
-
             speed = myRigidbody.velocity.magnitude * 3.6f;
 
             VerificaPoints();
-
-
 
             distanceToNode = Vector3.Distance(atualWayScript.Node(sideAtual, currentNode), myReference.position + myReference.forward * (carSetting.curveAdjustment * 0.5f));
 
             if (_avanceNode != Vector3.zero)
             {
-
                 //Debug.DrawLine(transform.position + Vector3.up * 2f, _avanceNode + Vector3.up * 2f, Color.cyan);
-
 
                 relativeVector = transform.InverseTransformPoint(_avanceNode);
 
                 if (Vector3.Distance(_avanceNode, myReference.position) < 4)
                     _avanceNode = Vector3.zero;
-
             }
             else
             {
-
                 //Debug.DrawLine(transform.position + Vector3.up * 0.2f, atualWayScript.Node(sideAtual, currentNode, (currentNode == 0 && nodeSteerCarefully) ? 3 : 0) + Vector3.up * 0.2f, Color.cyan);
 
                 relativeVector = transform.InverseTransformPoint(atualWayScript.Node(sideAtual, currentNode, (currentNode == 0 && nodeSteerCarefully) ? 3 : 0));
@@ -603,7 +593,6 @@ namespace FCG
                     //    // Decide whether I should wait for another car to pass and then proceed
                     //    if ((nodeSteerCarefully && !myOldWayScript.oneway) || (nodeSteerCarefully2))
                     //    {
-
                     //        //Reserve the node next to mine in my previous lane, so as not to come by car in the opposite direction.
                     //        if (!nodeSteerCarefully2)
                     //            b1 = myOldWayScript.SetNodeZero((myOldSideAtual == 1) ? 0 : 1, myOldWay, transform);

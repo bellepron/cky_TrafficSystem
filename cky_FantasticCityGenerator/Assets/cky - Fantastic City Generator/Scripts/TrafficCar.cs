@@ -556,7 +556,6 @@ namespace FCG
                         // Decide whether I should wait for another car to pass and then proceed
                         if ((nodeSteerCarefully && !myOldWayScript.oneway) || (nodeSteerCarefully2))
                         {
-
                             //Reserve the node next to mine in my previous lane, so as not to come by car in the opposite direction.
                             if (!nodeSteerCarefully2)
                                 b1 = myOldWayScript.SetNodeZero((myOldSideAtual == 1) ? 0 : 1, myOldWay, transform);
