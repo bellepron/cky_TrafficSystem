@@ -1,9 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-
-namespace FCG
+namespace cky.TrafficSystem
 {
     public class TFShiftHand : MonoBehaviour
     {

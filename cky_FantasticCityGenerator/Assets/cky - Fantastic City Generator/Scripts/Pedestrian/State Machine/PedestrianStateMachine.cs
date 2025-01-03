@@ -1,18 +1,11 @@
-//using cky.ckyEventBus;
-using cky.FCG.Pedestrian.States;
-//using cky.Helpers;
-//using cky.Managers;
-//using cky.SideQuest;
-using cky.StateMachine.Base;
-using CKY_Pooling;
-using FCG;
-using FCG.Pedestrian;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using cky.StateMachine.Base;
+using System.Collections;
 using UnityEngine.AI;
+using CKY_Pooling;
+using UnityEngine;
 
-namespace cky.FCG.Pedestrian.StateMachine
+namespace cky.TrafficSystem
 {
     public enum PedestrianStates
     {
@@ -164,7 +157,7 @@ namespace cky.FCG.Pedestrian.StateMachine
             switch (state)
             {
                 case PedestrianStates.Empty: return new Empty_State(this);
-                case PedestrianStates.Idle: return new States.Idle_State(this);
+                case PedestrianStates.Idle: return new Idle_State(this);
                 case PedestrianStates.Walk: return new Walk_State(this);
                 case PedestrianStates.Run: return new Run_State(this);
 
@@ -489,14 +482,14 @@ namespace cky.FCG.Pedestrian.StateMachine
 
         [HideInInspector] public Transform atualWay;
         [HideInInspector] public int sideAtual = 0;
-        [HideInInspector] public FCGPedestrianWaypointsContainer atualWayScript;
+        [HideInInspector] public PedestrianWaypointsContainer atualWayScript;
         Transform myOldWay;
 
         [HideInInspector]
         public int myOldSideAtual = 0;
 
         [HideInInspector]
-        public FCGPedestrianWaypointsContainer myOldWayScript = null;
+        public PedestrianWaypointsContainer myOldWayScript = null;
 
         private Vector3 _avanceNode = Vector3.zero; //private Position where an additional and momentary node can be added
 
@@ -511,7 +504,7 @@ namespace cky.FCG.Pedestrian.StateMachine
 
         public void Init()
         {
-            atualWayScript = atualWay.GetComponent<FCGPedestrianWaypointsContainer>();
+            atualWayScript = atualWay.GetComponent<PedestrianWaypointsContainer>();
 
             DefineNewPath();
 
@@ -520,7 +513,7 @@ namespace cky.FCG.Pedestrian.StateMachine
             distanceToNode = Vector3.Distance(atualWayScript.Node(sideAtual, currentNode), transform.position);
         }
 
-        public void TrafficSystemInit(int sideAtual, Transform atualWay, FCGPedestrianWaypointsContainer atualWayScript, int currentNode, float distanceToSelfDestroy, Transform player, PedestrianTrafficSystem pedestrianTrafficSystem)
+        public void TrafficSystemInit(int sideAtual, Transform atualWay, PedestrianWaypointsContainer atualWayScript, int currentNode, float distanceToSelfDestroy, Transform player, PedestrianTrafficSystem pedestrianTrafficSystem)
         {
             this.sideAtual = sideAtual;
             this.atualWay = atualWay;

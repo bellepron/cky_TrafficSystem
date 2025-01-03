@@ -1,7 +1,6 @@
-using cky.FCG.Pedestrian.StateMachine;
 using UnityEngine;
 
-namespace cky.FCG.Pedestrian.States
+namespace cky.TrafficSystem
 {
     public class Walk_State : PedestrianBaseState
     {

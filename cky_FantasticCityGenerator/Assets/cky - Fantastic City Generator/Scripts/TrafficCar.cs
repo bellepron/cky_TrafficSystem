@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 using System.Linq;
 using CKY_Pooling;
-using FCG.Pedestrian;
 
-namespace FCG
+namespace cky.TrafficSystem
 {
     public class TrafficCar : MonoBehaviour
     {
@@ -56,12 +55,12 @@ namespace FCG
 
         [HideInInspector] public Transform atualWay;
         [HideInInspector] public int sideAtual = 0;
-        [HideInInspector] public FCGWaypointsContainer atualWayScript;
+        [HideInInspector] public WaypointsContainer atualWayScript;
         [HideInInspector] public bool nodeSteerCarefully = false;
         [HideInInspector] public bool nodeSteerCarefully2 = false;
         [HideInInspector] public Transform myOldWay;
         [HideInInspector] public int myOldSideAtual = 0;
-        [HideInInspector] public FCGWaypointsContainer myOldWayScript = null;
+        [HideInInspector] public WaypointsContainer myOldWayScript = null;
         private Vector3 _avanceNode = Vector3.zero;
 
         private float countTimeToSignal = 0;
@@ -110,7 +109,7 @@ namespace FCG
             MoveCar();
         }
 
-        public void TrafficSystemInit(int sideAtual, Transform atualWay, FCGWaypointsContainer atualWayScript, int currentNode, float distanceToSelfDestroy, Transform player, TrafficSystem trafficSystem)
+        public void TrafficSystemInit(int sideAtual, Transform atualWay, WaypointsContainer atualWayScript, int currentNode, float distanceToSelfDestroy, Transform player, TrafficSystem trafficSystem)
         {
             nodeSteerCarefully = false;
             nodeSteerCarefully2 = false;
@@ -148,11 +147,11 @@ namespace FCG
             return atualWayScript.Node(sideAtual, currentNode);
         }
 
-        bool CheckBookAllPathOptions(FCGWaypointsContainer wayScript, int side)
+        bool CheckBookAllPathOptions(WaypointsContainer wayScript, int side)
         {
             int total;
             int wSide;
-            FCGWaypointsContainer wScript;
+            WaypointsContainer wScript;
 
             total = (side == 0) ? wayScript.nextWay0.Length : wayScript.nextWay1.Length;
 
@@ -184,11 +183,11 @@ namespace FCG
             return true;
         }
 
-        bool BookAllPathOptions(FCGWaypointsContainer wayScript, int side, bool book = true)
+        bool BookAllPathOptions(WaypointsContainer wayScript, int side, bool book = true)
         {
             int total;
             int wSide;
-            FCGWaypointsContainer wScript;
+            WaypointsContainer wScript;
 
             total = (side == 0) ? wayScript.nextWay0.Length : wayScript.nextWay1.Length;
 

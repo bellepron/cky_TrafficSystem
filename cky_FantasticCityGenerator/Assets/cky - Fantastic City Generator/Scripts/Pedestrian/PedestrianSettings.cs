@@ -1,9 +1,8 @@
-using cky.FCG.Pedestrian.StateMachine;
 using UnityEngine;
 
-namespace cky.FCG.Pedestrian
+namespace cky.TrafficSystem
 {
-    [CreateAssetMenu(menuName = "cky/FCG/New Pedestrian Settings", fileName = "New Pedestrian Settings")]
+    [CreateAssetMenu(menuName = "cky/Data/New Pedestrian Settings", fileName = "New Pedestrian Settings")]
     public class PedestrianSettings : ScriptableObject
     {
         public PedestrianStates state = PedestrianStates.Walk;

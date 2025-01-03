@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace FCG
+namespace cky.TrafficSystem
 {
     public class TrafficLightController : TrafficLightControllerAbstract
     {

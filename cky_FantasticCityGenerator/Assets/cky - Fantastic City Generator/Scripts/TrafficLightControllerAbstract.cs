@@ -1,7 +1,6 @@
-//using cky.InteractableObjects;
 using UnityEngine;
 
-namespace FCG
+namespace cky.TrafficSystem
 {
     public enum TrafficLightColor { Red, Yellow, Green }
 

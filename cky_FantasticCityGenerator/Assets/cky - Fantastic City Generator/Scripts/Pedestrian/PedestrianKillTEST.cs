@@ -1,5 +1,3 @@
-using cky;
-using cky.Managers;
 using UnityEngine;
 
 public class PedestrianKillTEST : MonoBehaviour

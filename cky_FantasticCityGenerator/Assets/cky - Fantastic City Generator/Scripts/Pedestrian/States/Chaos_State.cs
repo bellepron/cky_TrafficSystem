@@ -1,9 +1,7 @@
-//using cky.Car;
-using cky.FCG.Pedestrian.StateMachine;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace cky.FCG.Pedestrian.States
+namespace cky.TrafficSystem
 {
     public class Chaos_State : PedestrianBaseState
     {

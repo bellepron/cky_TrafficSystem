@@ -1,8 +1,6 @@
-//using cky.Car;
-//using cky.Helpers;
 using UnityEngine;
 
-namespace cky.FCG.Pedestrian.StateMachine
+namespace cky.TrafficSystem
 {
     public class PedestrianIKLook : MonoBehaviour
     {

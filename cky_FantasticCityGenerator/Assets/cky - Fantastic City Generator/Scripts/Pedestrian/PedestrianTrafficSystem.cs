@@ -1,11 +1,10 @@
-using cky.FCG.Pedestrian.StateMachine;
 using System.Collections.Generic;
 using System.Collections;
 using cky.GizmoHelper;
 using UnityEngine;
 using CKY_Pooling;
 
-namespace FCG.Pedestrian
+namespace cky.TrafficSystem
 {
     #region Data Holder's
 
@@ -14,7 +13,7 @@ namespace FCG.Pedestrian
     {
         public bool[] tsActive;
         public Vector3[] tf01;
-        public FCGPedestrianWaypointsContainer[] tsParent;
+        public PedestrianWaypointsContainer[] tsParent;
         public bool[] tsOneway;
         public bool[] tsOnewayDoubleLine;
         public int[] tsSide;
@@ -28,7 +27,7 @@ namespace FCG.Pedestrian
         public float locateZ;
         public int side;
         public int node;
-        public FCGPedestrianWaypointsContainer wayScript;
+        public PedestrianWaypointsContainer wayScript;
     }
     #endregion
 
@@ -42,7 +41,7 @@ namespace FCG.Pedestrian
         [Space(5)]
         public Transform player = null;
 
-        FCGPedestrianWaypointsContainer[] _waypointContainers;
+        PedestrianWaypointsContainer[] _waypointContainers;
 
         [Space(10)]
         [Header("Pedestrian Prefabs")]
@@ -100,7 +99,7 @@ namespace FCG.Pedestrian
             player = GameObject.FindWithTag(Tags.Player)?.transform;
             if (player == null) player = Camera.main.transform;
 
-            _waypointContainers = FindObjectsOfType<FCGPedestrianWaypointsContainer>();
+            _waypointContainers = FindObjectsOfType<PedestrianWaypointsContainer>();
 
             _isGameStarted = true;
         }
@@ -127,7 +126,7 @@ namespace FCG.Pedestrian
                 return;
             }
 
-            if (!_isGameStarted) _waypointContainers = FindObjectsOfType<FCGPedestrianWaypointsContainer>();
+            if (!_isGameStarted) _waypointContainers = FindObjectsOfType<PedestrianWaypointsContainer>();
 
             int n = _waypointContainers.Length;
             for (int i = 0; i < n; i++)
@@ -227,13 +226,11 @@ namespace FCG.Pedestrian
 
             int n = _wpDataSpawn.Count;
             bool invert = (Random.Range(1, 20) < 10);
-            Debug.Log("3");
 
             var posPlayer = player.position; posPlayer.y = 0.0f;
             for (int j = 0; j < n; j++)
             {
                 int i = (invert) ? n - 1 - j : j;
-                Debug.Log("2");
 
                 if (nPedestrians >= maxPedestriansWithPlayer)
                 {
@@ -241,7 +238,6 @@ namespace FCG.Pedestrian
                 }
                 else
                 {
-                    Debug.Log("1");
                     var wpDataSpawn = _wpDataSpawn[i];
 
                     var posData = wpDataSpawn.position; posData.y = 0.0f;
@@ -256,7 +252,6 @@ namespace FCG.Pedestrian
                     var sa = wpDataSpawn_Side;
                     if (!ThereIsNoTrafficPedestrian_InCheckRadius(wpDataSpawn.position, aw, sa))
                     {
-                        Debug.Log("0");
                         p_sm = CKY_PoolManager.Spawn(pedestrianPrefabs[Random.Range(0, pedestrianPrefabs.Length)], wpDataSpawn.position + Vector3.up * 0.1f, wpDataSpawn.rotation).GetComponent<PedestrianStateMachine>();
 
                         AddToCurrentPedestrians(p_sm);
@@ -273,7 +268,7 @@ namespace FCG.Pedestrian
 
         public void UpdateAllWayPoints()
         {
-            _waypointContainers = FindObjectsOfType<FCGPedestrianWaypointsContainer>();
+            _waypointContainers = FindObjectsOfType<PedestrianWaypointsContainer>();
 
             for (int i = 0; i < _waypointContainers.Length; i++)
             {
@@ -300,7 +295,7 @@ namespace FCG.Pedestrian
 
             _wpData.tsActive = new bool[wpcLength * 2];
             _wpData.tf01 = new Vector3[wpcLength * 2];
-            _wpData.tsParent = new FCGPedestrianWaypointsContainer[wpcLength * 2];
+            _wpData.tsParent = new PedestrianWaypointsContainer[wpcLength * 2];
             _wpData.tsOneway = new bool[wpcLength * 2];
             _wpData.tsOnewayDoubleLine = new bool[wpcLength * 2];
             _wpData.tsSide = new int[wpcLength * 2];
@@ -344,7 +339,7 @@ namespace FCG.Pedestrian
             }
         }
 
-        private void PlaceSpawnPoint(FCGPedestrianWaypointsContainer f, int side, int node, float locate)
+        private void PlaceSpawnPoint(PedestrianWaypointsContainer f, int side, int node, float locate)
         {
             _wpDataSpawn.Add(new WpDataSpawnPedestrian
             {

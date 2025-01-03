@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace FCG
+namespace cky.TrafficSystem
 {
     public class Crosswalk : MonoBehaviour
     {

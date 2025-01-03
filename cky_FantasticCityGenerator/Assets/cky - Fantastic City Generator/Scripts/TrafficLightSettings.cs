@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace FCG
+namespace cky.TrafficSystem
 {
     [CreateAssetMenu(fileName = "Traffic Light Settings", menuName = "cky/Traffic Light Settings")]
     public class TrafficLightSettings : ScriptableObject

@@ -1,43 +1,36 @@
-﻿
+﻿using System.Collections.Generic;
+using ICON.Utilities;
 using UnityEditor;
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using ICON.Utilities;
 
-namespace FCG
+namespace cky.TrafficSystem
 {
-    [CustomEditor(typeof(FCGWaypointsContainer))]
+    [CustomEditor(typeof(PedestrianWaypointsContainer))]
 
-    public class FCGWPEditor : Editor
+    public class PedestrianWPEditor : Editor
     {
-
-        FCGWaypointsContainer wpScript;
+        PedestrianWaypointsContainer wpScript;
 
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
 
-            wpScript = (FCGWaypointsContainer)target;
+            wpScript = (PedestrianWaypointsContainer)target;
 
             if (GUI.changed)
             {
                 wpScript.RefreshAllWayPoints();
             }
-
         }
 
 
         void OnSceneGUI()
         {
-
             Event e = Event.current;
-            wpScript = (FCGWaypointsContainer)target;
+            wpScript = (PedestrianWaypointsContainer)target;
 
             if (e != null)
             {
-
-
                 if (e.isMouse && e.shift && e.type == EventType.MouseDown)
                 {
 
@@ -45,7 +38,6 @@ namespace FCG
                     RaycastHit hit = new RaycastHit();
                     if (Physics.Raycast(ray, out hit, 5000.0f))
                     {
-
                         GetWaypoints();
 
                         Vector3 newTilePosition = hit.point;
@@ -58,20 +50,12 @@ namespace FCG
                         GetWaypoints();
 
                         wpScript.RefreshAllWayPoints();
-
-
-
                     }
 
                     Selection.activeObject = wpScript.gameObject;
-
-
-
                 }
                 else if (e.isMouse && !e.shift && e.type == EventType.MouseDown)
                 {
-
-
                     Ray ray = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
                     RaycastHit hit = new RaycastHit();
                     if (Physics.Raycast(ray, out hit, 5000.0f))
@@ -79,7 +63,7 @@ namespace FCG
 
                         Vector3 newTilePosition = hit.point;
 
-                        FCGWaypointsContainer[] tArray = GameObject.FindObjectsOfType<FCGWaypointsContainer>();
+                        PedestrianWaypointsContainer[] tArray = GameObject.FindObjectsOfType<PedestrianWaypointsContainer>();
 
                         for (int f = 0; f < tArray.Length; f++)
                         {
@@ -95,31 +79,20 @@ namespace FCG
                                         wpScript.RefreshAllWayPoints();
                                         return;
                                     }
-
                             }
                         }
-
-
                     }
-
-
                 }
-
 
                 if (wpScript)
                     Selection.activeGameObject = wpScript.gameObject;
-
-
             }
-
         }
 
 
 
         public void GetWaypoints()
         {
-
-
             wpScript.waypoints = new List<Transform>();
 
             Transform[] allTransforms = wpScript.transform.GetComponentsInChildren<Transform>();
@@ -132,18 +105,9 @@ namespace FCG
 
                 wpScript.waypoints.Add(allTransforms[i]);
                 allTransforms[i].gameObject.SetIcon(LabelIcon.Yellow);
-                Debug.Log($"{allTransforms.Length}");
 
             }
-
-
             wpScript.WaypointsSetAngle();
-
-
-
         }
-
-
-
     }
 }

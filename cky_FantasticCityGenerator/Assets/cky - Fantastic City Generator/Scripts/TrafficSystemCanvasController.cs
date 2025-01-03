@@ -1,10 +1,8 @@
-using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine;
 using TMPro;
-using System.Collections;
-using System;
 
-namespace FCG
+namespace cky.TrafficSystem
 {
     public class TrafficSystemCanvasController : MonoBehaviour
     {

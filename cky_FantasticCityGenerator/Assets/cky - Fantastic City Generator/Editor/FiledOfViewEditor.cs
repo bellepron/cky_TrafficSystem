@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 
-namespace cky.FCG.Pedestrian.StateMachine
+namespace cky.TrafficSystem
 {
     [CustomEditor(typeof(PedestrianStateMachine))]
     public class FieldOfViewEditor : Editor

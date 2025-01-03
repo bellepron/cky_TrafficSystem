@@ -1,6 +1,5 @@
-using cky.FCG.Pedestrian.StateMachine;
 
-namespace cky.FCG.Pedestrian.States
+namespace cky.TrafficSystem
 {
     public class Empty_State : PedestrianBaseState
     {

@@ -1,11 +1,7 @@
-//using cky;
-//using cky.Helpers;
-//using cky.InteractableObjects;
-//using cky.Managers;
-using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine;
 
-namespace FCG
+namespace cky.TrafficSystem
 {
     public class TrafficLightExtra : MonoBehaviour/*, IHitable*/
     {

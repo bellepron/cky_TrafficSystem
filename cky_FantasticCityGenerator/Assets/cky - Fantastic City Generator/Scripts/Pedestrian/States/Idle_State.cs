@@ -1,7 +1,5 @@
-using cky.FCG.Pedestrian.StateMachine;
-using UnityEngine;
 
-namespace cky.FCG.Pedestrian.States
+namespace cky.TrafficSystem
 {
     public class Idle_State : PedestrianBaseState
     {

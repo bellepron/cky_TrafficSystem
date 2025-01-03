@@ -1,24 +1,23 @@
-﻿
-using UnityEngine;
+﻿using System.Collections.Generic;
 using System.Collections;
-using System.Collections.Generic;
+using UnityEngine;
 using UnityEditor;
 
-namespace FCG.Pedestrian
+namespace cky.TrafficSystem
 {
-    public class FCGPedestrianWaypointsContainer : MonoBehaviour
+    public class WaypointsContainer : MonoBehaviour
     {
-        private PedestrianTrafficSystem pedestrianTrafficSystem;
 
-        public bool noPedestrian;
+
+        private TrafficSystem trafficSystem;
 
         public bool oneway = false;
         public bool doubleLine = false;
 
-        [Range(0.5f, 25)]
+        [Range(1, 25)]
         public float width = 2f;
 
-        public FCGPedestrianWaypointsContainer[] doNotConnectTo;
+        public WaypointsContainer[] doNotConnectTo;
 
         [Range(5, 100)]
         public float limitNodeDistance = 30;  //Maximum distance between the end of one lane to the bridge of the other for automatic linking
@@ -31,15 +30,15 @@ namespace FCG.Pedestrian
         public List<Transform> waypoints = new List<Transform>();
 
         [HideInInspector]
-        public FCGPedestrianWaypointsContainer[] nextWay0;
+        public WaypointsContainer[] nextWay0;
         [HideInInspector]
-        public FCGPedestrianWaypointsContainer[] nextWay1;
+        public WaypointsContainer[] nextWay1;
         [HideInInspector]
         public int[] nextWaySide0;
         [HideInInspector]
         public int[] nextWaySide1;
-        [HideInInspector]
-        public int rightHand = 0;
+        //[HideInInspector]
+        //public int rightHand = 0;
 
         [HideInInspector]
         public bool bloked = false;
@@ -54,18 +53,16 @@ namespace FCG.Pedestrian
         public Transform nodeZeroWay1;
 
         [HideInInspector]
-        public FCGPedestrianWaypointsContainer[] directConnectSide = new FCGPedestrianWaypointsContainer[2];
+        public WaypointsContainer[] directConnectSide = new WaypointsContainer[2];
 
         Vector3 nodeBegin;
         Vector3 nodeEnd;
 
         [HideInInspector]
-        public WpDataPedestrian wpData;
+        public TrafficSystem.WpDataCar wpData;
 
 
         private Vector3 oldPosition;
-
-        float _forDistanceControl = 1;
 
         public void NextWaysCloseOnly()
         {
@@ -91,8 +88,9 @@ namespace FCG.Pedestrian
                         continue;
 
                     float pathDistance = Vector3.Distance(referencia, wpData.tf01[i]);
-                    if (pathDistance < _forDistanceControl)
+                    if (pathDistance < 3)
                     {
+
                         if (TestDoNotConnectTo(wpData.tsParent[i]) || wpData.tsParent[i].TestDoNotConnectTo(this))
                             continue;
 
@@ -101,14 +99,14 @@ namespace FCG.Pedestrian
 
                         if (idx == 0)
                         {
-                            nextWay0 = new FCGPedestrianWaypointsContainer[1];
+                            nextWay0 = new WaypointsContainer[1];
                             nextWaySide0 = new int[1];
                             nextWay0[0] = wpData.tsParent[i];
                             nextWaySide0[0] = wpData.tsSide[i];
                         }
                         else
                         {
-                            nextWay1 = new FCGPedestrianWaypointsContainer[1];
+                            nextWay1 = new WaypointsContainer[1];
                             nextWaySide1 = new int[1];
                             nextWay1[0] = wpData.tsParent[i];
                             nextWaySide1[0] = wpData.tsSide[i];
@@ -130,34 +128,35 @@ namespace FCG.Pedestrian
             nextWay0 = null;
             nextWay1 = null;
 
-            nextWay0 = new FCGPedestrianWaypointsContainer[0];
-            nextWay1 = new FCGPedestrianWaypointsContainer[0];
+            nextWay0 = new WaypointsContainer[0];
+            nextWay1 = new WaypointsContainer[0];
 
             directConnectSide[0] = null;
             directConnectSide[1] = null;
 
             width = Mathf.Abs(width);
-
         }
 
         public void NextWays()
         {
             for (int idx = 1; idx >= 0; idx--)
             {
+
                 if (oneway && !doubleLine && idx == 0)
                     continue;
 
                 if (directConnectSide[idx] != null)
                     continue;
 
+
                 if (idx == 0)
                 {
-                    nextWay0 = new FCGPedestrianWaypointsContainer[0];
+                    nextWay0 = new WaypointsContainer[0];
                     nextWaySide0 = new int[0];
                 }
                 else
                 {
-                    nextWay1 = new FCGPedestrianWaypointsContainer[0];
+                    nextWay1 = new WaypointsContainer[0];
                     nextWaySide1 = new int[0];
                 }
 
@@ -181,8 +180,9 @@ namespace FCG.Pedestrian
 
                     float pathDistance = Vector3.Distance(referencia, wpData.tf01[i]);
 
-                    if (pathDistance < limitNodeDistance && pathDistance >= _forDistanceControl)// && (tf01Script.tsGroup[i] == "" || tf01Script.tsGroup[i] == group || group == ""))
+                    if (pathDistance < limitNodeDistance && pathDistance >= 3)// && (tf01Script.tsGroup[i] == "" || tf01Script.tsGroup[i] == group || group == ""))
                     {
+
                         if (!wpData.tsParent[i])
                             continue;
 
@@ -202,7 +202,9 @@ namespace FCG.Pedestrian
                         if (wpData.tsParent[i].transform == transform)
                             continue;
 
-                        FCGPedestrianWaypointsContainer wpc = wpData.tsParent[i];
+
+
+                        WaypointsContainer wpc = wpData.tsParent[i];
 
                         //Link this path with the nearby paths
                         //If the two ends of the path are close, stay with the closest one
@@ -214,7 +216,11 @@ namespace FCG.Pedestrian
                                 arrSide.Add(wpData.tsSide[i]);
 
                             }
+
+
+
                     }
+
                 }
 
                 int qt = arrParent.Count;
@@ -223,12 +229,12 @@ namespace FCG.Pedestrian
                     continue;
 
 
-                FCGPedestrianWaypointsContainer[] _NextWays = new FCGPedestrianWaypointsContainer[qt];
+                WaypointsContainer[] _NextWays = new WaypointsContainer[qt];
                 int[] _NextWaysSide = new int[qt];
 
                 for (int i = 0; i < qt; i++)
                 {
-                    _NextWays[i] = (FCGPedestrianWaypointsContainer)arrParent[i];
+                    _NextWays[i] = (WaypointsContainer)arrParent[i];
                     _NextWaysSide[i] = (int)arrSide[i];
                 }
 
@@ -246,15 +252,13 @@ namespace FCG.Pedestrian
             }
 
 
-            widthToUse = (oneway && !doubleLine) ? 0f : (rightHand == 0) ? Mathf.Abs(width) : -Mathf.Abs(width); ;
+            widthToUse = (oneway && !doubleLine) ? 0f : Mathf.Abs(width);
 
             //Block path that has no exit
             bloked = ((!oneway && (nextWay0.Length < 1 || nextWay1.Length < 1)) || (oneway && (nextWay0.Length < 1 && nextWay1.Length < 1)));   // If one of my ends is not linked to another route, ban me
-
-
         }
 
-        public bool TestDoNotConnectTo(FCGPedestrianWaypointsContainer t)
+        public bool TestDoNotConnectTo(WaypointsContainer t)
         {
             if (doNotConnectTo == null) return false;
             if (doNotConnectTo.Length == 0) return false;
@@ -266,22 +270,18 @@ namespace FCG.Pedestrian
             }
 
             return false;
-
         }
 
         private float GetAngulo180(Transform origem, Vector3 target)
         {
-
             return Vector3.Angle(target - origem.position, origem.forward);
-
         }
 
-
-        public void InvertNodesDirection()
+        public void InvertNodesDirection(int hand_Right)
         {
-
-            widthToUse = Mathf.Abs(width);
-
+            //rightHand = hand_Right;
+            //widthToUse = (rightHand == 0) ? Mathf.Abs(width) : -Mathf.Abs(width); // cky
+            widthToUse = Mathf.Abs(width); // cky
         }
 
         float _timer;
@@ -291,21 +291,20 @@ namespace FCG.Pedestrian
             if (Time.time - _timer < 0.2f) return;
             _timer = Time.time;
 
-            if (!pedestrianTrafficSystem)
+            if (!trafficSystem)
             {
-                pedestrianTrafficSystem = FindObjectOfType<PedestrianTrafficSystem>();
+                trafficSystem = FindObjectOfType<TrafficSystem>();
 
 #if UNITY_EDITOR
-                if (!pedestrianTrafficSystem)
-                    pedestrianTrafficSystem = (PedestrianTrafficSystem)AssetDatabase.LoadAssetAtPath("Assets/Fantastic City Generator/Traffic System/Pedestrian Traffic System.prefab", (typeof(TrafficSystem)));
+                if (!trafficSystem)
+                    trafficSystem = (TrafficSystem)AssetDatabase.LoadAssetAtPath("Assets/Fantastic City Generator/Traffic System/Traffic System.prefab", (typeof(TrafficSystem)));
 #endif
 
-                if (!pedestrianTrafficSystem)
-                    Debug.LogError("Pedestrian Traffic System.prefab was not found in 'Assets/Fantastic City Generator/Traffic System'");
+                if (!trafficSystem)
+                    Debug.LogError("Traffic System.prefab was not found in 'Assets/Fantastic City Generator/Traffic System'");
             }
 
-            pedestrianTrafficSystem.UpdateAllWayPoints();
-
+            trafficSystem.UpdateAllWayPoints();
         }
 
 
@@ -331,7 +330,6 @@ namespace FCG.Pedestrian
 
             if (!isPlay && wCount > 1)
             {
-
                 if ((waypoints[wCount - 1].localPosition != nodeEnd) || (waypoints[0].localPosition != nodeBegin))
                 {
                     if (UnityEditor.Selection.activeGameObject)
@@ -342,24 +340,14 @@ namespace FCG.Pedestrian
 
                 nodeBegin = waypoints[0].localPosition;
                 nodeEnd = waypoints[wCount - 1].localPosition;
-
             }
 
-            widthToUse = (oneway && !doubleLine) ? 0.1f : (rightHand == 0) ? Mathf.Abs(width) : -Mathf.Abs(width); ;
+            widthToUse = (oneway && !doubleLine) ? 0.1f : Mathf.Abs(width);
 
             for (int i = 0; i < wCount; i++)
             {
-
-                if (noPedestrian)
-                {
-                    Gizmos.color = Color.blue;
-                    Gizmos.DrawSphere(waypoints[i].position, 0.4f);
-                }
-                else
-                {
-                    Gizmos.color = Color.magenta;
-                    Gizmos.DrawSphere(waypoints[i].position, 0.6f);
-                }
+                Gizmos.color = new Color(0.0f, 0.7f, 0.7f, 1.0f);
+                Gizmos.DrawSphere(waypoints[i].transform.position, 0.6f);
 
                 if (wCount < 2) return;
 
@@ -368,10 +356,11 @@ namespace FCG.Pedestrian
                 {
 
                     if (oneway && !doubleLine)
-                        Gizmos.color = Color.yellow;
+                        Gizmos.color = new Color(1.0f, 0.5f, 0.0f, 1.0f);
 
-                    Gizmos.color = new Color(1f, 1f, 0f, 0.5f); // Central Line
+                    //central line
                     Gizmos.DrawLine(waypoints[i].position, waypoints[i + 1].position);
+
 
                     Vector3 offset = waypoints[i].transform.right * widthToUse;
                     Vector3 offsetTo = waypoints[i + 1].transform.right * widthToUse;
@@ -379,22 +368,19 @@ namespace FCG.Pedestrian
                     // White line
                     if (i == 0)
                     {
-                        //Gizmos.color = Gizmos.color = new Color(1.0f, 0.35f, 1.0f, 1.0f);
-                        Gizmos.color = Color.cyan; // Connection
+                        Gizmos.color = Gizmos.color = new Color(1f, 1f, 1f, 0.7f);
                         for (int t = 0; t < nextWay0.Length; t++)
-                            if (!oneway)
-                                Gizmos.DrawLine(Node(0, wCount - 1), nextWay0[t].Node(nextWaySide0[t], 0));
-
+                            //if (!oneway || rightHand != 0) // rightHand=0 olduğu için hep true cky.
+                            Gizmos.DrawLine(Node(0, wCount - 1), nextWay0[t].Node(nextWaySide0[t], 0));
 
 
                         if (!isPlay)
                         {
-
-                            //Gizmos.color = new Color(0.0f, 0.35f, 1.0f, 1.0f);
-                            Gizmos.color = Color.cyan; // Back Arrows
+                            Gizmos.color = new Color(1.0f, 0.0f, 0.0f, 1.0f);
 
                             if (oneway)
                             {
+                                //int m = (rightHand == 0) ? -1 : 1; // rightHand=0 olduğu için hep true cky.
                                 int m = -1;
                                 if (doubleLine)
                                 {
@@ -422,46 +408,37 @@ namespace FCG.Pedestrian
                     }
 
 
-
-
-
                     if (!oneway || doubleLine)
                     {
 
-                        Gizmos.color = noPedestrian ? Color.blue : Color.yellow; // Left - Right Lines
-
+                        Gizmos.color = new Color(0.0f, 1.0f, 0.0f, 1.0f);
                         Gizmos.DrawLine(waypoints[i].position + offset, waypoints[i].position - offset);
 
-                        Gizmos.color = (oneway && doubleLine) ? Color.magenta : Color.yellow;
+                        Gizmos.color = new Color(1.0f, (oneway && doubleLine) ? 0.5f : 0.0f, 0.0f, 0.9f);
 
-                        if (noPedestrian) Gizmos.color = Color.blue;
                         Gizmos.DrawLine(waypoints[i].position + offset, waypoints[i + 1].position + offsetTo);
                         Gizmos.DrawLine(waypoints[i].position - offset, waypoints[i + 1].position - offsetTo);
 
                     }
-
                 }
                 else
                 {
-
                     // Last node
 
                     Vector3 offset = waypoints[i].transform.right * widthToUse;
 
-                    Gizmos.color = Color.yellow; // Last Line
-
+                    Gizmos.color = new Color(0.0f, 1.0f, 0.0f, 0.5f);
                     Gizmos.DrawLine(waypoints[i].position + offset, waypoints[i].position - offset);
-
 
                     if (!isPlay)
                     {
 
-                        //Gizmos.color = new Color(1.0f, 0.0f, 0.0f, 1.0f);
-                        Gizmos.color = Color.yellow; // Front Arrows
+                        Gizmos.color = new Color(1.0f, 0.0f, 0.0f, 1.0f);
 
                         if (oneway)
                         {
-                            int m = (rightHand == 0) ? -1 : 1;
+                            //int m = (rightHand == 0) ? -1 : 1;
+                            int m = -1; // rightHand=0 olduğu için hep true cky.
                             if (doubleLine)
                             {
                                 Gizmos.DrawLine(waypoints[i].position + offset, waypoints[i].position + (waypoints[i].right * widthToUse * 0.8f) + waypoints[i].forward * m);
@@ -485,7 +462,8 @@ namespace FCG.Pedestrian
 
                     }
 
-                    Gizmos.color = Color.cyan; // Connection
+
+                    Gizmos.color = Gizmos.color = new Color(1f, 1f, 1f, 0.7f);
 
                     for (int t = 0; t < nextWay1.Length; t++)
                     {
@@ -497,10 +475,13 @@ namespace FCG.Pedestrian
 
                     }
 
+
+
                 }
 
-            }
 
+
+            }
 
             /*
             Gizmos.color = Color.cyan;
@@ -536,16 +517,13 @@ namespace FCG.Pedestrian
             return (side == 0) ? nodeZeroWay0 : nodeZeroWay1;
         }
 
-        //public Transform GetNodeZeroOldWay(int side)
-        //{
-
-        //    return (side == 0) ? nodeZeroCar0.GetComponent<TrafficPedestrian>().myOldWay : nodeZeroCar1.GetComponent<TrafficPedestrian>().myOldWay;
-
-        //}
+        public Transform GetNodeZeroOldWay(int side)
+        {
+            return (side == 0) ? nodeZeroCar0.GetComponent<TrafficCar>().myOldWay : nodeZeroCar1.GetComponent<TrafficCar>().myOldWay;
+        }
 
         public bool SetNodeZero(int side, Transform nodeWay, Transform nodeCar, bool force = false)
         {
-
             if (side == 0)
             {
                 if (nodeZeroCar0 == null || force)
@@ -564,12 +542,10 @@ namespace FCG.Pedestrian
                 }
                 return nodeZeroCar1 == nodeCar;
             }
-
         }
 
         public bool UnSetNodeZero(int side, Transform carTransform, bool force = false)
         {
-
             if (side == 0)
             {
                 if (nodeZeroCar0 == carTransform || force)
@@ -588,50 +564,43 @@ namespace FCG.Pedestrian
                 }
                 return nodeZeroCar1 == null;
             }
-
         }
 
 
 
-        //public bool BookNodeZero(TrafficPedestrian pedestrian)
-        //{
+        public bool BookNodeZero(TrafficCar trafficCar)
+        {
+            if (trafficCar.sideAtual == 0)
+            {
+                if (SetNodeZero(0, trafficCar.myOldWay, trafficCar.transform))
+                    return true;
+                else
+                {
+                    if (trafficCar.nodeSteerCarefully2 == false && trafficCar.nodeSteerCarefully == false && nodeZeroCar0.GetComponent<TrafficCar>().Get_avanceNode() && trafficCar.GetBehind() != nodeZeroCar0)
+                    {
+                        SetNodeZero(0, trafficCar.myOldWay, trafficCar.transform, true);
+                    }
 
-        //    if (pedestrian.sideAtual == 0)
-        //    {
+                    //The starting node of the path is already reserved for another car. So the car that called this procedure must wait.
+                    return ((nodeZeroCar0 == trafficCar.transform) || (nodeZeroWay0 == trafficCar.myOldWay && trafficCar.myOldSideAtual == nodeZeroCar0.GetComponent<TrafficCar>().myOldSideAtual));
+                }
+            }
+            else
+            {
+                if (SetNodeZero(1, trafficCar.myOldWay, trafficCar.transform))
+                    return true;
+                else
+                {
+                    if (trafficCar.nodeSteerCarefully == false && nodeZeroCar1.GetComponent<TrafficCar>().Get_avanceNode() && trafficCar.GetBehind() != nodeZeroCar1)
+                    {
+                        SetNodeZero(1, trafficCar.myOldWay, trafficCar.transform, true);
+                    }
 
-        //        if (SetNodeZero(0, pedestrian.myOldWay, pedestrian.transform))
-        //            return true;
-        //        else
-        //        {
-        //            if (pedestrian.nodeSteerCarefully2 == false && pedestrian.nodeSteerCarefully == false && nodeZeroCar0.GetComponent<TrafficPedestrian>().Get_avanceNode() && pedestrian.GetBehind() != nodeZeroCar0)
-        //            {
-        //                SetNodeZero(0, pedestrian.myOldWay, pedestrian.transform, true);
-        //            }
-
-        //            //The starting node of the path is already reserved for another car. So the car that called this procedure must wait.
-        //            return ((nodeZeroCar0 == pedestrian.transform) || (nodeZeroWay0 == pedestrian.myOldWay && pedestrian.myOldSideAtual == nodeZeroCar0.GetComponent<TrafficPedestrian>().myOldSideAtual));
-        //        }
-
-        //    }
-        //    else
-        //    {
-
-        //        if (SetNodeZero(1, pedestrian.myOldWay, pedestrian.transform))
-        //            return true;
-        //        else
-        //        {
-        //            if (pedestrian.nodeSteerCarefully == false && nodeZeroCar1.GetComponent<TrafficPedestrian>().Get_avanceNode() && pedestrian.GetBehind() != nodeZeroCar1)
-        //            {
-        //                SetNodeZero(1, pedestrian.myOldWay, pedestrian.transform, true);
-        //            }
-
-        //            //The starting node of the path is already reserved for another car. So the car that called this procedure must wait.                
-        //            return ((nodeZeroCar1 == pedestrian.transform) || (nodeZeroWay1 == pedestrian.myOldWay && pedestrian.myOldSideAtual == nodeZeroCar1.GetComponent<TrafficPedestrian>().myOldSideAtual));
-        //        }
-
-        //    }
-
-        //}
+                    //The starting node of the path is already reserved for another car. So the car that called this procedure must wait.                
+                    return ((nodeZeroCar1 == trafficCar.transform) || (nodeZeroWay1 == trafficCar.myOldWay && trafficCar.myOldSideAtual == nodeZeroCar1.GetComponent<TrafficCar>().myOldSideAtual));
+                }
+            }
+        }
 
 
 
@@ -643,7 +612,7 @@ namespace FCG.Pedestrian
             The value is specified in the mts parameter. This value can be positive or negative.
             */
 
-            if ((!oneway && side == 0) || (oneway && rightHand != 0))
+            if ((!oneway && side == 0) /*|| (oneway && rightHand != 0)*/)
             {
                 int i = (waypoints.Count - 1) - idx;
                 return waypoints[i].position - (waypoints[i].transform.forward * mts) - (waypoints[i].transform.right * ((doubleLine && side == 0) ? -widthToUse : widthToUse));
@@ -652,21 +621,17 @@ namespace FCG.Pedestrian
             {
                 return waypoints[idx].position + (waypoints[idx].transform.forward * mts) + (waypoints[idx].transform.right * ((doubleLine && side == 0) ? -widthToUse : widthToUse));
             }
-
-
         }
 
         public Quaternion NodeRotation(int side, int idx)
         {
-
-            if ((!oneway && side == 1) || (oneway && rightHand == 0))     // 0 = do Inicio para o fim  e   1 = do fim para o inicio
+            if ((!oneway && side == 1) || (oneway /*&& rightHand == 0*/))
                 return Quaternion.LookRotation(waypoints[idx + 1].position - waypoints[idx].position);
             else
             {
                 int i = (waypoints.Count - 1) - idx;
                 return Quaternion.LookRotation(waypoints[i - 1].position - waypoints[i].position);
             }
-
         }
 
         public Vector3 Node(int side, int idx, float nodeSteerCarefully = 0)
@@ -680,7 +645,7 @@ namespace FCG.Pedestrian
             if (oneway)
             {
 
-                int i = (rightHand == 0) ? idx : (waypoints.Count - 1) - idx;
+                int i = idx;
 
                 if (!doubleLine)
                     return waypoints[i].position;
@@ -700,18 +665,24 @@ namespace FCG.Pedestrian
                         return (waypoints[i].position + (waypoints[i].transform.forward * nodeSteerCarefully)) + (waypoints[i].transform.right * ((side == 1) ? widthToUse : -widthToUse));
                 }
                 else
+                {
+                    if (i >= waypoints.Count)
+                    {
+                        Debug.Log($"AAAAAAA {i} / {waypoints.Count}");
+                    }
+                    else if (i < 0)
+                    {
+                        Debug.Log($"AAAAAAA {i} / EKSIII");
+                    }
                     return waypoints[i].position + waypoints[i].transform.right * ((side == 1) ? widthToUse : -widthToUse);
+                }
             }
-
-
-
         }
 
 
 
         public void GetWaypoints()
         {
-
             waypoints = new List<Transform>();
 
             Transform[] allTransforms = transform.GetComponentsInChildren<Transform>();
@@ -725,15 +696,11 @@ namespace FCG.Pedestrian
             }
 
             WaypointsSetAngle();
-
-
         }
 
 
         public void WaypointsSetAngle()
         {
-
-
             int wCount = waypoints.Count;
 
             if (wCount > 1)
@@ -743,16 +710,12 @@ namespace FCG.Pedestrian
                 for (int i = 1; i < wCount - 1; i++)
                     waypoints[i].rotation = Quaternion.LookRotation(waypoints[i + 1].position - waypoints[i - 1].position);
 
-                waypoints[wCount - 1].rotation = Quaternion.LookRotation(waypoints[wCount - 1].position - waypoints[wCount - 2].position);
+                var ckyDir = waypoints[wCount - 1].position - waypoints[wCount - 2].position;
+                if (ckyDir != Vector3.zero)
+                    waypoints[wCount - 1].rotation = Quaternion.LookRotation(ckyDir);
 
             }
 
         }
-
-
-
-
-
     }
-
 }

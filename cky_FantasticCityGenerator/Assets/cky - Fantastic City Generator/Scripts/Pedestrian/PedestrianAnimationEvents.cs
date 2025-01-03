@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace cky.FCG.Pedestrian.StateMachine
+namespace cky.TrafficSystem
 {
     public class PedestrianAnimationEvents : MonoBehaviour
     {

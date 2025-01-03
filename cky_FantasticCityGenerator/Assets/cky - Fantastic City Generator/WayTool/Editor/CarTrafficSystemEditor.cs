@@ -1,7 +1,7 @@
-using UnityEditor;
 using UnityEngine;
+using UnityEditor;
 
-namespace FCG
+namespace cky.TrafficSystem
 {
     [CustomEditor(typeof(TrafficSystem))]
     public class CarTrafficSystemEditor : Editor

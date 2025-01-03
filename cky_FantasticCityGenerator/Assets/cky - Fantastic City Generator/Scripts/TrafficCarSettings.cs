@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace FCG
+namespace cky.TrafficSystem
 {
-    [CreateAssetMenu(menuName = "FGC/Traffic Car Settings", fileName = "TrafficCar Settings")]
+    [CreateAssetMenu(menuName = "cky/Data/Traffic Car Settings", fileName = "TrafficCar Settings")]
     public class TrafficCarSettings : ScriptableObject
     {
         public float rayLength = 10.0f;

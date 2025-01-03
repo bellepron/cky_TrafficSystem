@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 
-namespace FCG
+namespace cky.TrafficSystem
 {
-
     public class FreeCamera : MonoBehaviour
     {
         public float speedNormal = 10.0f;

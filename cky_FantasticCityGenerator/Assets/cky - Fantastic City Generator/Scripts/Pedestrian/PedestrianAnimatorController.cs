@@ -1,17 +1,16 @@
-//using cky.Helpers;
 using UnityEngine;
 
-namespace cky.FCG.Pedestrian.StateMachine
+namespace cky.TrafficSystem
 {
     public class PedestrianAnimatorController : MonoBehaviour
     {
-       Animator _animator;
+        Animator _animator;
 
         private void Awake()
         {
             _animator = GetComponent<Animator>();
         }
 
-        public void SetAnimatorMoveSpeedValue(float value) => _animator.SetFloat(/*AnimatorHelper.a_MoveSpeed*/"MoveSpeed", value);
+        public void SetAnimatorMoveSpeedValue(float value) => _animator.SetFloat("MoveSpeed", value);
     }
 }

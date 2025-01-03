@@ -1,7 +1,7 @@
 //using UnityEngine;
 //using UnityEditor;
 
-//namespace FCG.Pedestrians
+//namespace cky.TrafficSystem
 //{
 //    [CustomEditor(typeof(TrafficPedestrian))]
 //    public class TCarEditor : Editor

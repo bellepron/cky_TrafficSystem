@@ -1,15 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace FCG
+namespace cky.TrafficSystem
 {
-
     public class DataSpawn : MonoBehaviour
     {
         public int sideAtual;
         public Transform atualWay;
-        public FCGWaypointsContainer atualWayScript;
+        public WaypointsContainer atualWayScript;
 
     }
 

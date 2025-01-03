@@ -4,7 +4,7 @@ using cky.GizmoHelper;
 using UnityEngine;
 using CKY_Pooling;
 
-namespace FCG
+namespace cky.TrafficSystem
 {
     public class TrafficSystem : MonoBehaviour
     {
@@ -15,7 +15,7 @@ namespace FCG
         {
             public bool[] tsActive;
             public Vector3[] tf01;
-            public FCGWaypointsContainer[] tsParent;
+            public WaypointsContainer[] tsParent;
             public bool[] tsOneway;
             public bool[] tsOnewayDoubleLine;
             public int[] tsSide;
@@ -29,7 +29,7 @@ namespace FCG
             public float locateZ;
             public int side;
             public int node;
-            public FCGWaypointsContainer wayScript;
+            public WaypointsContainer wayScript;
         }
 
         #endregion
@@ -41,7 +41,7 @@ namespace FCG
         [Space(5)]
         public Transform player = null;
 
-        FCGWaypointsContainer[] _waypointContainers;
+        WaypointsContainer[] _waypointContainers;
 
         [Space(10)]
         [Header("Car Prefabs")]
@@ -99,7 +99,7 @@ namespace FCG
             player = GameObject.FindWithTag(Tags.Player)?.transform;
             if (player == null) player = Camera.main.transform;
 
-            _waypointContainers = FindObjectsOfType<FCGWaypointsContainer>();
+            _waypointContainers = FindObjectsOfType<WaypointsContainer>();
 
             _isGameStarted = true;
         }
@@ -127,7 +127,7 @@ namespace FCG
                 return;
             }
 
-            if (!_isGameStarted) _waypointContainers = FindObjectsOfType<FCGWaypointsContainer>();
+            if (!_isGameStarted) _waypointContainers = FindObjectsOfType<WaypointsContainer>();
 
             int n = _waypointContainers.Length;
             for (int i = 0; i < n; i++)
@@ -268,7 +268,7 @@ namespace FCG
 
         public void UpdateAllWayPoints()
         {
-            _waypointContainers = FindObjectsOfType<FCGWaypointsContainer>();
+            _waypointContainers = FindObjectsOfType<WaypointsContainer>();
 
             for (int i = 0; i < _waypointContainers.Length; i++)
             {
@@ -295,7 +295,7 @@ namespace FCG
 
             _wpData.tsActive = new bool[wpcLength * 2];
             _wpData.tf01 = new Vector3[wpcLength * 2];
-            _wpData.tsParent = new FCGWaypointsContainer[wpcLength * 2];
+            _wpData.tsParent = new WaypointsContainer[wpcLength * 2];
             _wpData.tsOneway = new bool[wpcLength * 2];
             _wpData.tsOnewayDoubleLine = new bool[wpcLength * 2];
             _wpData.tsSide = new int[wpcLength * 2];
@@ -340,7 +340,7 @@ namespace FCG
             }
         }
 
-        private void PlaceSpawnPoint(FCGWaypointsContainer f, int side, int node, float locate)
+        private void PlaceSpawnPoint(WaypointsContainer f, int side, int node, float locate)
         {
             _wpDataSpawn.Add(new WpDataSpawnCar
             {
