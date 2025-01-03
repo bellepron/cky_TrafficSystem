@@ -6520,7 +6520,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefabPoolOptions:
-  - prefabTransform: {fileID: 4686067547922548, guid: fa90b10d7c8dd6c40894d9130b1951d3, type: 3}
+  - prefabTransform: {fileID: 4282665674783342, guid: c109cf36f99fd2f41b3dadbb986f2b67, type: 3}
+    instancesToPreload: 1
+    isPoolExpanded: 1
+    showDebugLog: 0
+    poolCanGrow: 1
+    cullDespawned: 0
+    cullAbove: 10
+    cullDelay: 2
+    cullAmount: 1
+    enableHardLimit: 0
+    hardLimit: 10
+    recycle: 1
+  - prefabTransform: {fileID: 4282665674783342, guid: 133fbdab97d328d40ab64f2f5d24104b, type: 3}
     instancesToPreload: 1
     isPoolExpanded: 1
     showDebugLog: 0
@@ -17434,7 +17446,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 112983850}
   pedestrianPrefabs:
-  - {fileID: 4686067547922548, guid: fa90b10d7c8dd6c40894d9130b1951d3, type: 3}
+  - {fileID: 4282665674783342, guid: 133fbdab97d328d40ab64f2f5d24104b, type: 3}
+  - {fileID: 4282665674783342, guid: c109cf36f99fd2f41b3dadbb986f2b67, type: 3}
   aroundMin: 80
   aroundMax: 150
   nPedestrians: 0
