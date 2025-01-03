@@ -18,12 +18,12 @@ namespace cky.StateMachine.Example1.Actor.States
             stateMachine.InputReader.GoToTargetEvent -= GoToTarget;
         }
 
-        public override void Tick(float deltaTime)
+        public override void FixedTick(float fixedDeltaTime)
         {
-
+            
         }
 
-        public override void FixedTick(float fixedDeltaTime)
+        public override void Tick(float deltaTime)
         {
 
         }

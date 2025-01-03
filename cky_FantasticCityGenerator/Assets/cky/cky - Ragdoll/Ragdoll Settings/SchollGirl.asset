@@ -1,0 +1,153 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0085026a5abbf143a9e1fbfc7e70d5a, type: 3}
+  m_Name: SchollGirl
+  m_EditorClassIdentifier: 
+  physicMat: {fileID: 13400000, guid: c3efc43e2ce779c4891077fe0b5a0f63, type: 2}
+  drivePS: 50
+  drivePS_CalfsAndArms: 25
+  drivePS_MiddleSpineAndHead: 40
+  interpolation: 0
+  collisionDetectionMode: 0
+  infos:
+  - LimbType: 1
+    colliderCenter: {x: -0.12038906, y: -0.0232113, z: 0.0000018775463}
+    colliderRadius: 0
+    colliderHeight: 0
+    colliderSize: {x: 0.40716234, y: 0.37288347, z: 0.47297212}
+    capsuleColliderDirection: 0
+    rigidbodyMass: 9.375
+    connectedLimbType: 0
+    anchor: {x: 0, y: 0, z: 0}
+    axis: {x: 0, y: 0, z: 0}
+    connectedAnchor: {x: 0, y: 0, z: 0}
+    swingAxis: {x: 0, y: 0, z: 0}
+  - LimbType: 2
+    colliderCenter: {x: -0.3680406, y: 0, z: 0}
+    colliderRadius: 0.125
+    colliderHeight: 0.7360812
+    colliderSize: {x: 0, y: 0, z: 0}
+    capsuleColliderDirection: 0
+    rigidbodyMass: 5.625
+    connectedLimbType: 1
+    anchor: {x: 0, y: 0, z: 0}
+    axis: {x: -1, y: 0, z: 0}
+    connectedAnchor: {x: 0.08319212, y: -0.006037251, z: 0.15524526}
+    swingAxis: {x: -1, y: 0, z: 0}
+  - LimbType: 3
+    colliderCenter: {x: -0.40647882, y: 0, z: 0}
+    colliderRadius: 0.09
+    colliderHeight: 0.81295764
+    colliderSize: {x: 0, y: 0, z: 0}
+    capsuleColliderDirection: 0
+    rigidbodyMass: 5.625
+    connectedLimbType: 2
+    anchor: {x: 0, y: 0, z: 0}
+    axis: {x: -1, y: 0, z: 0}
+    connectedAnchor: {x: -0.7360812, y: 0.000005061156, z: -0.00000029057264}
+    swingAxis: {x: -1, y: 0, z: 0}
+  - LimbType: 4
+    colliderCenter: {x: -0.3682516, y: 0, z: 0}
+    colliderRadius: 0.125
+    colliderHeight: 0.7365032
+    colliderSize: {x: 0, y: 0, z: 0}
+    capsuleColliderDirection: 0
+    rigidbodyMass: 5.625
+    connectedLimbType: 1
+    anchor: {x: 0, y: 0, z: 0}
+    axis: {x: -1, y: 0, z: 0}
+    connectedAnchor: {x: 0.08319212, y: -0.0030787145, z: -0.15524523}
+    swingAxis: {x: -1, y: 0, z: 0}
+  - LimbType: 5
+    colliderCenter: {x: -0.4048824, y: 0, z: 0}
+    colliderRadius: 0.09
+    colliderHeight: 0.8097648
+    colliderSize: {x: 0, y: 0, z: 0}
+    capsuleColliderDirection: 0
+    rigidbodyMass: 5.625
+    connectedLimbType: 4
+    anchor: {x: 0, y: 0, z: 0}
+    axis: {x: -1, y: 0, z: 0}
+    connectedAnchor: {x: -0.7365032, y: 0.0000050474196, z: 0.00000028312203}
+    swingAxis: {x: -1, y: 0, z: 0}
+  - LimbType: 10
+    colliderCenter: {x: -0.23234726, y: -0.0053374255, z: 0.0000018776018}
+    colliderRadius: 0
+    colliderHeight: 0
+    colliderSize: {x: 0.40797812, y: 0.37351194, z: 0.4729721}
+    capsuleColliderDirection: 0
+    rigidbodyMass: 9.375
+    connectedLimbType: 1
+    anchor: {x: 0, y: 0, z: 0}
+    axis: {x: 1, y: 0, z: 0}
+    connectedAnchor: {x: -0.32397023, y: -0.019729258, z: 0.0000000018626454}
+    swingAxis: {x: -1, y: 0, z: 0}
+  - LimbType: 6
+    colliderCenter: {x: -0.193913, y: 0, z: 0}
+    colliderRadius: 0.09
+    colliderHeight: 0.387826
+    colliderSize: {x: 0, y: 0, z: 0}
+    capsuleColliderDirection: 0
+    rigidbodyMass: 3.7499998
+    connectedLimbType: 10
+    anchor: {x: 0, y: 0, z: 0}
+    axis: {x: 0, y: 0, z: -1}
+    connectedAnchor: {x: -0.3395946, y: -0.0064019705, z: 0.23648793}
+    swingAxis: {x: -1, y: 0, z: 0}
+  - LimbType: 7
+    colliderCenter: {x: -0.34983087, y: 0, z: 0}
+    colliderRadius: 0.065
+    colliderHeight: 0.69966173
+    colliderSize: {x: 0, y: 0, z: 0}
+    capsuleColliderDirection: 0
+    rigidbodyMass: 3.7499998
+    connectedLimbType: 6
+    anchor: {x: 0, y: 0, z: 0}
+    axis: {x: -1, y: 0, z: 0}
+    connectedAnchor: {x: -0.387826, y: 0.000000033163815, z: -0.00000027753418}
+    swingAxis: {x: 0, y: 0, z: -1}
+  - LimbType: 11
+    colliderCenter: {x: -0.18, y: 0.03, z: 0}
+    colliderRadius: 0.2
+    colliderHeight: 0
+    colliderSize: {x: 0, y: 0, z: 0}
+    capsuleColliderDirection: 0
+    rigidbodyMass: 3.7499998
+    connectedLimbType: 10
+    anchor: {x: 0, y: 0, z: 0}
+    axis: {x: 1, y: 0, z: 0}
+    connectedAnchor: {x: -0.5397423, y: 0.003305487, z: -0.0000000021873656}
+    swingAxis: {x: -1, y: 0, z: 0}
+  - LimbType: 8
+    colliderCenter: {x: -0.19392219, y: 0, z: 0}
+    colliderRadius: 0.09
+    colliderHeight: 0.38784438
+    colliderSize: {x: 0, y: 0, z: 0}
+    capsuleColliderDirection: 0
+    rigidbodyMass: 3.7499998
+    connectedLimbType: 10
+    anchor: {x: 0, y: 0, z: 0}
+    axis: {x: 0, y: 0, z: 1}
+    connectedAnchor: {x: -0.3395709, y: -0.00619022, z: -0.23648416}
+    swingAxis: {x: -1, y: 0, z: 0}
+  - LimbType: 9
+    colliderCenter: {x: -0.34868872, y: 0, z: 0}
+    colliderRadius: 0.065
+    colliderHeight: 0.69737744
+    colliderSize: {x: 0, y: 0, z: 0}
+    capsuleColliderDirection: 0
+    rigidbodyMass: 3.7499998
+    connectedLimbType: 8
+    anchor: {x: 0, y: 0, z: 0}
+    axis: {x: -1, y: 0, z: 0}
+    connectedAnchor: {x: -0.38784438, y: 0.000000035361158, z: 0.00000016577543}
+    swingAxis: {x: 0, y: 0, z: 1}

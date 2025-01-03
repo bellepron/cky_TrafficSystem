@@ -24,6 +24,11 @@ namespace cky.StateMachine.Example1.Actor.States
             stateMachine.InputReader.StopEvent -= Stop;
         }
 
+        public override void FixedTick(float fixedDeltaTime)
+        {
+            
+        }
+
         public override void Tick(float deltaTime)
         {
             var distance = Vector3.Distance(_targetPos, stateMachine.transform.position);
@@ -35,11 +40,6 @@ namespace cky.StateMachine.Example1.Actor.States
             {
                 stateMachine.SwitchState(new GoToBaseState(stateMachine));
             }
-        }
-
-        public override void FixedTick(float fixedDeltaTime)
-        {
-
         }
 
         private void Stop()

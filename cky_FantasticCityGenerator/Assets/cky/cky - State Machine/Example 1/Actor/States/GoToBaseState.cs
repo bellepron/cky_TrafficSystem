@@ -17,9 +17,9 @@ namespace cky.StateMachine.Example1.Actor.States
             stateMachine.InputReader.StopEvent -= Stop;
         }
 
-        private void Stop()
+        public override void FixedTick(float fixedDeltaTime)
         {
-            stateMachine.SwitchState(new IdleState(stateMachine));
+            
         }
 
         public override void Tick(float deltaTime)
@@ -30,9 +30,9 @@ namespace cky.StateMachine.Example1.Actor.States
                 stateMachine.SwitchState(new GoToTargetState(stateMachine));
         }
 
-        public override void FixedTick(float fixedDeltaTime)
+        private void Stop()
         {
-
+            stateMachine.SwitchState(new IdleState(stateMachine));
         }
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,6 +6,23 @@ namespace cky.Reuseables.Extension
 {
     public static class Extensions
     {
+        public static bool TryGetRaycastHit(this Camera camera, out Ray ray, out RaycastHit hit, float rayDistance)
+        {
+            Vector3 screenCenter = new Vector3(Screen.width / 2f, Screen.height / 2f, 0);
+            ray = camera.ScreenPointToRay(screenCenter);
+            return Physics.Raycast(ray, out hit, rayDistance);
+        }
+
+        public static void AlignToNearestAngle(this Transform transform, float angleStep)
+        {
+            float currentAngle = transform.eulerAngles.y;
+
+            float nearestAngle = Mathf.Round(currentAngle / angleStep) * angleStep;
+
+            transform.rotation = Quaternion.Euler(0, nearestAngle, 0);
+        }
+
+
         public static bool IsCarParked(this Transform carTr, Transform parkingTr, float distance, float viewAngle)
         {
             var dist = Vector3.Distance(carTr.position, parkingTr.position);
@@ -174,5 +190,23 @@ namespace cky.Reuseables.Extension
             var random = UnityEngine.Random.Range(0, array.Count());
             return array.ElementAt(random);
         }
+
+
+
+        private static readonly System.Random RandomGenerator = new System.Random();
+
+        public static void Shuffle<T>(this IList<T> shuffleList)
+        {
+            int count = shuffleList.Count;
+            while (count > 1)
+            {
+                count--;
+                int randomValue = RandomGenerator.Next(count + 1);
+                T value = shuffleList[randomValue];
+                shuffleList[randomValue] = shuffleList[count];
+                shuffleList[count] = value;
+            }
+        }
+
     }
 }

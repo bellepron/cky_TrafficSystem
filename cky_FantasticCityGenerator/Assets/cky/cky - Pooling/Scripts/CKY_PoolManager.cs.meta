@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 1701af0df6c96fa45bfa3662b319541b
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 19941
+  packageName: EZ Pooling
+  packageVersion: 2
+  assetPath: Assets/EZ Pooling/Scripts/EZ_PoolManager.cs
+  uploadId: 54147

@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: cc9d94c79bdec394a9a0f4f916e09a0b
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 19941
+  packageName: EZ Pooling
+  packageVersion: 2
+  assetPath: Assets/EZ Pooling/Scripts/EZ_PrefabPool.cs
+  uploadId: 54147
