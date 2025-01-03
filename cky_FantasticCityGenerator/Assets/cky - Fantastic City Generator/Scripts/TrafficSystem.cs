@@ -362,8 +362,6 @@ namespace FCG
             UpdateAllWayPoints();
         }
 
-
-
         public bool ThereIsNoTrafficCar_InCheckRadius(Vector3 position, Transform atualWay, int sideAtual)
         {
             if (!isTrafficCarCheckerActive) return false;
@@ -386,8 +384,6 @@ namespace FCG
             return false;
         }
 
-
-
         private float ckyRandom(float b) => UnityEngine.Random.Range(-b, b);
         private bool ckyPerThousand(int percentage)
         {
@@ -406,8 +402,6 @@ namespace FCG
         {
             if (currentTrafficCars.Contains(car)) currentTrafficCars.Remove(car);
         }
-
-
 
 
 

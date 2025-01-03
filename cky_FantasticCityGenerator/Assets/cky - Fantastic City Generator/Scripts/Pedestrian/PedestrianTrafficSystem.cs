@@ -227,11 +227,13 @@ namespace FCG.Pedestrian
 
             int n = _wpDataSpawn.Count;
             bool invert = (Random.Range(1, 20) < 10);
+            Debug.Log("3");
 
             var posPlayer = player.position; posPlayer.y = 0.0f;
             for (int j = 0; j < n; j++)
             {
                 int i = (invert) ? n - 1 - j : j;
+                Debug.Log("2");
 
                 if (nPedestrians >= maxPedestriansWithPlayer)
                 {
@@ -239,6 +241,7 @@ namespace FCG.Pedestrian
                 }
                 else
                 {
+                    Debug.Log("1");
                     var wpDataSpawn = _wpDataSpawn[i];
 
                     var posData = wpDataSpawn.position; posData.y = 0.0f;
@@ -253,6 +256,7 @@ namespace FCG.Pedestrian
                     var sa = wpDataSpawn_Side;
                     if (!ThereIsNoTrafficPedestrian_InCheckRadius(wpDataSpawn.position, aw, sa))
                     {
+                        Debug.Log("0");
                         p_sm = CKY_PoolManager.Spawn(pedestrianPrefabs[Random.Range(0, pedestrianPrefabs.Length)], wpDataSpawn.position + Vector3.up * 0.1f, wpDataSpawn.rotation).GetComponent<PedestrianStateMachine>();
 
                         AddToCurrentPedestrians(p_sm);
@@ -342,7 +346,7 @@ namespace FCG.Pedestrian
 
         private void PlaceSpawnPoint(FCGPedestrianWaypointsContainer f, int side, int node, float locate)
         {
-            var wpDSP = new WpDataSpawnPedestrian
+            _wpDataSpawn.Add(new WpDataSpawnPedestrian
             {
                 locateZ = locate,
                 position = f.AvanceNode(side, node, locate),
@@ -350,7 +354,7 @@ namespace FCG.Pedestrian
                 side = side,
                 node = node,
                 wayScript = f
-            };
+            });
         }
 
         public void DeffineDirection()
@@ -361,8 +365,6 @@ namespace FCG.Pedestrian
 
             UpdateAllWayPoints();
         }
-
-
 
         public bool ThereIsNoTrafficPedestrian_InCheckRadius(Vector3 position, Transform atualWay, int sideAtual)
         {
@@ -383,9 +385,8 @@ namespace FCG.Pedestrian
             return false;
         }
 
-
-
         private float ckyRandom(float b) => UnityEngine.Random.Range(-b, b);
+
         private bool ckyPerThousand(int percentage)
         {
             if (percentage > UnityEngine.Random.Range(0, 1000))
@@ -403,8 +404,6 @@ namespace FCG.Pedestrian
         {
             if (currentPedestrians.Contains(p)) currentPedestrians.Remove(p);
         }
-
-
 
 
 

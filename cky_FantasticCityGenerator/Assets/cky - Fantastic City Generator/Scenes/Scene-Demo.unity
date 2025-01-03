@@ -1303,7 +1303,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 102317931}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1347,7 +1347,7 @@ Transform:
   - {fileID: 51659067}
   - {fileID: 1436589966}
   - {fileID: 505137835}
-  m_Father: {fileID: 1362745736}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &106504066
 GameObject:
@@ -3529,7 +3529,7 @@ Transform:
   m_Children:
   - {fileID: 45903251}
   - {fileID: 428431146382360047}
-  m_Father: {fileID: 1362745736}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &408003747
 GameObject:
@@ -3710,7 +3710,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 462310423}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3720,7 +3720,7 @@ Transform:
   - {fileID: 26651369}
   - {fileID: 1545268720}
   - {fileID: 498274282}
-  m_Father: {fileID: 1362745736}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &474438690
 GameObject:
@@ -9928,7 +9928,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: cf5f0193fffe8fb4f8428fe68b1a0fb9, type: 2}
   m_BuildHeightMesh: 0
 --- !u!4 &1362745736
 Transform:
@@ -9944,9 +9944,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1184415186}
-  - {fileID: 399376228}
-  - {fileID: 102317932}
-  - {fileID: 462310424}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1369109648
@@ -17440,10 +17437,9 @@ MonoBehaviour:
   - {fileID: 4686067547922548, guid: fa90b10d7c8dd6c40894d9130b1951d3, type: 3}
   aroundMin: 80
   aroundMax: 150
-  pedestrianDestroyDistance: 50
-  nPedestrians: 52
+  nPedestrians: 0
   maxPedestriansWithPlayer: 30
-  intervalLoadPedestrian: 2
+  intervalLoadPedestrian: 1
   minNodeDistanceToCreate: 10
   distanceToRepeat: 40
   skipping: 1
@@ -17653,6 +17649,9 @@ SceneRoots:
   m_Roots:
   - {fileID: 1609231467}
   - {fileID: 878927254}
+  - {fileID: 399376228}
+  - {fileID: 102317932}
+  - {fileID: 462310424}
   - {fileID: 1362745736}
   - {fileID: 1295055974}
   - {fileID: 2323055039393678021}

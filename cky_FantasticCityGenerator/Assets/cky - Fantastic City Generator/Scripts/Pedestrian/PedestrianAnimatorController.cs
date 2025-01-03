@@ -5,7 +5,12 @@ namespace cky.FCG.Pedestrian.StateMachine
 {
     public class PedestrianAnimatorController : MonoBehaviour
     {
-        [SerializeField] Animator _animator;
+       Animator _animator;
+
+        private void Awake()
+        {
+            _animator = GetComponent<Animator>();
+        }
 
         public void SetAnimatorMoveSpeedValue(float value) => _animator.SetFloat(/*AnimatorHelper.a_MoveSpeed*/"MoveSpeed", value);
     }
