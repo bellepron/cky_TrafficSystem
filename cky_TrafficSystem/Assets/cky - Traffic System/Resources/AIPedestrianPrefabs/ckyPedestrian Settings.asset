@@ -31,17 +31,17 @@ MonoBehaviour:
   distToStopLight: 3
   targetMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 1
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 0
-  ikLookDistance: 8
+    m_Bits: 1
+  ikLookDistance: 8.06
   crosswalkLayerMask:
     serializedVersion: 2
-    m_Bits: 32768
+    m_Bits: 2147483648
   chaosEffectLayer:
     serializedVersion: 2
-    m_Bits: 65536
+    m_Bits: 1
   chaosRadius: 20
   idleColor: {r: 0, g: 0, b: 0, a: 1}
   walkColor: {r: 0, g: 0, b: 1, a: 1}

@@ -3,7 +3,12 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - People
+  - Car
+  - TrafficLight
+  - Stop
+  - Crosswalk
   layers:
   - Default
   - TransparentFX
@@ -36,7 +41,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - Crosswalk
   m_SortingLayers:
   - name: Default
     uniqueID: 0

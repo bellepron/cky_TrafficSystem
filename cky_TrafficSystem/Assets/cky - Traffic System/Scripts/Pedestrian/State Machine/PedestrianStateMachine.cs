@@ -215,6 +215,7 @@ namespace cky.TrafficSystem
             else
             {
                 OnCrosswalk = _crosswalkColliders[0].GetComponent<Crosswalk>();
+                Debug.Log($"{_crosswalkColliders[0].name} ,+, {OnCrosswalk}");
 
                 if (!PreviousCrosswalk)
                 {

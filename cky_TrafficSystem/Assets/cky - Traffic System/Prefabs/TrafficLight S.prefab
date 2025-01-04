@@ -131,7 +131,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settings: {fileID: 11400000, guid: d735d4c352ec5d24195bb40285f79ab8, type: 2}
-  interactableSettings: {fileID: 11400000, guid: a08d713d6e5fb014fbb02346f3c443ba, type: 2}
   _step: 0
   trafficLight: {fileID: 8195120015921269641}
   _startWithRed: 1
@@ -967,7 +966,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66190ab4d681e1247afcc31ead914946, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactableSettings: {fileID: 0}
   rb: {fileID: 8655827489247363850}
   navMeshObstacle: {fileID: 1134263449992917828}
 --- !u!54 &8655827489247363850
@@ -1741,7 +1739,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11fa3588b2c18d348bcfbeced373b561, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactableSettings: {fileID: 0}
   lightColor: 0
   Green: {fileID: 2605127486530872683}
   Yellow: {fileID: 2664577439375829150}
@@ -2060,22 +2057,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 7368468791117912483}
     m_Modifications:
     - target: {fileID: 4332790137486403895, guid: 73a25edb7233b524394193907d7ba1bc, type: 3}
-      propertyPath: m_RootOrder
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4332790137486403895, guid: 73a25edb7233b524394193907d7ba1bc, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 26
-      objectReference: {fileID: 0}
-    - target: {fileID: 4332790137486403895, guid: 73a25edb7233b524394193907d7ba1bc, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4332790137486403895, guid: 73a25edb7233b524394193907d7ba1bc, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 4332790137486403895, guid: 73a25edb7233b524394193907d7ba1bc, type: 3}
       propertyPath: m_LocalPosition.x
       value: 16
       objectReference: {fileID: 0}
@@ -2118,10 +2099,6 @@ PrefabInstance:
     - target: {fileID: 7246473123183772924, guid: 73a25edb7233b524394193907d7ba1bc, type: 3}
       propertyPath: m_Name
       value: Crosswalk
-      objectReference: {fileID: 0}
-    - target: {fileID: 7246473123183772924, guid: 73a25edb7233b524394193907d7ba1bc, type: 3}
-      propertyPath: m_Layer
-      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

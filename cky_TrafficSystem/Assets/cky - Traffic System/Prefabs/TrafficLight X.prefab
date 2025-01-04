@@ -679,7 +679,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11fa3588b2c18d348bcfbeced373b561, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactableSettings: {fileID: 0}
   lightColor: 0
   Green: {fileID: 7176458552003940513}
   Yellow: {fileID: 7762469751286553886}
@@ -1061,7 +1060,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11fa3588b2c18d348bcfbeced373b561, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactableSettings: {fileID: 0}
   lightColor: 0
   Green: {fileID: 6449334681560466132}
   Yellow: {fileID: 6240178623344412880}
@@ -2084,7 +2082,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11fa3588b2c18d348bcfbeced373b561, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactableSettings: {fileID: 0}
   lightColor: 0
   Green: {fileID: 7506793513649049299}
   Yellow: {fileID: 1918094581223582775}
@@ -2310,7 +2307,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11fa3588b2c18d348bcfbeced373b561, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactableSettings: {fileID: 0}
   lightColor: 0
   Green: {fileID: 4746027808861513333}
   Yellow: {fileID: 5548840911478454349}
@@ -6881,7 +6877,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settings: {fileID: 11400000, guid: d735d4c352ec5d24195bb40285f79ab8, type: 2}
-  interactableSettings: {fileID: 11400000, guid: a08d713d6e5fb014fbb02346f3c443ba, type: 2}
   _step: 0
   trafficLight_N: {fileID: 8631240607895060663}
   trafficLight_S: {fileID: 6917840702347792660}
@@ -8135,22 +8130,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 6327199907233388311}
     m_Modifications:
     - target: {fileID: 4332790137486403895, guid: 73a25edb7233b524394193907d7ba1bc, type: 3}
-      propertyPath: m_RootOrder
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4332790137486403895, guid: 73a25edb7233b524394193907d7ba1bc, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 26
-      objectReference: {fileID: 0}
-    - target: {fileID: 4332790137486403895, guid: 73a25edb7233b524394193907d7ba1bc, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4332790137486403895, guid: 73a25edb7233b524394193907d7ba1bc, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 4332790137486403895, guid: 73a25edb7233b524394193907d7ba1bc, type: 3}
       propertyPath: m_LocalPosition.x
       value: 16
       objectReference: {fileID: 0}
@@ -8193,10 +8172,6 @@ PrefabInstance:
     - target: {fileID: 7246473123183772924, guid: 73a25edb7233b524394193907d7ba1bc, type: 3}
       propertyPath: m_Name
       value: Crosswalk S
-      objectReference: {fileID: 0}
-    - target: {fileID: 7246473123183772924, guid: 73a25edb7233b524394193907d7ba1bc, type: 3}
-      propertyPath: m_Layer
-      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8289,7 +8264,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7246473123183772924, guid: 73a25edb7233b524394193907d7ba1bc, type: 3}
       propertyPath: m_Layer
-      value: 15
+      value: 31
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8320,50 +8295,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1323947681190820985}
     m_Modifications:
-    - target: {fileID: 3804411525891841021, guid: 73a25edb7233b524394193907d7ba1bc, type: 3}
-      propertyPath: m_Size.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3804411525891841021, guid: 73a25edb7233b524394193907d7ba1bc, type: 3}
-      propertyPath: m_Size.z
-      value: 0.99999994
-      objectReference: {fileID: 0}
-    - target: {fileID: 3804411525891841021, guid: 73a25edb7233b524394193907d7ba1bc, type: 3}
-      propertyPath: m_Center.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3804411525891841021, guid: 73a25edb7233b524394193907d7ba1bc, type: 3}
-      propertyPath: m_Center.y
-      value: -0.0000009536743
-      objectReference: {fileID: 0}
-    - target: {fileID: 3804411525891841021, guid: 73a25edb7233b524394193907d7ba1bc, type: 3}
-      propertyPath: m_Center.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3804411525891841021, guid: 73a25edb7233b524394193907d7ba1bc, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3804411525891841021, guid: 73a25edb7233b524394193907d7ba1bc, type: 3}
-      propertyPath: m_ExcludeLayers.m_Bits
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4332790137486403895, guid: 73a25edb7233b524394193907d7ba1bc, type: 3}
-      propertyPath: m_RootOrder
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4332790137486403895, guid: 73a25edb7233b524394193907d7ba1bc, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 26
-      objectReference: {fileID: 0}
-    - target: {fileID: 4332790137486403895, guid: 73a25edb7233b524394193907d7ba1bc, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4332790137486403895, guid: 73a25edb7233b524394193907d7ba1bc, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 11
-      objectReference: {fileID: 0}
     - target: {fileID: 4332790137486403895, guid: 73a25edb7233b524394193907d7ba1bc, type: 3}
       propertyPath: m_LocalPosition.x
       value: 16
@@ -8407,10 +8338,6 @@ PrefabInstance:
     - target: {fileID: 7246473123183772924, guid: 73a25edb7233b524394193907d7ba1bc, type: 3}
       propertyPath: m_Name
       value: Crosswalk N
-      objectReference: {fileID: 0}
-    - target: {fileID: 7246473123183772924, guid: 73a25edb7233b524394193907d7ba1bc, type: 3}
-      propertyPath: m_Layer
-      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8511,7 +8438,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7246473123183772924, guid: 73a25edb7233b524394193907d7ba1bc, type: 3}
       propertyPath: m_Layer
-      value: 15
+      value: 31
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

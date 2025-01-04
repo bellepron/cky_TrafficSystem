@@ -1006,7 +1006,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11fa3588b2c18d348bcfbeced373b561, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactableSettings: {fileID: 0}
   lightColor: 0
   Green: {fileID: 5011264239123678674}
   Yellow: {fileID: 607679226585776758}
@@ -2374,7 +2373,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settings: {fileID: 11400000, guid: d735d4c352ec5d24195bb40285f79ab8, type: 2}
-  interactableSettings: {fileID: 11400000, guid: a08d713d6e5fb014fbb02346f3c443ba, type: 2}
   _step: 0
   trafficLight_N: {fileID: 4577679040052045233}
   trafficLight_S: {fileID: 14730927504078895}
@@ -4161,7 +4159,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11fa3588b2c18d348bcfbeced373b561, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactableSettings: {fileID: 0}
   lightColor: 0
   Green: {fileID: 7976523222302685136}
   Yellow: {fileID: 3291556997009348240}
@@ -4574,7 +4571,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11fa3588b2c18d348bcfbeced373b561, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactableSettings: {fileID: 0}
   lightColor: 0
   Green: {fileID: 5650200914093597147}
   Yellow: {fileID: 4855151502517746531}
@@ -5298,7 +5294,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66190ab4d681e1247afcc31ead914946, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactableSettings: {fileID: 0}
   rb: {fileID: 254390138621825309}
   navMeshObstacle: {fileID: 4575221228723721808}
 --- !u!54 &254390138621825309
@@ -6416,22 +6411,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 6289715463844180367}
     m_Modifications:
     - target: {fileID: 4332790137486403895, guid: 73a25edb7233b524394193907d7ba1bc, type: 3}
-      propertyPath: m_RootOrder
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4332790137486403895, guid: 73a25edb7233b524394193907d7ba1bc, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 25.021101
-      objectReference: {fileID: 0}
-    - target: {fileID: 4332790137486403895, guid: 73a25edb7233b524394193907d7ba1bc, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4332790137486403895, guid: 73a25edb7233b524394193907d7ba1bc, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 4332790137486403895, guid: 73a25edb7233b524394193907d7ba1bc, type: 3}
       propertyPath: m_LocalPosition.x
       value: 15.91
       objectReference: {fileID: 0}
@@ -6475,10 +6454,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Crosswalk N
       objectReference: {fileID: 0}
-    - target: {fileID: 7246473123183772924, guid: 73a25edb7233b524394193907d7ba1bc, type: 3}
-      propertyPath: m_Layer
-      value: 15
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6508,22 +6483,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2869157569360069691}
     m_Modifications:
-    - target: {fileID: 4332790137486403895, guid: 73a25edb7233b524394193907d7ba1bc, type: 3}
-      propertyPath: m_RootOrder
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4332790137486403895, guid: 73a25edb7233b524394193907d7ba1bc, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 24.28296
-      objectReference: {fileID: 0}
-    - target: {fileID: 4332790137486403895, guid: 73a25edb7233b524394193907d7ba1bc, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4332790137486403895, guid: 73a25edb7233b524394193907d7ba1bc, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 11
-      objectReference: {fileID: 0}
     - target: {fileID: 4332790137486403895, guid: 73a25edb7233b524394193907d7ba1bc, type: 3}
       propertyPath: m_LocalPosition.x
       value: 14.22
@@ -6568,10 +6527,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Crosswalk E
       objectReference: {fileID: 0}
-    - target: {fileID: 7246473123183772924, guid: 73a25edb7233b524394193907d7ba1bc, type: 3}
-      propertyPath: m_Layer
-      value: 15
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6601,22 +6556,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7037200125151176420}
     m_Modifications:
-    - target: {fileID: 4332790137486403895, guid: 73a25edb7233b524394193907d7ba1bc, type: 3}
-      propertyPath: m_RootOrder
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4332790137486403895, guid: 73a25edb7233b524394193907d7ba1bc, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 24.69974
-      objectReference: {fileID: 0}
-    - target: {fileID: 4332790137486403895, guid: 73a25edb7233b524394193907d7ba1bc, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4332790137486403895, guid: 73a25edb7233b524394193907d7ba1bc, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 11
-      objectReference: {fileID: 0}
     - target: {fileID: 4332790137486403895, guid: 73a25edb7233b524394193907d7ba1bc, type: 3}
       propertyPath: m_LocalPosition.x
       value: 16.14
@@ -6660,10 +6599,6 @@ PrefabInstance:
     - target: {fileID: 7246473123183772924, guid: 73a25edb7233b524394193907d7ba1bc, type: 3}
       propertyPath: m_Name
       value: Crosswalk S
-      objectReference: {fileID: 0}
-    - target: {fileID: 7246473123183772924, guid: 73a25edb7233b524394193907d7ba1bc, type: 3}
-      propertyPath: m_Layer
-      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
