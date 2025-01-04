@@ -3,12 +3,12 @@ using UnityEditor;
 
 namespace cky.TrafficSystem
 {
-    [CustomEditor(typeof(TrafficSystem))]
+    [CustomEditor(typeof(TrafficSystem_Car))]
     public class CarTrafficSystemEditor : Editor
     {
         public override void OnInspectorGUI()
         {
-            TrafficSystem myScript = (TrafficSystem)target;
+            TrafficSystem_Car myScript = (TrafficSystem_Car)target;
 
             // Normal özellikleri çizdirin
             DrawDefaultInspector();

@@ -9,7 +9,7 @@ namespace cky.TrafficSystem
     {
 
 
-        private TrafficSystem trafficSystem;
+        private TrafficSystem_Car trafficSystem;
 
         public bool oneway = false;
         public bool doubleLine = false;
@@ -59,7 +59,7 @@ namespace cky.TrafficSystem
         Vector3 nodeEnd;
 
         [HideInInspector]
-        public TrafficSystem.WpDataCar wpData;
+        public TrafficSystem_Car.WpDataCar wpData;
 
 
         private Vector3 oldPosition;
@@ -293,11 +293,11 @@ namespace cky.TrafficSystem
 
             if (!trafficSystem)
             {
-                trafficSystem = FindObjectOfType<TrafficSystem>();
+                trafficSystem = FindObjectOfType<TrafficSystem_Car>();
 
 #if UNITY_EDITOR
                 if (!trafficSystem)
-                    trafficSystem = (TrafficSystem)AssetDatabase.LoadAssetAtPath("Assets/Fantastic City Generator/Traffic System/Traffic System.prefab", (typeof(TrafficSystem)));
+                    trafficSystem = (TrafficSystem_Car)AssetDatabase.LoadAssetAtPath("Assets/Fantastic City Generator/Traffic System/Traffic System.prefab", (typeof(TrafficSystem_Car)));
 #endif
 
                 if (!trafficSystem)

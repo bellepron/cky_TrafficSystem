@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Collections;
 using cky.GizmoHelper;
 using UnityEngine;
@@ -6,33 +6,33 @@ using CKY_Pooling;
 
 namespace cky.TrafficSystem
 {
-    public class TrafficSystem : MonoBehaviour
+    #region Data Holder's
+
+    [System.Serializable]
+    public class WpDataPedestrian
     {
-        #region Data Holder's
+        public bool[] tsActive;
+        public Vector3[] tf01;
+        public PedestrianWaypointsContainer[] tsParent;
+        public bool[] tsOneway;
+        public bool[] tsOnewayDoubleLine;
+        public int[] tsSide;
+    }
 
-        [System.Serializable]
-        public class WpDataCar
-        {
-            public bool[] tsActive;
-            public Vector3[] tf01;
-            public WaypointsContainer[] tsParent;
-            public bool[] tsOneway;
-            public bool[] tsOnewayDoubleLine;
-            public int[] tsSide;
-        }
+    [System.Serializable]
+    public class WpDataSpawnPedestrian
+    {
+        public Vector3 position;
+        public Quaternion rotation;
+        public float locateZ;
+        public int side;
+        public int node;
+        public PedestrianWaypointsContainer wayScript;
+    }
+    #endregion
 
-        [System.Serializable]
-        public class WpDataSpawnCar
-        {
-            public Vector3 position;
-            public Quaternion rotation;
-            public float locateZ;
-            public int side;
-            public int node;
-            public WaypointsContainer wayScript;
-        }
-
-        #endregion
+    public class TrafficSystem_Pedestrian : MonoBehaviour
+    {
         struct Tags
         {
             public const string Player = "Player";
@@ -41,26 +41,26 @@ namespace cky.TrafficSystem
         [Space(5)]
         public Transform player = null;
 
-        WaypointsContainer[] _waypointContainers;
+        PedestrianWaypointsContainer[] _waypointContainers;
 
         [Space(10)]
-        [Header("Car Prefabs")]
-        public Transform[] IaCars;
+        [Header("Pedestrian Prefabs")]
+        [SerializeField] Transform[] pedestrianPrefabs;
 
         [Space(5)]
         [Header("Around")]
         [Range(0, 1000)][SerializeField] float aroundMin = 80;
         [Range(0, 1000)][SerializeField] float aroundMax = 150;
-        ArrayList _spawnPoints;
-        List<WpDataSpawnCar> _wpDataSpawn;
-        WpDataCar _wpData = new WpDataCar();
+        ArrayList _spanwPoints;
+        List<WpDataSpawnPedestrian> _wpDataSpawn;
+        WpDataPedestrian _wpData = new WpDataPedestrian();
 
         [Space(5)]
-        [SerializeField] int nVehicles = 0;
-        [SerializeField] int maxVehiclesWithPlayer = 50;
+        [SerializeField] int nPedestrians;
+        [SerializeField] int maxPedestriansWithPlayer = 50;
 
         [Space(5)]
-        [SerializeField] private float intervalLoadCar = 1;
+        [SerializeField] private float intervalLoadPedestrian = 1;
         [SerializeField] private float minNodeDistanceToCreate = 10.0f;
         [SerializeField] private float distanceToRepeat = 40.0f;
 
@@ -72,9 +72,9 @@ namespace cky.TrafficSystem
         bool _isGameStarted;
 
         [Space(15)]
-        [Header("Traffic Car Checker")]
-        [SerializeField] bool isTrafficCarCheckerActive = true;
-        [SerializeField] float trafficCarCheckRadius = 5.0f;
+        [Header("Traffic Pedestrian Checker")]
+        [SerializeField] bool isPedestrianCheckerActive = true;
+        [SerializeField] float pedestrianCheckRadius = 5.0f;
 
         [Space(15)]
         [Header("Gizmos")]
@@ -83,7 +83,7 @@ namespace cky.TrafficSystem
         [SerializeField] Color gizmo_Color = Color.black;
 
         [Space(15)]
-        [SerializeField] List<TrafficCar> currentTrafficCars = new List<TrafficCar>();
+        [SerializeField] List<PedestrianStateMachine> currentPedestrians = new List<PedestrianStateMachine>();
 
 
 
@@ -91,7 +91,7 @@ namespace cky.TrafficSystem
         {
             player = playerTr;
 
-            LoadCars();
+            LoadPedestrians();
         }
 
         private void Awake()
@@ -99,7 +99,7 @@ namespace cky.TrafficSystem
             player = GameObject.FindWithTag(Tags.Player)?.transform;
             if (player == null) player = Camera.main.transform;
 
-            _waypointContainers = FindObjectsOfType<WaypointsContainer>();
+            _waypointContainers = FindObjectsOfType<PedestrianWaypointsContainer>();
 
             _isGameStarted = true;
         }
@@ -112,22 +112,21 @@ namespace cky.TrafficSystem
             }
             else
             {
-                LoadCars();
+                LoadPedestrians();
             }
         }
 
-
-        public void LoadCars()
+        public void LoadPedestrians()
         {
-            currentTrafficCars = new List<TrafficCar>();
+            currentPedestrians = new List<PedestrianStateMachine>();
 
-            if (maxVehiclesWithPlayer == 0)
+            if (maxPedestriansWithPlayer == 0)
             {
-                Debug.LogError("You need to set the maximum number of vehicles in the Traffic System");
+                Debug.LogError("You need to set the maximum number of pedestrians in the Traffic System");
                 return;
             }
 
-            if (!_isGameStarted) _waypointContainers = FindObjectsOfType<WaypointsContainer>();
+            if (!_isGameStarted) _waypointContainers = FindObjectsOfType<PedestrianWaypointsContainer>();
 
             int n = _waypointContainers.Length;
             for (int i = 0; i < n; i++)
@@ -136,17 +135,18 @@ namespace cky.TrafficSystem
 
             UpdateAllWayPoints();
 
-            nVehicles = currentTrafficCars.Count;
+            nPedestrians = currentPedestrians.Count;
 
             DeffineDirection();
 
-            _wpDataSpawn = new List<WpDataSpawnCar>();
+            _wpDataSpawn = new List<WpDataSpawnPedestrian>();
 
             n = _waypointContainers.Length;
 
             for (int i = 0; i < n; i++)
             {
                 var _w = _waypointContainers[i];
+                if (_w.noPedestrian) continue;
 
                 if (!_w.bloked && _w.waypoints.Count > 1)
                 {
@@ -157,6 +157,7 @@ namespace cky.TrafficSystem
                             for (int node = 0; node < _w.waypoints.Count - 1; node++)
                             {
                                 float dist = Vector3.Distance(_w.Node(nSide, node), _w.Node(nSide, node + 1));
+
 
                                 if (isClassic)
                                 {
@@ -208,21 +209,20 @@ namespace cky.TrafficSystem
 
             if (player && Application.isPlaying)
             {
-                InvokeRepeating(nameof(LoadCars2), 0f, intervalLoadCar);
+                InvokeRepeating(nameof(LoadPedestrians2), 0f, intervalLoadPedestrian);
             }
             else
             {
-                LoadCars2();
+                LoadPedestrians2();
             }
         }
-
-        public void LoadCars2()
+        public void LoadPedestrians2()
         {
             if (!player) return;
 
-            nVehicles = currentTrafficCars.Count;
+            nPedestrians = currentPedestrians.Count;
 
-            TrafficCar car;
+            PedestrianStateMachine p_sm;
 
             int n = _wpDataSpawn.Count;
             bool invert = (Random.Range(1, 20) < 10);
@@ -232,7 +232,7 @@ namespace cky.TrafficSystem
             {
                 int i = (invert) ? n - 1 - j : j;
 
-                if (nVehicles >= maxVehiclesWithPlayer)
+                if (nPedestrians >= maxPedestriansWithPlayer)
                 {
                     break;
                 }
@@ -250,15 +250,15 @@ namespace cky.TrafficSystem
                     var wpDataSpawn_WayScript = wpDataSpawn.wayScript;
                     var aw = wpDataSpawn_WayScript.transform;
                     var sa = wpDataSpawn_Side;
-                    if (!ThereIsNoTrafficCar_InCheckRadius(wpDataSpawn.position, aw, sa))
+                    if (!ThereIsNoTrafficPedestrian_InCheckRadius(wpDataSpawn.position, aw, sa))
                     {
-                        car = CKY_PoolManager.Spawn(IaCars[Random.Range(0, IaCars.Length)], wpDataSpawn.position + Vector3.up * 0.1f, wpDataSpawn.rotation).GetComponent<TrafficCar>();
+                        p_sm = CKY_PoolManager.Spawn(pedestrianPrefabs[Random.Range(0, pedestrianPrefabs.Length)], wpDataSpawn.position + Vector3.up * 0.1f, wpDataSpawn.rotation).GetComponent<PedestrianStateMachine>();
 
-                        AddToCurrentTrafficCar(car);
+                        AddToCurrentPedestrians(p_sm);
 
-                        car.TrafficSystemInit(sa, aw, wpDataSpawn_WayScript, wpDataSpawn_Node + 1, aroundMax, player, this);
+                        p_sm.TrafficSystemInit(sa, aw, wpDataSpawn_WayScript, wpDataSpawn_Node + 1, aroundMax, player, this);
 
-                        nVehicles++;
+                        nPedestrians++;
                     }
                 }
             }
@@ -268,7 +268,7 @@ namespace cky.TrafficSystem
 
         public void UpdateAllWayPoints()
         {
-            _waypointContainers = FindObjectsOfType<WaypointsContainer>();
+            _waypointContainers = FindObjectsOfType<PedestrianWaypointsContainer>();
 
             for (int i = 0; i < _waypointContainers.Length; i++)
             {
@@ -295,7 +295,7 @@ namespace cky.TrafficSystem
 
             _wpData.tsActive = new bool[wpcLength * 2];
             _wpData.tf01 = new Vector3[wpcLength * 2];
-            _wpData.tsParent = new WaypointsContainer[wpcLength * 2];
+            _wpData.tsParent = new PedestrianWaypointsContainer[wpcLength * 2];
             _wpData.tsOneway = new bool[wpcLength * 2];
             _wpData.tsOnewayDoubleLine = new bool[wpcLength * 2];
             _wpData.tsSide = new int[wpcLength * 2];
@@ -305,8 +305,7 @@ namespace cky.TrafficSystem
             for (int i = 0; i < wpcLength; i++)
             {
                 var currentWPContainer = _waypointContainers[i];
-
-                if (_waypointContainers[i].waypoints.Count > 1)
+                if (currentWPContainer.waypoints.Count > 1)
                 {
                     t++;
 
@@ -340,9 +339,9 @@ namespace cky.TrafficSystem
             }
         }
 
-        private void PlaceSpawnPoint(WaypointsContainer f, int side, int node, float locate)
+        private void PlaceSpawnPoint(PedestrianWaypointsContainer f, int side, int node, float locate)
         {
-            _wpDataSpawn.Add(new WpDataSpawnCar
+            _wpDataSpawn.Add(new WpDataSpawnPedestrian
             {
                 locateZ = locate,
                 position = f.AvanceNode(side, node, locate),
@@ -357,27 +356,24 @@ namespace cky.TrafficSystem
         {
             //Inverse Nodes
             for (int i = 0; i < _waypointContainers.Length; i++)
-                _waypointContainers[i].InvertNodesDirection(0);
+                _waypointContainers[i].InvertNodesDirection();
 
             UpdateAllWayPoints();
         }
 
-        public bool ThereIsNoTrafficCar_InCheckRadius(Vector3 position, Transform atualWay, int sideAtual)
+        public bool ThereIsNoTrafficPedestrian_InCheckRadius(Vector3 position, Transform atualWay, int sideAtual)
         {
-            if (!isTrafficCarCheckerActive) return false;
-
-            foreach (var c in currentTrafficCars)
+            if (!isPedestrianCheckerActive) return false;
+            foreach (var p in currentPedestrians)
             {
-                var inRange = Vector3.Distance(c.transform.position, position) < trafficCarCheckRadius;
+                var inRange = Vector3.Distance(p.transform.position, position) < pedestrianCheckRadius;
 
                 if (inRange)
                 {
-                    if (atualWay == c.atualWay && sideAtual == c.sideAtual)
+                    if (atualWay == p.atualWay && sideAtual == p.sideAtual)
                     {
                         return true;
                     }
-
-                    return true;
                 }
             }
 
@@ -385,6 +381,7 @@ namespace cky.TrafficSystem
         }
 
         private float ckyRandom(float b) => UnityEngine.Random.Range(-b, b);
+
         private bool ckyPerThousand(int percentage)
         {
             if (percentage > UnityEngine.Random.Range(0, 1000))
@@ -393,14 +390,14 @@ namespace cky.TrafficSystem
             return false;
         }
 
-        private void AddToCurrentTrafficCar(TrafficCar car)
+        private void AddToCurrentPedestrians(PedestrianStateMachine p)
         {
-            if (!currentTrafficCars.Contains(car)) currentTrafficCars.Add(car);
+            if (!currentPedestrians.Contains(p)) currentPedestrians.Add(p);
         }
 
-        public void RemoveFromCurrentTrafficCar(TrafficCar car)
+        public void RemoveFromCurrentPedestrians(PedestrianStateMachine p)
         {
-            if (currentTrafficCars.Contains(car)) currentTrafficCars.Remove(car);
+            if (currentPedestrians.Contains(p)) currentPedestrians.Remove(p);
         }
 
 

@@ -7,7 +7,7 @@ namespace cky.TrafficSystem
 {
     public class PedestrianWaypointsContainer : MonoBehaviour
     {
-        private PedestrianTrafficSystem pedestrianTrafficSystem;
+        private TrafficSystem_Pedestrian pedestrianTrafficSystem;
 
         public bool noPedestrian;
 
@@ -292,11 +292,11 @@ namespace cky.TrafficSystem
 
             if (!pedestrianTrafficSystem)
             {
-                pedestrianTrafficSystem = FindObjectOfType<PedestrianTrafficSystem>();
+                pedestrianTrafficSystem = FindObjectOfType<TrafficSystem_Pedestrian>();
 
 #if UNITY_EDITOR
                 if (!pedestrianTrafficSystem)
-                    pedestrianTrafficSystem = (PedestrianTrafficSystem)AssetDatabase.LoadAssetAtPath("Assets/Fantastic City Generator/Traffic System/Pedestrian Traffic System.prefab", (typeof(TrafficSystem)));
+                    pedestrianTrafficSystem = (TrafficSystem_Pedestrian)AssetDatabase.LoadAssetAtPath("Assets/Fantastic City Generator/Traffic System/Pedestrian Traffic System.prefab", (typeof(TrafficSystem_Car)));
 #endif
 
                 if (!pedestrianTrafficSystem)

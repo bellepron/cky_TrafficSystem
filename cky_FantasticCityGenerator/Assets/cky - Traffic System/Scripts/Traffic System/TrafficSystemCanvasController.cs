@@ -6,7 +6,7 @@ namespace cky.TrafficSystem
 {
     public class TrafficSystemCanvasController : MonoBehaviour
     {
-        TrafficSystem trafficSystem;
+        TrafficSystem_Car trafficSystem;
 
         [SerializeField] TextMeshProUGUI nVehiclesTMP;
         [SerializeField] TextMeshProUGUI maxVehiclesTMP;

@@ -74,7 +74,7 @@ namespace cky.TrafficSystem
         Transform cameraTr;
 
 
-        [HideInInspector] public TrafficSystem trafficSystem;
+        [HideInInspector] public TrafficSystem_Car trafficSystem;
 
         float distanceToSelfDestroy = 0;
 
@@ -109,7 +109,7 @@ namespace cky.TrafficSystem
             MoveCar();
         }
 
-        public void TrafficSystemInit(int sideAtual, Transform atualWay, WaypointsContainer atualWayScript, int currentNode, float distanceToSelfDestroy, Transform player, TrafficSystem trafficSystem)
+        public void TrafficSystemInit(int sideAtual, Transform atualWay, WaypointsContainer atualWayScript, int currentNode, float distanceToSelfDestroy, Transform player, TrafficSystem_Car trafficSystem)
         {
             nodeSteerCarefully = false;
             nodeSteerCarefully2 = false;

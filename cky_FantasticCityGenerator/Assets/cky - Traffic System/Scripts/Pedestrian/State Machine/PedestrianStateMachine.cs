@@ -45,7 +45,7 @@ namespace cky.TrafficSystem
         public Crosswalk PreviousCrosswalk;
         public Crosswalk OnCrosswalk;
 
-        public PedestrianTrafficSystem PedestrianTrafficSystem { get; set; }
+        public TrafficSystem_Pedestrian PedestrianTrafficSystem { get; set; }
 
         [SerializeField] Collider[] targetsInViewRadius;
         [SerializeField] List<PedestrianStateMachine> _pedestrians = new List<PedestrianStateMachine>();
@@ -513,7 +513,7 @@ namespace cky.TrafficSystem
             distanceToNode = Vector3.Distance(atualWayScript.Node(sideAtual, currentNode), transform.position);
         }
 
-        public void TrafficSystemInit(int sideAtual, Transform atualWay, PedestrianWaypointsContainer atualWayScript, int currentNode, float distanceToSelfDestroy, Transform player, PedestrianTrafficSystem pedestrianTrafficSystem)
+        public void TrafficSystemInit(int sideAtual, Transform atualWay, PedestrianWaypointsContainer atualWayScript, int currentNode, float distanceToSelfDestroy, Transform player, TrafficSystem_Pedestrian pedestrianTrafficSystem)
         {
             this.sideAtual = sideAtual;
             this.atualWay = atualWay;
