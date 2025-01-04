@@ -14,12 +14,6 @@ namespace cky.TrafficSystem
 
     public enum HumanTypes { None, Normal }
 
-    public struct Tags
-    {
-        public const string People = "People";
-        public const string Car = "Car";
-    }
-
     public class PedestrianStateMachine : BaseStateMachine, ITrafficSystemUnit/*, IHitable, IChaosable*/
     {
         [field: SerializeField] public bool IsAlive { get; set; }
@@ -293,7 +287,7 @@ namespace cky.TrafficSystem
                 Transform cTransform = c.transform;
                 Vector3 target = cTransform.position - thisPosition;
 
-                if (cTransform.CompareTag(Tags.People))
+                if (cTransform.CompareTag(TagHelper.People))
                 {
                     if (cTransform != thisTransform)
                     {
@@ -312,14 +306,14 @@ namespace cky.TrafficSystem
                         NearTarget_Pedestrian(thisPosition, forward, halfViewAngle);
                     }
                 }
-                else if (cTransform.CompareTag(Tags.Car))
+                else if (cTransform.CompareTag(TagHelper.Car))
                 {
                     if (Vector3.Dot(forward, target) > 0)
                         _cars.Add(cTransform);
 
                     NearTarget_Car(thisPosition, forward, halfViewAngle);
                 }
-                //else if (cTransform.CompareTag(TagHelper.TAG_PLAYER))
+                //else if (cTransform.CompareTag(TagHelper.Player))
                 //{
                 //    if (Vector3.Dot(forward, target) > 0)
                 //        _players.Add(cTransform);
