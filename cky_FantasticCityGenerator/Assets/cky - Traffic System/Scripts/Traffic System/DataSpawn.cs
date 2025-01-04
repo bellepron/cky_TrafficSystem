@@ -6,7 +6,7 @@ namespace cky.TrafficSystem
     {
         public int sideAtual;
         public Transform atualWay;
-        public WaypointsContainer atualWayScript;
+        public WaypointsContainer_Car atualWayScript;
 
     }
 

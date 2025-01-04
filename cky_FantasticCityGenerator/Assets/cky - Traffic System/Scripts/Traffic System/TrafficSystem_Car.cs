@@ -15,7 +15,7 @@ namespace cky.TrafficSystem
         {
             public bool[] tsActive;
             public Vector3[] tf01;
-            public WaypointsContainer[] tsParent;
+            public WaypointsContainer_Car[] tsParent;
             public bool[] tsOneway;
             public bool[] tsOnewayDoubleLine;
             public int[] tsSide;
@@ -29,7 +29,7 @@ namespace cky.TrafficSystem
             public float locateZ;
             public int side;
             public int node;
-            public WaypointsContainer wayScript;
+            public WaypointsContainer_Car wayScript;
         }
 
         #endregion
@@ -41,7 +41,7 @@ namespace cky.TrafficSystem
         [Space(5)]
         public Transform player = null;
 
-        WaypointsContainer[] _waypointContainers;
+        WaypointsContainer_Car[] _waypointContainers;
 
         [Space(10)]
         [Header("Car Prefabs")]
@@ -99,7 +99,7 @@ namespace cky.TrafficSystem
             player = GameObject.FindWithTag(Tags.Player)?.transform;
             if (player == null) player = Camera.main.transform;
 
-            _waypointContainers = FindObjectsOfType<WaypointsContainer>();
+            _waypointContainers = FindObjectsOfType<WaypointsContainer_Car>();
 
             _isGameStarted = true;
         }
@@ -127,7 +127,7 @@ namespace cky.TrafficSystem
                 return;
             }
 
-            if (!_isGameStarted) _waypointContainers = FindObjectsOfType<WaypointsContainer>();
+            if (!_isGameStarted) _waypointContainers = FindObjectsOfType<WaypointsContainer_Car>();
 
             int n = _waypointContainers.Length;
             for (int i = 0; i < n; i++)
@@ -268,7 +268,7 @@ namespace cky.TrafficSystem
 
         public void UpdateAllWayPoints()
         {
-            _waypointContainers = FindObjectsOfType<WaypointsContainer>();
+            _waypointContainers = FindObjectsOfType<WaypointsContainer_Car>();
 
             for (int i = 0; i < _waypointContainers.Length; i++)
             {
@@ -295,7 +295,7 @@ namespace cky.TrafficSystem
 
             _wpData.tsActive = new bool[wpcLength * 2];
             _wpData.tf01 = new Vector3[wpcLength * 2];
-            _wpData.tsParent = new WaypointsContainer[wpcLength * 2];
+            _wpData.tsParent = new WaypointsContainer_Car[wpcLength * 2];
             _wpData.tsOneway = new bool[wpcLength * 2];
             _wpData.tsOnewayDoubleLine = new bool[wpcLength * 2];
             _wpData.tsSide = new int[wpcLength * 2];
@@ -340,7 +340,7 @@ namespace cky.TrafficSystem
             }
         }
 
-        private void PlaceSpawnPoint(WaypointsContainer f, int side, int node, float locate)
+        private void PlaceSpawnPoint(WaypointsContainer_Car f, int side, int node, float locate)
         {
             _wpDataSpawn.Add(new WpDataSpawnCar
             {

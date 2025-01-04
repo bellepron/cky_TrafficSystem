@@ -55,12 +55,12 @@ namespace cky.TrafficSystem
 
         [HideInInspector] public Transform atualWay;
         [HideInInspector] public int sideAtual = 0;
-        [HideInInspector] public WaypointsContainer atualWayScript;
+        [HideInInspector] public WaypointsContainer_Car atualWayScript;
         [HideInInspector] public bool nodeSteerCarefully = false;
         [HideInInspector] public bool nodeSteerCarefully2 = false;
         [HideInInspector] public Transform myOldWay;
         [HideInInspector] public int myOldSideAtual = 0;
-        [HideInInspector] public WaypointsContainer myOldWayScript = null;
+        [HideInInspector] public WaypointsContainer_Car myOldWayScript = null;
         private Vector3 _avanceNode = Vector3.zero;
 
         private float countTimeToSignal = 0;
@@ -109,7 +109,7 @@ namespace cky.TrafficSystem
             MoveCar();
         }
 
-        public void TrafficSystemInit(int sideAtual, Transform atualWay, WaypointsContainer atualWayScript, int currentNode, float distanceToSelfDestroy, Transform player, TrafficSystem_Car trafficSystem)
+        public void TrafficSystemInit(int sideAtual, Transform atualWay, WaypointsContainer_Car atualWayScript, int currentNode, float distanceToSelfDestroy, Transform player, TrafficSystem_Car trafficSystem)
         {
             nodeSteerCarefully = false;
             nodeSteerCarefully2 = false;
@@ -147,11 +147,11 @@ namespace cky.TrafficSystem
             return atualWayScript.Node(sideAtual, currentNode);
         }
 
-        bool CheckBookAllPathOptions(WaypointsContainer wayScript, int side)
+        bool CheckBookAllPathOptions(WaypointsContainer_Car wayScript, int side)
         {
             int total;
             int wSide;
-            WaypointsContainer wScript;
+            WaypointsContainer_Car wScript;
 
             total = (side == 0) ? wayScript.nextWay0.Length : wayScript.nextWay1.Length;
 
@@ -183,11 +183,11 @@ namespace cky.TrafficSystem
             return true;
         }
 
-        bool BookAllPathOptions(WaypointsContainer wayScript, int side, bool book = true)
+        bool BookAllPathOptions(WaypointsContainer_Car wayScript, int side, bool book = true)
         {
             int total;
             int wSide;
-            WaypointsContainer wScript;
+            WaypointsContainer_Car wScript;
 
             total = (side == 0) ? wayScript.nextWay0.Length : wayScript.nextWay1.Length;
 

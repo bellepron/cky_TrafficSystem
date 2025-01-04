@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4760311153090965873
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3469180505797300293}
+  - component: {fileID: 6898951769677195306}
+  m_Layer: 0
+  m_Name: Traffic System - Pedestrian
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3469180505797300293
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4760311153090965873}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6898951769677195306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4760311153090965873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc223ff4497c23f41bfdc0622059fc74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  pedestrianPrefabs:
+  - {fileID: 4282665674783342, guid: 133fbdab97d328d40ab64f2f5d24104b, type: 3}
+  - {fileID: 4282665674783342, guid: c109cf36f99fd2f41b3dadbb986f2b67, type: 3}
+  aroundMin: 80
+  aroundMax: 150
+  nPedestrians: 0
+  maxPedestriansWithPlayer: 30
+  intervalLoadPedestrian: 1
+  minNodeDistanceToCreate: 10
+  distanceToRepeat: 40
+  skipping: 1
+  isClassic: 1
+  isPedestrianCheckerActive: 1
+  pedestrianCheckRadius: 5
+  gizmo_CircleOffset_Y: 0.5
+  gizmo_CircleSegmentCount: 360
+  gizmo_Color: {r: 0, g: 0, b: 0, a: 1}
+  currentPedestrians: []

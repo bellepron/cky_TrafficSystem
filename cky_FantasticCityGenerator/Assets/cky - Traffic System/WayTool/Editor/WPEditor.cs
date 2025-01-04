@@ -5,18 +5,18 @@ using UnityEditor;
 
 namespace cky.TrafficSystem
 {
-    [CustomEditor(typeof(WaypointsContainer))]
+    [CustomEditor(typeof(WaypointsContainer_Car))]
 
     public class WPEditor : Editor
     {
 
-        WaypointsContainer wpScript;
+        WaypointsContainer_Car wpScript;
 
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
 
-            wpScript = (WaypointsContainer)target;
+            wpScript = (WaypointsContainer_Car)target;
 
             if (GUI.changed)
             {
@@ -30,7 +30,7 @@ namespace cky.TrafficSystem
         {
 
             Event e = Event.current;
-            wpScript = (WaypointsContainer)target;
+            wpScript = (WaypointsContainer_Car)target;
 
             if (e != null)
             {
@@ -77,7 +77,7 @@ namespace cky.TrafficSystem
 
                         Vector3 newTilePosition = hit.point;
 
-                        WaypointsContainer[] tArray = GameObject.FindObjectsOfType<WaypointsContainer>();
+                        WaypointsContainer_Car[] tArray = GameObject.FindObjectsOfType<WaypointsContainer_Car>();
 
                         for (int f = 0; f < tArray.Length; f++)
                         {

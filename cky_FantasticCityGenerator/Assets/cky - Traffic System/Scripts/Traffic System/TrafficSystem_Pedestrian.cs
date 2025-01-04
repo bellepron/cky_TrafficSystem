@@ -13,7 +13,7 @@ namespace cky.TrafficSystem
     {
         public bool[] tsActive;
         public Vector3[] tf01;
-        public PedestrianWaypointsContainer[] tsParent;
+        public WaypointsContainer_Pedestrian[] tsParent;
         public bool[] tsOneway;
         public bool[] tsOnewayDoubleLine;
         public int[] tsSide;
@@ -27,7 +27,7 @@ namespace cky.TrafficSystem
         public float locateZ;
         public int side;
         public int node;
-        public PedestrianWaypointsContainer wayScript;
+        public WaypointsContainer_Pedestrian wayScript;
     }
     #endregion
 
@@ -41,7 +41,7 @@ namespace cky.TrafficSystem
         [Space(5)]
         public Transform player = null;
 
-        PedestrianWaypointsContainer[] _waypointContainers;
+        WaypointsContainer_Pedestrian[] _waypointContainers;
 
         [Space(10)]
         [Header("Pedestrian Prefabs")]
@@ -99,7 +99,7 @@ namespace cky.TrafficSystem
             player = GameObject.FindWithTag(Tags.Player)?.transform;
             if (player == null) player = Camera.main.transform;
 
-            _waypointContainers = FindObjectsOfType<PedestrianWaypointsContainer>();
+            _waypointContainers = FindObjectsOfType<WaypointsContainer_Pedestrian>();
 
             _isGameStarted = true;
         }
@@ -126,7 +126,7 @@ namespace cky.TrafficSystem
                 return;
             }
 
-            if (!_isGameStarted) _waypointContainers = FindObjectsOfType<PedestrianWaypointsContainer>();
+            if (!_isGameStarted) _waypointContainers = FindObjectsOfType<WaypointsContainer_Pedestrian>();
 
             int n = _waypointContainers.Length;
             for (int i = 0; i < n; i++)
@@ -268,7 +268,7 @@ namespace cky.TrafficSystem
 
         public void UpdateAllWayPoints()
         {
-            _waypointContainers = FindObjectsOfType<PedestrianWaypointsContainer>();
+            _waypointContainers = FindObjectsOfType<WaypointsContainer_Pedestrian>();
 
             for (int i = 0; i < _waypointContainers.Length; i++)
             {
@@ -295,7 +295,7 @@ namespace cky.TrafficSystem
 
             _wpData.tsActive = new bool[wpcLength * 2];
             _wpData.tf01 = new Vector3[wpcLength * 2];
-            _wpData.tsParent = new PedestrianWaypointsContainer[wpcLength * 2];
+            _wpData.tsParent = new WaypointsContainer_Pedestrian[wpcLength * 2];
             _wpData.tsOneway = new bool[wpcLength * 2];
             _wpData.tsOnewayDoubleLine = new bool[wpcLength * 2];
             _wpData.tsSide = new int[wpcLength * 2];
@@ -339,7 +339,7 @@ namespace cky.TrafficSystem
             }
         }
 
-        private void PlaceSpawnPoint(PedestrianWaypointsContainer f, int side, int node, float locate)
+        private void PlaceSpawnPoint(WaypointsContainer_Pedestrian f, int side, int node, float locate)
         {
             _wpDataSpawn.Add(new WpDataSpawnPedestrian
             {

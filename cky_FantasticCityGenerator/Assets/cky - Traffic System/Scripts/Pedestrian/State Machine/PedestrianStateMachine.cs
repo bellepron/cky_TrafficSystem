@@ -482,14 +482,14 @@ namespace cky.TrafficSystem
 
         [HideInInspector] public Transform atualWay;
         [HideInInspector] public int sideAtual = 0;
-        [HideInInspector] public PedestrianWaypointsContainer atualWayScript;
+        [HideInInspector] public WaypointsContainer_Pedestrian atualWayScript;
         Transform myOldWay;
 
         [HideInInspector]
         public int myOldSideAtual = 0;
 
         [HideInInspector]
-        public PedestrianWaypointsContainer myOldWayScript = null;
+        public WaypointsContainer_Pedestrian myOldWayScript = null;
 
         private Vector3 _avanceNode = Vector3.zero; //private Position where an additional and momentary node can be added
 
@@ -504,7 +504,7 @@ namespace cky.TrafficSystem
 
         public void Init()
         {
-            atualWayScript = atualWay.GetComponent<PedestrianWaypointsContainer>();
+            atualWayScript = atualWay.GetComponent<WaypointsContainer_Pedestrian>();
 
             DefineNewPath();
 
@@ -513,7 +513,7 @@ namespace cky.TrafficSystem
             distanceToNode = Vector3.Distance(atualWayScript.Node(sideAtual, currentNode), transform.position);
         }
 
-        public void TrafficSystemInit(int sideAtual, Transform atualWay, PedestrianWaypointsContainer atualWayScript, int currentNode, float distanceToSelfDestroy, Transform player, TrafficSystem_Pedestrian pedestrianTrafficSystem)
+        public void TrafficSystemInit(int sideAtual, Transform atualWay, WaypointsContainer_Pedestrian atualWayScript, int currentNode, float distanceToSelfDestroy, Transform player, TrafficSystem_Pedestrian pedestrianTrafficSystem)
         {
             this.sideAtual = sideAtual;
             this.atualWay = atualWay;

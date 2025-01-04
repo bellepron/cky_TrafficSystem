@@ -5,17 +5,17 @@ using UnityEngine;
 
 namespace cky.TrafficSystem
 {
-    [CustomEditor(typeof(PedestrianWaypointsContainer))]
+    [CustomEditor(typeof(WaypointsContainer_Pedestrian))]
 
     public class PedestrianWPEditor : Editor
     {
-        PedestrianWaypointsContainer wpScript;
+        WaypointsContainer_Pedestrian wpScript;
 
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
 
-            wpScript = (PedestrianWaypointsContainer)target;
+            wpScript = (WaypointsContainer_Pedestrian)target;
 
             if (GUI.changed)
             {
@@ -27,7 +27,7 @@ namespace cky.TrafficSystem
         void OnSceneGUI()
         {
             Event e = Event.current;
-            wpScript = (PedestrianWaypointsContainer)target;
+            wpScript = (WaypointsContainer_Pedestrian)target;
 
             if (e != null)
             {
@@ -63,7 +63,7 @@ namespace cky.TrafficSystem
 
                         Vector3 newTilePosition = hit.point;
 
-                        PedestrianWaypointsContainer[] tArray = GameObject.FindObjectsOfType<PedestrianWaypointsContainer>();
+                        WaypointsContainer_Pedestrian[] tArray = GameObject.FindObjectsOfType<WaypointsContainer_Pedestrian>();
 
                         for (int f = 0; f < tArray.Length; f++)
                         {
