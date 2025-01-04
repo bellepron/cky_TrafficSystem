@@ -322,9 +322,7 @@ namespace cky.TrafficSystem
                 }
                 else
                 {
-                    Debug.Log($"{brake2} - {behind}"); //***
-                                                       //status = StatusCar.waitingForAnotherVehicleToPass;
-                    brake = 0;
+                    status = StatusCar.waitingForAnotherVehicleToPass;
                 }
 
                 if (speed < 2 && (status != StatusCar.stoppedAtTrafficLights || status != StatusCar.waitingForAnotherVehicleToPass))
@@ -514,7 +512,7 @@ namespace cky.TrafficSystem
 
             rStop = hit.distance;
 
-            if (rStop > 0 && hit.transform.CompareTag("Stop"))
+            if (rStop > 0 && hit.transform.CompareTag(TagHelper.Crosswalk))
             {
                 if (hit.transform.TryGetComponent<Crosswalk>(out var crosswalk))
                 {
@@ -541,7 +539,7 @@ namespace cky.TrafficSystem
                 {
 
                 }
-                else if (hit.transform.CompareTag("Stop"))
+                else if (hit.transform.CompareTag(TagHelper.Crosswalk))
                 {
                     if (hit.transform.TryGetComponent<Crosswalk>(out var crosswalk))
                     {
