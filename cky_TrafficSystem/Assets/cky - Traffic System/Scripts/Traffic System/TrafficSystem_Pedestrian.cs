@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using System.Collections;
-using cky.GizmoHelper;
 using UnityEngine;
 using CKY_Pooling;
 
@@ -9,7 +7,7 @@ namespace cky.TrafficSystem
     #region Data Holder's
 
     [System.Serializable]
-    public class WpDataPedestrian
+    public class WpData_Pedestrian
     {
         public bool[] tsActive;
         public Vector3[] tf01;
@@ -31,102 +29,28 @@ namespace cky.TrafficSystem
     }
     #endregion
 
-    public class TrafficSystem_Pedestrian : MonoBehaviour
+    public class TrafficSystem_Pedestrian : TrafficSystem_Abstract
     {
-        struct Tags
-        {
-            public const string Player = "Player";
-        }
-
-        [Space(5)]
-        public Transform player = null;
-
         WaypointsContainer_Pedestrian[] _waypointContainers;
 
-        [Space(10)]
-        [Header("Pedestrian Prefabs")]
-        [SerializeField] Transform[] pedestrianPrefabs;
-
-        [Space(5)]
-        [Header("Around")]
-        [Range(0, 1000)][SerializeField] float aroundMin = 80;
-        [Range(0, 1000)][SerializeField] float aroundMax = 150;
-        ArrayList _spanwPoints;
         List<WpDataSpawnPedestrian> _wpDataSpawn;
-        WpDataPedestrian _wpData = new WpDataPedestrian();
+        WpData_Pedestrian _wpData = new WpData_Pedestrian();
 
-        [Space(5)]
-        [SerializeField] int nPedestrians;
-        [SerializeField] int maxPedestriansWithPlayer = 50;
-
-        [Space(5)]
-        [SerializeField] private float intervalLoadPedestrian = 1;
-        [SerializeField] private float minNodeDistanceToCreate = 10.0f;
-        [SerializeField] private float distanceToRepeat = 40.0f;
-
-        [Space(10)]
-        [SerializeField] private int skipping = 1;
-        [SerializeField] bool isClassic;
-        int _counterForSkipping = 0;
-
-        bool _isGameStarted;
-
-        [Space(15)]
-        [Header("Traffic Pedestrian Checker")]
-        [SerializeField] bool isPedestrianCheckerActive = true;
-        [SerializeField] float pedestrianCheckRadius = 5.0f;
-
-        [Space(15)]
-        [Header("Gizmos")]
-        [SerializeField] float gizmo_CircleOffset_Y = 0.5f;
-        [SerializeField] int gizmo_CircleSegmentCount = 360;
-        [SerializeField] Color gizmo_Color = Color.black;
-
-        [Space(15)]
-        [SerializeField] List<PedestrianStateMachine> currentPedestrians = new List<PedestrianStateMachine>();
-
-
-
-        public void SetPlayerAndStart(Transform playerTr)
+        protected override void LoadUnits()
         {
-            player = playerTr;
+            currentUnits = new List<ITrafficSystemUnit>();
 
-            LoadPedestrians();
-        }
-
-        private void Awake()
-        {
-            player = GameObject.FindWithTag(Tags.Player)?.transform;
-            if (player == null) player = Camera.main.transform;
-
-            _waypointContainers = FindObjectsOfType<WaypointsContainer_Pedestrian>();
-
-            _isGameStarted = true;
-        }
-
-        void Start()
-        {
-            if (!player)
-            {
-                Debug.LogWarning("You have not set the player in the Traffic System on Inspector. This drastically decreases performance in big cities");
-            }
-            else
-            {
-                LoadPedestrians();
-            }
-        }
-
-        public void LoadPedestrians()
-        {
-            currentPedestrians = new List<PedestrianStateMachine>();
-
-            if (maxPedestriansWithPlayer == 0)
+            if (maxUnitsWithPlayer == 0)
             {
                 Debug.LogError("You need to set the maximum number of pedestrians in the Traffic System");
                 return;
             }
 
-            if (!_isGameStarted) _waypointContainers = FindObjectsOfType<WaypointsContainer_Pedestrian>();
+            if (!_isStarted)
+            {
+                _waypointContainers = FindObjectsOfType<WaypointsContainer_Pedestrian>();
+                _isStarted = true;
+            }
 
             int n = _waypointContainers.Length;
             for (int i = 0; i < n; i++)
@@ -135,7 +59,7 @@ namespace cky.TrafficSystem
 
             UpdateAllWayPoints();
 
-            nPedestrians = currentPedestrians.Count;
+            nUnits = currentUnits.Count;
 
             DeffineDirection();
 
@@ -207,32 +131,34 @@ namespace cky.TrafficSystem
                 }
             }
 
-            if (player && Application.isPlaying)
+            if (Player && Application.isPlaying)
             {
-                InvokeRepeating(nameof(LoadPedestrians2), 0f, intervalLoadPedestrian);
+                InvokeRepeating(nameof(CreateUnits), 0f, intervalLoad);
             }
             else
             {
-                LoadPedestrians2();
+                CreateUnits();
             }
         }
-        public void LoadPedestrians2()
-        {
-            if (!player) return;
 
-            nPedestrians = currentPedestrians.Count;
+
+        protected override void CreateUnits()
+        {
+            if (!Player) return;
+
+            nUnits = currentUnits.Count;
 
             PedestrianStateMachine p_sm;
 
             int n = _wpDataSpawn.Count;
             bool invert = (Random.Range(1, 20) < 10);
 
-            var posPlayer = player.position; posPlayer.y = 0.0f;
+            var posPlayer = Player.position; posPlayer.y = 0.0f;
             for (int j = 0; j < n; j++)
             {
                 int i = (invert) ? n - 1 - j : j;
 
-                if (nPedestrians >= maxPedestriansWithPlayer)
+                if (nUnits >= maxUnitsWithPlayer)
                 {
                     break;
                 }
@@ -250,15 +176,15 @@ namespace cky.TrafficSystem
                     var wpDataSpawn_WayScript = wpDataSpawn.wayScript;
                     var aw = wpDataSpawn_WayScript.transform;
                     var sa = wpDataSpawn_Side;
-                    if (!ThereIsNoTrafficPedestrian_InCheckRadius(wpDataSpawn.position, aw, sa))
+                    if (!ThereIsNoUnit_InCheckRadius(wpDataSpawn.position, aw, sa))
                     {
-                        p_sm = CKY_PoolManager.Spawn(pedestrianPrefabs[Random.Range(0, pedestrianPrefabs.Length)], wpDataSpawn.position + Vector3.up * 0.1f, wpDataSpawn.rotation).GetComponent<PedestrianStateMachine>();
+                        p_sm = CKY_PoolManager.Spawn(prefabs[Random.Range(0, prefabs.Length)], wpDataSpawn.position + Vector3.up * 0.1f, wpDataSpawn.rotation).GetComponent<PedestrianStateMachine>();
 
-                        AddToCurrentPedestrians(p_sm);
+                        AddToCurrentUnits(p_sm);
 
-                        p_sm.TrafficSystemInit(sa, aw, wpDataSpawn_WayScript, wpDataSpawn_Node + 1, aroundMax, player, this);
+                        p_sm.TrafficSystemInit(sa, aw, wpDataSpawn_WayScript, wpDataSpawn_Node + 1, aroundMax, Player, this);
 
-                        nPedestrians++;
+                        nUnits++;
                     }
                 }
             }
@@ -266,7 +192,7 @@ namespace cky.TrafficSystem
 
 
 
-        public void UpdateAllWayPoints()
+        public override void UpdateAllWayPoints()
         {
             _waypointContainers = FindObjectsOfType<WaypointsContainer_Pedestrian>();
 
@@ -352,7 +278,7 @@ namespace cky.TrafficSystem
             });
         }
 
-        public void DeffineDirection()
+        public override void DeffineDirection()
         {
             //Inverse Nodes
             for (int i = 0; i < _waypointContainers.Length; i++)
@@ -360,58 +286,5 @@ namespace cky.TrafficSystem
 
             UpdateAllWayPoints();
         }
-
-        public bool ThereIsNoTrafficPedestrian_InCheckRadius(Vector3 position, Transform atualWay, int sideAtual)
-        {
-            if (!isPedestrianCheckerActive) return false;
-            foreach (var p in currentPedestrians)
-            {
-                var inRange = Vector3.Distance(p.transform.position, position) < pedestrianCheckRadius;
-
-                if (inRange)
-                {
-                    if (atualWay == p.atualWay && sideAtual == p.sideAtual)
-                    {
-                        return true;
-                    }
-                }
-            }
-
-            return false;
-        }
-
-        private float ckyRandom(float b) => UnityEngine.Random.Range(-b, b);
-
-        private bool ckyPerThousand(int percentage)
-        {
-            if (percentage > UnityEngine.Random.Range(0, 1000))
-                return true;
-
-            return false;
-        }
-
-        private void AddToCurrentPedestrians(PedestrianStateMachine p)
-        {
-            if (!currentPedestrians.Contains(p)) currentPedestrians.Add(p);
-        }
-
-        public void RemoveFromCurrentPedestrians(PedestrianStateMachine p)
-        {
-            if (currentPedestrians.Contains(p)) currentPedestrians.Remove(p);
-        }
-
-
-
-        #region Gizmos
-
-        void OnDrawGizmos()
-        {
-            if (!player) return;
-
-            GizmoHelper_CKY.DrawCircle(player.transform, new Vector3(0, gizmo_CircleOffset_Y, 0), aroundMin, gizmo_CircleSegmentCount, gizmo_Color);
-            GizmoHelper_CKY.DrawCircle(player.transform, new Vector3(0, gizmo_CircleOffset_Y, 0), aroundMax, gizmo_CircleSegmentCount, gizmo_Color);
-        }
-
-        #endregion
     }
 }

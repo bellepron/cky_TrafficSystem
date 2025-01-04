@@ -44,22 +44,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc223ff4497c23f41bfdc0622059fc74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  pedestrianPrefabs:
+  <Player>k__BackingField: {fileID: 0}
+  prefabs:
   - {fileID: 4282665674783342, guid: 133fbdab97d328d40ab64f2f5d24104b, type: 3}
   - {fileID: 4282665674783342, guid: c109cf36f99fd2f41b3dadbb986f2b67, type: 3}
-  aroundMin: 80
-  aroundMax: 150
-  nPedestrians: 0
-  maxPedestriansWithPlayer: 30
-  intervalLoadPedestrian: 1
+  intervalLoad: 1
   minNodeDistanceToCreate: 10
   distanceToRepeat: 40
+  aroundMin: 80
+  aroundMax: 150
   skipping: 1
   isClassic: 1
-  isPedestrianCheckerActive: 1
-  pedestrianCheckRadius: 5
+  nUnits: 0
+  maxUnitsWithPlayer: 50
+  _isStarted: 0
+  isCheckerActive: 1
+  checkRadius: 5
   gizmo_CircleOffset_Y: 0.5
   gizmo_CircleSegmentCount: 360
   gizmo_Color: {r: 0, g: 0, b: 0, a: 1}
+  player: {fileID: 0}
   currentPedestrians: []

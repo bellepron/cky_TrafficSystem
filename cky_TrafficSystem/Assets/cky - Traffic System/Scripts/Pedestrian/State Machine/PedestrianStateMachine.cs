@@ -20,7 +20,7 @@ namespace cky.TrafficSystem
         public const string Car = "Car";
     }
 
-    public class PedestrianStateMachine : BaseStateMachine/*, IHitable, IChaosable*/
+    public class PedestrianStateMachine : BaseStateMachine, ITrafficSystemUnit/*, IHitable, IChaosable*/
     {
         [field: SerializeField] public bool IsAlive { get; set; }
 
@@ -45,7 +45,7 @@ namespace cky.TrafficSystem
         public Crosswalk PreviousCrosswalk;
         public Crosswalk OnCrosswalk;
 
-        public TrafficSystem_Pedestrian PedestrianTrafficSystem { get; set; }
+        public TrafficSystem_Abstract TrafficSystem { get; set; }
 
         [SerializeField] Collider[] targetsInViewRadius;
         [SerializeField] List<PedestrianStateMachine> _pedestrians = new List<PedestrianStateMachine>();
@@ -59,6 +59,12 @@ namespace cky.TrafficSystem
         bool _isFirstCreation = true;
 
         //SoundManager SoundManager;
+
+        public Vector3 Position => transform.position;
+        public int SideAtual => sideAtual;
+        public Transform AtualWay => atualWay;
+
+
 
         public void AgentStop(bool b) { if (Agent.isActiveAndEnabled) Agent.isStopped = b; }
         public void AgentMoveSpeed(float speed) => Agent.speed = speed;
@@ -482,14 +488,14 @@ namespace cky.TrafficSystem
 
         [HideInInspector] public Transform atualWay;
         [HideInInspector] public int sideAtual = 0;
-        [HideInInspector] public WaypointsContainer_Pedestrian atualWayScript;
+        [HideInInspector] public WaypointsContainer_Abstract atualWayScript;
         Transform myOldWay;
 
         [HideInInspector]
         public int myOldSideAtual = 0;
 
         [HideInInspector]
-        public WaypointsContainer_Pedestrian myOldWayScript = null;
+        public WaypointsContainer_Abstract myOldWayScript = null;
 
         private Vector3 _avanceNode = Vector3.zero; //private Position where an additional and momentary node can be added
 
@@ -513,7 +519,7 @@ namespace cky.TrafficSystem
             distanceToNode = Vector3.Distance(atualWayScript.Node(sideAtual, currentNode), transform.position);
         }
 
-        public void TrafficSystemInit(int sideAtual, Transform atualWay, WaypointsContainer_Pedestrian atualWayScript, int currentNode, float distanceToSelfDestroy, Transform player, TrafficSystem_Pedestrian pedestrianTrafficSystem)
+        public void TrafficSystemInit(int sideAtual, Transform atualWay, WaypointsContainer_Abstract atualWayScript, int currentNode, float distanceToSelfDestroy, Transform player, TrafficSystem_Abstract trafficSystem)
         {
             this.sideAtual = sideAtual;
             this.atualWay = atualWay;
@@ -521,7 +527,7 @@ namespace cky.TrafficSystem
             this.currentNode = currentNode;
             this.distanceToSelfDestroy = distanceToSelfDestroy;
             this.player = player;
-            this.PedestrianTrafficSystem = pedestrianTrafficSystem;
+            this.TrafficSystem = trafficSystem;
 
             Init();
         }
@@ -632,7 +638,7 @@ namespace cky.TrafficSystem
 
         void OnDisable()
         {
-            PedestrianTrafficSystem?.RemoveFromCurrentPedestrians(this);
+            TrafficSystem?.RemoveFromCurrentUnits(this);
         }
 
         #endregion

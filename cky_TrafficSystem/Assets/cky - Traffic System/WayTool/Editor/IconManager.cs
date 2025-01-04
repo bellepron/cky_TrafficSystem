@@ -1,7 +1,7 @@
-﻿using System;
-using System.Reflection;
-using UnityEditor;
+﻿using System.Reflection;
 using UnityEngine;
+using UnityEditor;
+using System;
 
 namespace ICON.Utilities
 {
@@ -16,7 +16,7 @@ namespace ICON.Utilities
         Red,
         Purple
     }
-    
+
     public static class GameObjectExtensions
     {
         public static void SetIcon(this GameObject gameObject, LabelIcon labelIcon)
@@ -24,15 +24,15 @@ namespace ICON.Utilities
             IconManager.SetIcon(gameObject, $"sv_label_{(int)labelIcon}");
         }
     }
-    
+
     public static class IconManager
     {
         private static MethodInfo setIconForObjectMethodInfo;
-   
+
         public static void SetIcon(GameObject gameObject, string contentName)
         {
             GUIContent iconContent = EditorGUIUtility.IconContent(contentName);
-            SetIconForObject(gameObject, (Texture2D) iconContent.image);
+            SetIconForObject(gameObject, (Texture2D)iconContent.image);
         }
 
         public static void SetIconForObject(GameObject obj, Texture2D icon)
@@ -41,10 +41,10 @@ namespace ICON.Utilities
             if (setIconForObjectMethodInfo == null)
             {
                 Type type = typeof(EditorGUIUtility);
-                setIconForObjectMethodInfo =  type.GetMethod("SetIconForObject", BindingFlags.Static | BindingFlags.NonPublic);
+                setIconForObjectMethodInfo = type.GetMethod("SetIconForObject", BindingFlags.Static | BindingFlags.NonPublic);
             }
 
-            setIconForObjectMethodInfo.Invoke(null, new object[] {obj, icon});
+            setIconForObjectMethodInfo.Invoke(null, new object[] { obj, icon });
         }
     }
 

@@ -7,7 +7,7 @@ namespace cky.TrafficSystem
 {
     [CustomEditor(typeof(WaypointsContainer_Pedestrian))]
 
-    public class PedestrianWPEditor : Editor
+    public class WaypointEditor_Pedestrian : Editor
     {
         WaypointsContainer_Pedestrian wpScript;
 

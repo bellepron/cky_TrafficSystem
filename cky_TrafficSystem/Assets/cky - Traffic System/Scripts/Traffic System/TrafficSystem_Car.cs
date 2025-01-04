@@ -1,133 +1,57 @@
 ﻿using System.Collections.Generic;
-using System.Collections;
-using cky.GizmoHelper;
 using UnityEngine;
 using CKY_Pooling;
 
 namespace cky.TrafficSystem
 {
-    public class TrafficSystem_Car : MonoBehaviour
+    #region Data Holder's
+
+    [System.Serializable]
+    public class WpData_Car
     {
-        #region Data Holder's
+        public bool[] tsActive;
+        public Vector3[] tf01;
+        public WaypointsContainer_Car[] tsParent;
+        public bool[] tsOneway;
+        public bool[] tsOnewayDoubleLine;
+        public int[] tsSide;
+    }
 
-        [System.Serializable]
-        public class WpDataCar
-        {
-            public bool[] tsActive;
-            public Vector3[] tf01;
-            public WaypointsContainer_Car[] tsParent;
-            public bool[] tsOneway;
-            public bool[] tsOnewayDoubleLine;
-            public int[] tsSide;
-        }
+    [System.Serializable]
+    public class WpDataSpawnCar
+    {
+        public Vector3 position;
+        public Quaternion rotation;
+        public float locateZ;
+        public int side;
+        public int node;
+        public WaypointsContainer_Car wayScript;
+    }
 
-        [System.Serializable]
-        public class WpDataSpawnCar
-        {
-            public Vector3 position;
-            public Quaternion rotation;
-            public float locateZ;
-            public int side;
-            public int node;
-            public WaypointsContainer_Car wayScript;
-        }
+    #endregion
 
-        #endregion
-        struct Tags
-        {
-            public const string Player = "Player";
-        }
-
-        [Space(5)]
-        public Transform player = null;
-
+    public class TrafficSystem_Car : TrafficSystem_Abstract
+    {
         WaypointsContainer_Car[] _waypointContainers;
 
-        [Space(10)]
-        [Header("Car Prefabs")]
-        public Transform[] IaCars;
-
-        [Space(5)]
-        [Header("Around")]
-        [Range(0, 1000)][SerializeField] float aroundMin = 80;
-        [Range(0, 1000)][SerializeField] float aroundMax = 150;
-        ArrayList _spawnPoints;
         List<WpDataSpawnCar> _wpDataSpawn;
-        WpDataCar _wpData = new WpDataCar();
+        WpData_Car _wpData = new WpData_Car();
 
-        [Space(5)]
-        [SerializeField] int nVehicles = 0;
-        [SerializeField] int maxVehiclesWithPlayer = 50;
-
-        [Space(5)]
-        [SerializeField] private float intervalLoadCar = 1;
-        [SerializeField] private float minNodeDistanceToCreate = 10.0f;
-        [SerializeField] private float distanceToRepeat = 40.0f;
-
-        [Space(10)]
-        [SerializeField] private int skipping = 1;
-        [SerializeField] bool isClassic;
-        int _counterForSkipping = 0;
-
-        bool _isGameStarted;
-
-        [Space(15)]
-        [Header("Traffic Car Checker")]
-        [SerializeField] bool isTrafficCarCheckerActive = true;
-        [SerializeField] float trafficCarCheckRadius = 5.0f;
-
-        [Space(15)]
-        [Header("Gizmos")]
-        [SerializeField] float gizmo_CircleOffset_Y = 0.5f;
-        [SerializeField] int gizmo_CircleSegmentCount = 360;
-        [SerializeField] Color gizmo_Color = Color.black;
-
-        [Space(15)]
-        [SerializeField] List<TrafficCar> currentTrafficCars = new List<TrafficCar>();
-
-
-
-        public void SetPlayerAndStart(Transform playerTr)
+        protected override void LoadUnits()
         {
-            player = playerTr;
+            currentUnits = new List<ITrafficSystemUnit>();
 
-            LoadCars();
-        }
-
-        private void Awake()
-        {
-            player = GameObject.FindWithTag(Tags.Player)?.transform;
-            if (player == null) player = Camera.main.transform;
-
-            _waypointContainers = FindObjectsOfType<WaypointsContainer_Car>();
-
-            _isGameStarted = true;
-        }
-
-        void Start()
-        {
-            if (!player)
-            {
-                Debug.LogWarning("You have not set the player in the Traffic System on Inspector. This drastically decreases performance in big cities");
-            }
-            else
-            {
-                LoadCars();
-            }
-        }
-
-
-        public void LoadCars()
-        {
-            currentTrafficCars = new List<TrafficCar>();
-
-            if (maxVehiclesWithPlayer == 0)
+            if (maxUnitsWithPlayer == 0)
             {
                 Debug.LogError("You need to set the maximum number of vehicles in the Traffic System");
                 return;
             }
 
-            if (!_isGameStarted) _waypointContainers = FindObjectsOfType<WaypointsContainer_Car>();
+            if (!_isStarted)
+            {
+                _waypointContainers = FindObjectsOfType<WaypointsContainer_Car>();
+                _isStarted = true;
+            }
 
             int n = _waypointContainers.Length;
             for (int i = 0; i < n; i++)
@@ -136,7 +60,7 @@ namespace cky.TrafficSystem
 
             UpdateAllWayPoints();
 
-            nVehicles = currentTrafficCars.Count;
+            nUnits = currentUnits.Count;
 
             DeffineDirection();
 
@@ -206,33 +130,33 @@ namespace cky.TrafficSystem
                 }
             }
 
-            if (player && Application.isPlaying)
+            if (Player && Application.isPlaying)
             {
-                InvokeRepeating(nameof(LoadCars2), 0f, intervalLoadCar);
+                InvokeRepeating(nameof(CreateUnits), 0f, intervalLoad);
             }
             else
             {
-                LoadCars2();
+                CreateUnits();
             }
         }
 
-        public void LoadCars2()
+        protected override void CreateUnits()
         {
-            if (!player) return;
+            if (!Player) return;
 
-            nVehicles = currentTrafficCars.Count;
+            nUnits = currentUnits.Count;
 
             TrafficCar car;
 
             int n = _wpDataSpawn.Count;
             bool invert = (Random.Range(1, 20) < 10);
 
-            var posPlayer = player.position; posPlayer.y = 0.0f;
+            var posPlayer = Player.position; posPlayer.y = 0.0f;
             for (int j = 0; j < n; j++)
             {
                 int i = (invert) ? n - 1 - j : j;
 
-                if (nVehicles >= maxVehiclesWithPlayer)
+                if (nUnits >= maxUnitsWithPlayer)
                 {
                     break;
                 }
@@ -250,15 +174,15 @@ namespace cky.TrafficSystem
                     var wpDataSpawn_WayScript = wpDataSpawn.wayScript;
                     var aw = wpDataSpawn_WayScript.transform;
                     var sa = wpDataSpawn_Side;
-                    if (!ThereIsNoTrafficCar_InCheckRadius(wpDataSpawn.position, aw, sa))
+                    if (!ThereIsNoUnit_InCheckRadius(wpDataSpawn.position, aw, sa))
                     {
-                        car = CKY_PoolManager.Spawn(IaCars[Random.Range(0, IaCars.Length)], wpDataSpawn.position + Vector3.up * 0.1f, wpDataSpawn.rotation).GetComponent<TrafficCar>();
+                        car = CKY_PoolManager.Spawn(prefabs[Random.Range(0, prefabs.Length)], wpDataSpawn.position + Vector3.up * 0.1f, wpDataSpawn.rotation).GetComponent<TrafficCar>();
 
-                        AddToCurrentTrafficCar(car);
+                        AddToCurrentUnits(car);
 
-                        car.TrafficSystemInit(sa, aw, wpDataSpawn_WayScript, wpDataSpawn_Node + 1, aroundMax, player, this);
+                        car.TrafficSystemInit(sa, aw, wpDataSpawn_WayScript, wpDataSpawn_Node + 1, aroundMax, Player, this);
 
-                        nVehicles++;
+                        nUnits++;
                     }
                 }
             }
@@ -266,7 +190,7 @@ namespace cky.TrafficSystem
 
 
 
-        public void UpdateAllWayPoints()
+        public override void UpdateAllWayPoints()
         {
             _waypointContainers = FindObjectsOfType<WaypointsContainer_Car>();
 
@@ -353,68 +277,13 @@ namespace cky.TrafficSystem
             });
         }
 
-        public void DeffineDirection()
+        public override void DeffineDirection()
         {
             //Inverse Nodes
             for (int i = 0; i < _waypointContainers.Length; i++)
-                _waypointContainers[i].InvertNodesDirection(0);
+                _waypointContainers[i].InvertNodesDirection();
 
             UpdateAllWayPoints();
         }
-
-        public bool ThereIsNoTrafficCar_InCheckRadius(Vector3 position, Transform atualWay, int sideAtual)
-        {
-            if (!isTrafficCarCheckerActive) return false;
-
-            foreach (var c in currentTrafficCars)
-            {
-                var inRange = Vector3.Distance(c.transform.position, position) < trafficCarCheckRadius;
-
-                if (inRange)
-                {
-                    if (atualWay == c.atualWay && sideAtual == c.sideAtual)
-                    {
-                        return true;
-                    }
-
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        private float ckyRandom(float b) => UnityEngine.Random.Range(-b, b);
-        private bool ckyPerThousand(int percentage)
-        {
-            if (percentage > UnityEngine.Random.Range(0, 1000))
-                return true;
-
-            return false;
-        }
-
-        private void AddToCurrentTrafficCar(TrafficCar car)
-        {
-            if (!currentTrafficCars.Contains(car)) currentTrafficCars.Add(car);
-        }
-
-        public void RemoveFromCurrentTrafficCar(TrafficCar car)
-        {
-            if (currentTrafficCars.Contains(car)) currentTrafficCars.Remove(car);
-        }
-
-
-
-        #region Gizmos
-
-        void OnDrawGizmos()
-        {
-            if (!player) return;
-
-            GizmoHelper_CKY.DrawCircle(player.transform, new Vector3(0, gizmo_CircleOffset_Y, 0), aroundMin, gizmo_CircleSegmentCount, gizmo_Color);
-            GizmoHelper_CKY.DrawCircle(player.transform, new Vector3(0, gizmo_CircleOffset_Y, 0), aroundMax, gizmo_CircleSegmentCount, gizmo_Color);
-        }
-
-        #endregion
     }
 }

@@ -4,7 +4,7 @@ using CKY_Pooling;
 
 namespace cky.TrafficSystem
 {
-    public class TrafficCar : MonoBehaviour
+    public class TrafficCar : MonoBehaviour, ITrafficSystemUnit
     {
         #region Variables
 
@@ -55,12 +55,12 @@ namespace cky.TrafficSystem
 
         [HideInInspector] public Transform atualWay;
         [HideInInspector] public int sideAtual = 0;
-        [HideInInspector] public WaypointsContainer_Car atualWayScript;
+        [HideInInspector] public WaypointsContainer_Abstract atualWayScript;
         [HideInInspector] public bool nodeSteerCarefully = false;
         [HideInInspector] public bool nodeSteerCarefully2 = false;
         [HideInInspector] public Transform myOldWay;
         [HideInInspector] public int myOldSideAtual = 0;
-        [HideInInspector] public WaypointsContainer_Car myOldWayScript = null;
+        [HideInInspector] public WaypointsContainer_Abstract myOldWayScript = null;
         private Vector3 _avanceNode = Vector3.zero;
 
         private float countTimeToSignal = 0;
@@ -74,11 +74,19 @@ namespace cky.TrafficSystem
         Transform cameraTr;
 
 
-        [HideInInspector] public TrafficSystem_Car trafficSystem;
+        [HideInInspector] public TrafficSystem_Abstract TrafficSystem { get; set; }
 
         float distanceToSelfDestroy = 0;
 
         bool _isFirstCreation = true;
+
+
+        private bool insideSemaphore;
+        public bool INSIDE { get { return insideSemaphore; } set { insideSemaphore = value; } }
+
+        public Vector3 Position => transform.position;
+        public int SideAtual => sideAtual;
+        public Transform AtualWay => atualWay;
 
 
 
@@ -109,7 +117,7 @@ namespace cky.TrafficSystem
             MoveCar();
         }
 
-        public void TrafficSystemInit(int sideAtual, Transform atualWay, WaypointsContainer_Car atualWayScript, int currentNode, float distanceToSelfDestroy, Transform player, TrafficSystem_Car trafficSystem)
+        public void TrafficSystemInit(int sideAtual, Transform atualWay, WaypointsContainer_Abstract atualWayScript, int currentNode, float distanceToSelfDestroy, Transform player, TrafficSystem_Abstract trafficSystem)
         {
             nodeSteerCarefully = false;
             nodeSteerCarefully2 = false;
@@ -124,7 +132,7 @@ namespace cky.TrafficSystem
             this.currentNode = currentNode;
             this.distanceToSelfDestroy = distanceToSelfDestroy;
             this.player = player;
-            this.trafficSystem = trafficSystem;
+            this.TrafficSystem = trafficSystem;
 
             Init();
 
@@ -146,12 +154,11 @@ namespace cky.TrafficSystem
         {
             return atualWayScript.Node(sideAtual, currentNode);
         }
-
-        bool CheckBookAllPathOptions(WaypointsContainer_Car wayScript, int side)
+        bool CheckBookAllPathOptions(WaypointsContainer_Abstract wayScript, int side)
         {
             int total;
             int wSide;
-            WaypointsContainer_Car wScript;
+            WaypointsContainer_Abstract wScript;
 
             total = (side == 0) ? wayScript.nextWay0.Length : wayScript.nextWay1.Length;
 
@@ -183,11 +190,11 @@ namespace cky.TrafficSystem
             return true;
         }
 
-        bool BookAllPathOptions(WaypointsContainer_Car wayScript, int side, bool book = true)
+        bool BookAllPathOptions(WaypointsContainer_Abstract wayScript, int side, bool book = true)
         {
             int total;
             int wSide;
-            WaypointsContainer_Car wScript;
+            WaypointsContainer_Abstract wScript;
 
             total = (side == 0) ? wayScript.nextWay0.Length : wayScript.nextWay1.Length;
 
@@ -477,10 +484,6 @@ namespace cky.TrafficSystem
             return behind;
         }
 
-
-        private bool insideSemaphore;
-        public bool INSIDE { get { return insideSemaphore; } set { insideSemaphore = value; } }
-
         float FixedRaycasts()
         {
             RaycastHit hit;
@@ -674,7 +677,7 @@ namespace cky.TrafficSystem
 
         public void SelfDestructWhenAwayFromThePlayerInit()
         {
-            if (trafficSystem && player)
+            if (TrafficSystem && player)
             {
                 if (distanceToSelfDestroy == 0)
                 {
@@ -707,7 +710,7 @@ namespace cky.TrafficSystem
         private void OnDisable()
         {
             _isActiveOnScene = false;
-            trafficSystem?.RemoveFromCurrentTrafficCar(this);
+            TrafficSystem?.RemoveFromCurrentUnits(this);
         }
 
 

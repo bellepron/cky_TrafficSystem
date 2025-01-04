@@ -44,23 +44,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54bc335c5f77d9541b60c9f4e3b08758, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  IaCars:
+  <Player>k__BackingField: {fileID: 0}
+  prefabs:
   - {fileID: 209460741863633675, guid: 561cae13d50ff5846ab86c75d074564a, type: 3}
   - {fileID: 5300159004796472821, guid: 237c70c0d92b8ea41bcebfebbb17c22f, type: 3}
   - {fileID: 1165125673604860485, guid: 3e35c579794b4c944a5e940fb84f9a29, type: 3}
   - {fileID: 8285849703329797012, guid: 87da159a55ff1de4bb11617df5a5a14c, type: 3}
-  aroundMin: 80
-  aroundMax: 150
-  nVehicles: 0
-  maxVehiclesWithPlayer: 30
-  intervalLoadCar: 1
+  intervalLoad: 1
   minNodeDistanceToCreate: 10
   distanceToRepeat: 40
+  aroundMin: 80
+  aroundMax: 150
   skipping: 1
   isClassic: 1
-  isTrafficCarCheckerActive: 1
-  trafficCarCheckRadius: 15
+  nUnits: 0
+  maxUnitsWithPlayer: 50
+  _isStarted: 0
+  isCheckerActive: 1
+  checkRadius: 5
   gizmo_CircleOffset_Y: 0.5
   gizmo_CircleSegmentCount: 360
   gizmo_Color: {r: 0, g: 0, b: 0, a: 1}

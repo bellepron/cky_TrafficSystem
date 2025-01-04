@@ -276,13 +276,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc6c86d7450870a41b0e213b85f9c5d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  noPedestrian: 0
-  oneway: 0
-  doubleLine: 0
-  width: 1
-  doNotConnectTo:
-  - {fileID: 603432619}
-  limitNodeDistance: 30
   waypoints:
   - {fileID: 568656630}
   - {fileID: 615292367}
@@ -292,30 +285,36 @@ MonoBehaviour:
   - {fileID: 1979249841}
   nextWay1:
   - {fileID: 498274283}
-  nextWaySide0: 00000000
-  nextWaySide1: 00000000
-  rightHand: 0
-  bloked: 0
-  nodeZeroCar0: {fileID: 0}
-  nodeZeroCar1: {fileID: 0}
-  nodeZeroWay0: {fileID: 0}
-  nodeZeroWay1: {fileID: 0}
   directConnectSide:
   - {fileID: 0}
   - {fileID: 0}
+  nextWaySide0: 00000000
+  nextWaySide1: 00000000
+  bloked: 0
+  nodeZero0: {fileID: 0}
+  nodeZero1: {fileID: 0}
+  nodeZeroWay0: {fileID: 0}
+  nodeZeroWay1: {fileID: 0}
+  oneway: 0
+  doubleLine: 0
+  width: 1
+  limitNodeDistance: 30
+  doNotConnectTo:
+  - {fileID: 603432619}
+  noPedestrian: 0
   wpData:
     tsActive: 01010101010101010101
     tf01:
     - {x: 15.3, y: 0, z: -53.859997}
     - {x: 13.3, y: 0, z: 2.24}
-    - {x: 12.370011, y: 0, z: -63.491386}
-    - {x: -38.46393, y: 0, z: 8.60407}
-    - {x: 5.8999996, y: 0, z: 15.18}
-    - {x: -8.1, y: 0, z: 13.18}
+    - {x: 12.822036, y: 0, z: -57.051216}
+    - {x: -38.769264, y: 0, z: 9.450691}
+    - {x: 5.6067395, y: 0, z: 13.714287}
+    - {x: -8.20674, y: 0, z: 13.185713}
     - {x: -33, y: 0, z: 13.18}
     - {x: -12.8, y: 0, z: 15.18}
-    - {x: 13.211471, y: 0, z: 7.456265}
-    - {x: 7.6685286, y: 0, z: 11.033735}
+    - {x: 11.667148, y: 0, z: 6.9336267}
+    - {x: 7.512853, y: 0, z: 11.656374}
     tsParent:
     - {fileID: 26651368}
     - {fileID: 26651368}
@@ -378,11 +377,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1621816067434a244a9dfeb78dfce2ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oneway: 0
-  doubleLine: 0
-  width: 2
-  doNotConnectTo: []
-  limitNodeDistance: 30
   waypoints:
   - {fileID: 13779456}
   - {fileID: 1771901028}
@@ -394,16 +388,21 @@ MonoBehaviour:
   nextWay1:
   - {fileID: 931247520}
   - {fileID: 1706750795}
-  nextWaySide0: 010000000000000000000000
-  nextWaySide1: 0100000001000000
-  bloked: 0
-  nodeZeroCar0: {fileID: 0}
-  nodeZeroCar1: {fileID: 0}
-  nodeZeroWay0: {fileID: 0}
-  nodeZeroWay1: {fileID: 0}
   directConnectSide:
   - {fileID: 0}
   - {fileID: 0}
+  nextWaySide0: 010000000000000000000000
+  nextWaySide1: 0100000001000000
+  bloked: 0
+  nodeZero0: {fileID: 0}
+  nodeZero1: {fileID: 0}
+  nodeZeroWay0: {fileID: 0}
+  nodeZeroWay1: {fileID: 0}
+  oneway: 0
+  doubleLine: 0
+  width: 2
+  limitNodeDistance: 30
+  doNotConnectTo: []
   wpData:
     tsActive: 010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101
     tf01:
@@ -614,11 +613,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1621816067434a244a9dfeb78dfce2ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oneway: 0
-  doubleLine: 0
-  width: 2
-  doNotConnectTo: []
-  limitNodeDistance: 30
   waypoints:
   - {fileID: 2050570784}
   - {fileID: 622648510}
@@ -638,16 +632,21 @@ MonoBehaviour:
   - {fileID: 1334531368}
   - {fileID: 1436589965}
   - {fileID: 2018238891}
-  nextWaySide0: 00000000
-  nextWaySide1: 000000000000000001000000
-  bloked: 0
-  nodeZeroCar0: {fileID: 0}
-  nodeZeroCar1: {fileID: 0}
-  nodeZeroWay0: {fileID: 0}
-  nodeZeroWay1: {fileID: 0}
   directConnectSide:
   - {fileID: 0}
   - {fileID: 0}
+  nextWaySide0: 00000000
+  nextWaySide1: 000000000000000001000000
+  bloked: 0
+  nodeZero0: {fileID: 0}
+  nodeZero1: {fileID: 0}
+  nodeZeroWay0: {fileID: 0}
+  nodeZeroWay1: {fileID: 0}
+  oneway: 0
+  doubleLine: 0
+  width: 2
+  limitNodeDistance: 30
+  doNotConnectTo: []
   wpData:
     tsActive: 010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101
     tf01:
@@ -934,11 +933,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1621816067434a244a9dfeb78dfce2ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oneway: 0
-  doubleLine: 0
-  width: 2
-  doNotConnectTo: []
-  limitNodeDistance: 30
   waypoints:
   - {fileID: 929485278}
   - {fileID: 1432808781}
@@ -956,16 +950,21 @@ MonoBehaviour:
   - {fileID: 2122655125}
   nextWay1:
   - {fileID: 1189615032}
-  nextWaySide0: 0100000001000000
-  nextWaySide1: 01000000
-  bloked: 0
-  nodeZeroCar0: {fileID: 0}
-  nodeZeroCar1: {fileID: 0}
-  nodeZeroWay0: {fileID: 0}
-  nodeZeroWay1: {fileID: 0}
   directConnectSide:
   - {fileID: 0}
   - {fileID: 0}
+  nextWaySide0: 0100000001000000
+  nextWaySide1: 01000000
+  bloked: 0
+  nodeZero0: {fileID: 0}
+  nodeZero1: {fileID: 0}
+  nodeZeroWay0: {fileID: 0}
+  nodeZeroWay1: {fileID: 0}
+  oneway: 0
+  doubleLine: 0
+  width: 2
+  limitNodeDistance: 30
+  doNotConnectTo: []
   wpData:
     tsActive: 010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101
     tf01:
@@ -1445,11 +1444,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1621816067434a244a9dfeb78dfce2ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oneway: 0
-  doubleLine: 0
-  width: 2
-  doNotConnectTo: []
-  limitNodeDistance: 30
   waypoints:
   - {fileID: 229727241}
   - {fileID: 1757917354}
@@ -1468,16 +1462,21 @@ MonoBehaviour:
   - {fileID: 1597054778}
   nextWay1:
   - {fileID: 1425946623}
-  nextWaySide0: 0000000000000000
-  nextWaySide1: 00000000
-  bloked: 0
-  nodeZeroCar0: {fileID: 0}
-  nodeZeroCar1: {fileID: 0}
-  nodeZeroWay0: {fileID: 0}
-  nodeZeroWay1: {fileID: 0}
   directConnectSide:
   - {fileID: 0}
   - {fileID: 0}
+  nextWaySide0: 0000000000000000
+  nextWaySide1: 00000000
+  bloked: 0
+  nodeZero0: {fileID: 0}
+  nodeZero1: {fileID: 0}
+  nodeZeroWay0: {fileID: 0}
+  nodeZeroWay1: {fileID: 0}
+  oneway: 0
+  doubleLine: 0
+  width: 2
+  limitNodeDistance: 30
+  doNotConnectTo: []
   wpData:
     tsActive: 010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101
     tf01:
@@ -1759,11 +1758,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1621816067434a244a9dfeb78dfce2ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oneway: 0
-  doubleLine: 0
-  width: 2
-  doNotConnectTo: []
-  limitNodeDistance: 30
   waypoints:
   - {fileID: 1578345069}
   - {fileID: 1757258561}
@@ -1780,16 +1774,21 @@ MonoBehaviour:
   - {fileID: 1504476314}
   nextWay1:
   - {fileID: 30141626}
-  nextWaySide0: 00000000
-  nextWaySide1: 01000000
-  bloked: 0
-  nodeZeroCar0: {fileID: 0}
-  nodeZeroCar1: {fileID: 0}
-  nodeZeroWay0: {fileID: 0}
-  nodeZeroWay1: {fileID: 0}
   directConnectSide:
   - {fileID: 0}
   - {fileID: 0}
+  nextWaySide0: 00000000
+  nextWaySide1: 01000000
+  bloked: 0
+  nodeZero0: {fileID: 0}
+  nodeZero1: {fileID: 0}
+  nodeZeroWay0: {fileID: 0}
+  nodeZeroWay1: {fileID: 0}
+  oneway: 0
+  doubleLine: 0
+  width: 2
+  limitNodeDistance: 30
+  doNotConnectTo: []
   wpData:
     tsActive: 010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101
     tf01:
@@ -2101,11 +2100,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1621816067434a244a9dfeb78dfce2ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oneway: 0
-  doubleLine: 0
-  width: 2
-  doNotConnectTo: []
-  limitNodeDistance: 30
   waypoints:
   - {fileID: 761493689}
   - {fileID: 1048341972}
@@ -2116,16 +2110,21 @@ MonoBehaviour:
   nextWay1:
   - {fileID: 1425946623}
   - {fileID: 1605053235}
-  nextWaySide0: 0000000000000000
-  nextWaySide1: 0100000000000000
-  bloked: 0
-  nodeZeroCar0: {fileID: 0}
-  nodeZeroCar1: {fileID: 0}
-  nodeZeroWay0: {fileID: 0}
-  nodeZeroWay1: {fileID: 0}
   directConnectSide:
   - {fileID: 0}
   - {fileID: 0}
+  nextWaySide0: 0000000000000000
+  nextWaySide1: 0100000000000000
+  bloked: 0
+  nodeZero0: {fileID: 0}
+  nodeZero1: {fileID: 0}
+  nodeZeroWay0: {fileID: 0}
+  nodeZeroWay1: {fileID: 0}
+  oneway: 0
+  doubleLine: 0
+  width: 2
+  limitNodeDistance: 30
+  doNotConnectTo: []
   wpData:
     tsActive: 010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101
     tf01:
@@ -2460,11 +2459,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1621816067434a244a9dfeb78dfce2ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oneway: 0
-  doubleLine: 0
-  width: 2
-  doNotConnectTo: []
-  limitNodeDistance: 30
   waypoints:
   - {fileID: 338328721}
   - {fileID: 133814567}
@@ -2486,16 +2480,21 @@ MonoBehaviour:
   - {fileID: 505137834}
   - {fileID: 1800925265}
   - {fileID: 1908327419}
-  nextWaySide0: 0100000001000000
-  nextWaySide1: 000000000100000001000000
-  bloked: 0
-  nodeZeroCar0: {fileID: 0}
-  nodeZeroCar1: {fileID: 0}
-  nodeZeroWay0: {fileID: 0}
-  nodeZeroWay1: {fileID: 0}
   directConnectSide:
   - {fileID: 0}
   - {fileID: 0}
+  nextWaySide0: 0100000001000000
+  nextWaySide1: 000000000100000001000000
+  bloked: 0
+  nodeZero0: {fileID: 0}
+  nodeZero1: {fileID: 0}
+  nodeZeroWay0: {fileID: 0}
+  nodeZeroWay1: {fileID: 0}
+  oneway: 0
+  doubleLine: 0
+  width: 2
+  limitNodeDistance: 30
+  doNotConnectTo: []
   wpData:
     tsActive: 010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101
     tf01:
@@ -2716,11 +2715,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1621816067434a244a9dfeb78dfce2ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oneway: 0
-  doubleLine: 0
-  width: 2
-  doNotConnectTo: []
-  limitNodeDistance: 30
   waypoints:
   - {fileID: 867381219}
   - {fileID: 1574638922}
@@ -2730,16 +2724,21 @@ MonoBehaviour:
   nextWay1:
   - {fileID: 215206245}
   - {fileID: 2045241887}
-  nextWaySide0: 00000000
-  nextWaySide1: 0100000000000000
-  bloked: 0
-  nodeZeroCar0: {fileID: 0}
-  nodeZeroCar1: {fileID: 0}
-  nodeZeroWay0: {fileID: 0}
-  nodeZeroWay1: {fileID: 0}
   directConnectSide:
   - {fileID: 0}
   - {fileID: 0}
+  nextWaySide0: 00000000
+  nextWaySide1: 0100000000000000
+  bloked: 0
+  nodeZero0: {fileID: 0}
+  nodeZero1: {fileID: 0}
+  nodeZeroWay0: {fileID: 0}
+  nodeZeroWay1: {fileID: 0}
+  oneway: 0
+  doubleLine: 0
+  width: 2
+  limitNodeDistance: 30
+  doNotConnectTo: []
   wpData:
     tsActive: 010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101
     tf01:
@@ -3043,11 +3042,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1621816067434a244a9dfeb78dfce2ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oneway: 0
-  doubleLine: 0
-  width: 2
-  doNotConnectTo: []
-  limitNodeDistance: 30
   waypoints:
   - {fileID: 885610150}
   - {fileID: 590611497}
@@ -3059,16 +3053,21 @@ MonoBehaviour:
   - {fileID: 660522319}
   - {fileID: 1436589965}
   - {fileID: 2018238891}
-  nextWaySide0: 0000000001000000
-  nextWaySide1: 010000000100000000000000
-  bloked: 0
-  nodeZeroCar0: {fileID: 0}
-  nodeZeroCar1: {fileID: 0}
-  nodeZeroWay0: {fileID: 0}
-  nodeZeroWay1: {fileID: 0}
   directConnectSide:
   - {fileID: 0}
   - {fileID: 0}
+  nextWaySide0: 0000000001000000
+  nextWaySide1: 010000000100000000000000
+  bloked: 0
+  nodeZero0: {fileID: 0}
+  nodeZero1: {fileID: 0}
+  nodeZeroWay0: {fileID: 0}
+  nodeZeroWay1: {fileID: 0}
+  oneway: 0
+  doubleLine: 0
+  width: 2
+  limitNodeDistance: 30
+  doNotConnectTo: []
   wpData:
     tsActive: 010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101
     tf01:
@@ -3926,6 +3925,7 @@ Transform:
   - {fileID: 20488582}
   - {fileID: 1859274295}
   - {fileID: 687348988}
+  - {fileID: 1026320684}
   m_Father: {fileID: 462310424}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &498274283
@@ -3940,14 +3940,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc6c86d7450870a41b0e213b85f9c5d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  noPedestrian: 0
-  oneway: 0
-  doubleLine: 0
-  width: 1
-  doNotConnectTo:
-  - {fileID: 1979249841}
-  - {fileID: 603432619}
-  limitNodeDistance: 50
   waypoints:
   - {fileID: 1867977705}
   - {fileID: 656664768}
@@ -3968,34 +3960,41 @@ MonoBehaviour:
   - {fileID: 20488582}
   - {fileID: 1859274295}
   - {fileID: 687348988}
+  - {fileID: 1026320684}
   nextWay0:
   - {fileID: 1545268719}
   nextWay1:
   - {fileID: 26651368}
-  nextWaySide0: 00000000
-  nextWaySide1: 00000000
-  rightHand: 0
-  bloked: 0
-  nodeZeroCar0: {fileID: 0}
-  nodeZeroCar1: {fileID: 0}
-  nodeZeroWay0: {fileID: 0}
-  nodeZeroWay1: {fileID: 0}
   directConnectSide:
   - {fileID: 0}
   - {fileID: 0}
+  nextWaySide0: 00000000
+  nextWaySide1: 00000000
+  bloked: 0
+  nodeZero0: {fileID: 0}
+  nodeZero1: {fileID: 0}
+  nodeZeroWay0: {fileID: 0}
+  nodeZeroWay1: {fileID: 0}
+  oneway: 0
+  doubleLine: 0
+  width: 1
+  limitNodeDistance: 50
+  doNotConnectTo:
+  - {fileID: 1979249841}
+  noPedestrian: 0
   wpData:
     tsActive: 01010101010101010101
     tf01:
     - {x: 15.3, y: 0, z: -53.859997}
     - {x: 13.3, y: 0, z: 2.24}
-    - {x: 12.370011, y: 0, z: -63.491386}
-    - {x: -38.46393, y: 0, z: 8.60407}
-    - {x: 5.8999996, y: 0, z: 15.18}
-    - {x: -8.1, y: 0, z: 13.18}
+    - {x: 12.822036, y: 0, z: -57.051216}
+    - {x: -38.769264, y: 0, z: 9.450691}
+    - {x: 5.6067395, y: 0, z: 13.714287}
+    - {x: -8.20674, y: 0, z: 13.185713}
     - {x: -33, y: 0, z: 13.18}
     - {x: -12.8, y: 0, z: 15.18}
-    - {x: 13.211471, y: 0, z: 7.456265}
-    - {x: 7.6685286, y: 0, z: 11.033735}
+    - {x: 11.667148, y: 0, z: 6.9336267}
+    - {x: 7.512853, y: 0, z: 11.656374}
     tsParent:
     - {fileID: 26651368}
     - {fileID: 26651368}
@@ -4039,11 +4038,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1621816067434a244a9dfeb78dfce2ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oneway: 0
-  doubleLine: 0
-  width: 2
-  doNotConnectTo: []
-  limitNodeDistance: 30
   waypoints:
   - {fileID: 1797527063}
   - {fileID: 674302904}
@@ -4055,16 +4049,21 @@ MonoBehaviour:
   - {fileID: 246105608}
   - {fileID: 1800925265}
   - {fileID: 1908327419}
-  nextWaySide0: 010000000000000000000000
-  nextWaySide1: 000000000100000001000000
-  bloked: 0
-  nodeZeroCar0: {fileID: 0}
-  nodeZeroCar1: {fileID: 0}
-  nodeZeroWay0: {fileID: 0}
-  nodeZeroWay1: {fileID: 0}
   directConnectSide:
   - {fileID: 0}
   - {fileID: 0}
+  nextWaySide0: 010000000000000000000000
+  nextWaySide1: 000000000100000001000000
+  bloked: 0
+  nodeZero0: {fileID: 0}
+  nodeZero1: {fileID: 0}
+  nodeZeroWay0: {fileID: 0}
+  nodeZeroWay1: {fileID: 0}
+  oneway: 0
+  doubleLine: 0
+  width: 2
+  limitNodeDistance: 30
+  doNotConnectTo: []
   wpData:
     tsActive: 010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101
     tf01:
@@ -4677,13 +4676,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc6c86d7450870a41b0e213b85f9c5d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  noPedestrian: 0
-  oneway: 0
-  doubleLine: 0
-  width: 1
-  doNotConnectTo:
-  - {fileID: 498274283}
-  limitNodeDistance: 30
   waypoints:
   - {fileID: 705493941}
   - {fileID: 1787709895}
@@ -4691,30 +4683,36 @@ MonoBehaviour:
   - {fileID: 1545268719}
   nextWay1:
   - {fileID: 1979249841}
-  nextWaySide0: 01000000
-  nextWaySide1: 01000000
-  rightHand: 0
-  bloked: 0
-  nodeZeroCar0: {fileID: 0}
-  nodeZeroCar1: {fileID: 0}
-  nodeZeroWay0: {fileID: 0}
-  nodeZeroWay1: {fileID: 0}
   directConnectSide:
   - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1979249841}
+  nextWaySide0: 01000000
+  nextWaySide1: 01000000
+  bloked: 0
+  nodeZero0: {fileID: 0}
+  nodeZero1: {fileID: 0}
+  nodeZeroWay0: {fileID: 0}
+  nodeZeroWay1: {fileID: 0}
+  oneway: 0
+  doubleLine: 0
+  width: 1
+  limitNodeDistance: 30
+  doNotConnectTo:
+  - {fileID: 498274283}
+  noPedestrian: 0
   wpData:
     tsActive: 01010101010101010101
     tf01:
     - {x: 15.3, y: 0, z: -53.859997}
     - {x: 13.3, y: 0, z: 2.24}
-    - {x: 12.370011, y: 0, z: -63.491386}
-    - {x: -38.46393, y: 0, z: 8.60407}
-    - {x: 5.8999996, y: 0, z: 15.18}
-    - {x: -8.1, y: 0, z: 13.18}
+    - {x: 12.822036, y: 0, z: -57.051216}
+    - {x: -38.769264, y: 0, z: 9.450691}
+    - {x: 5.6067395, y: 0, z: 13.714287}
+    - {x: -8.20674, y: 0, z: 13.185713}
     - {x: -33, y: 0, z: 13.18}
     - {x: -12.8, y: 0, z: 15.18}
-    - {x: 13.211471, y: 0, z: 7.456265}
-    - {x: 7.6685286, y: 0, z: 11.033735}
+    - {x: 11.667148, y: 0, z: 6.9336267}
+    - {x: 7.512853, y: 0, z: 11.656374}
     tsParent:
     - {fileID: 26651368}
     - {fileID: 26651368}
@@ -5085,11 +5083,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1621816067434a244a9dfeb78dfce2ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oneway: 0
-  doubleLine: 0
-  width: 2
-  doNotConnectTo: []
-  limitNodeDistance: 30
   waypoints:
   - {fileID: 539671574}
   - {fileID: 725688835}
@@ -5109,16 +5102,21 @@ MonoBehaviour:
   nextWay1:
   - {fileID: 123583134}
   - {fileID: 1597054778}
-  nextWaySide0: 000000000100000000000000
-  nextWaySide1: 0100000000000000
-  bloked: 0
-  nodeZeroCar0: {fileID: 0}
-  nodeZeroCar1: {fileID: 0}
-  nodeZeroWay0: {fileID: 0}
-  nodeZeroWay1: {fileID: 0}
   directConnectSide:
   - {fileID: 0}
   - {fileID: 0}
+  nextWaySide0: 000000000100000000000000
+  nextWaySide1: 0100000000000000
+  bloked: 0
+  nodeZero0: {fileID: 0}
+  nodeZero1: {fileID: 0}
+  nodeZeroWay0: {fileID: 0}
+  nodeZeroWay1: {fileID: 0}
+  oneway: 0
+  doubleLine: 0
+  width: 2
+  limitNodeDistance: 30
+  doNotConnectTo: []
   wpData:
     tsActive: 010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101
     tf01:
@@ -5425,7 +5423,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 687348987}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.0069438405, z: -0, w: 0.9999759}
+  m_LocalRotation: {x: -0, y: 0.045649715, z: -0, w: 0.9989575}
   m_LocalPosition: {x: 50.9, y: 0, z: -72}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -5487,7 +5485,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 705493940}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: -0, y: 0.7438883, z: -0, w: 0.66830397}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -5523,11 +5521,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1621816067434a244a9dfeb78dfce2ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oneway: 0
-  doubleLine: 0
-  width: 2
-  doNotConnectTo: []
-  limitNodeDistance: 30
   waypoints:
   - {fileID: 699775077}
   - {fileID: 1524590181}
@@ -5538,16 +5531,21 @@ MonoBehaviour:
   - {fileID: 1251923105}
   - {fileID: 1706750795}
   - {fileID: 2045241887}
-  nextWaySide0: 00000000
-  nextWaySide1: 010000000000000001000000
-  bloked: 0
-  nodeZeroCar0: {fileID: 0}
-  nodeZeroCar1: {fileID: 0}
-  nodeZeroWay0: {fileID: 0}
-  nodeZeroWay1: {fileID: 0}
   directConnectSide:
   - {fileID: 1301752015}
   - {fileID: 0}
+  nextWaySide0: 00000000
+  nextWaySide1: 010000000000000001000000
+  bloked: 0
+  nodeZero0: {fileID: 0}
+  nodeZero1: {fileID: 0}
+  nodeZeroWay0: {fileID: 0}
+  nodeZeroWay1: {fileID: 0}
+  oneway: 0
+  doubleLine: 0
+  width: 2
+  limitNodeDistance: 30
+  doNotConnectTo: []
   wpData:
     tsActive: 010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101
     tf01:
@@ -6148,11 +6146,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1621816067434a244a9dfeb78dfce2ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oneway: 0
-  doubleLine: 0
-  width: 2
-  doNotConnectTo: []
-  limitNodeDistance: 30
   waypoints:
   - {fileID: 636949034}
   - {fileID: 1025012280}
@@ -6162,16 +6155,21 @@ MonoBehaviour:
   nextWay1:
   - {fileID: 1472298145}
   - {fileID: 1666581324}
-  nextWaySide0: 00000000
-  nextWaySide1: 0100000000000000
-  bloked: 0
-  nodeZeroCar0: {fileID: 0}
-  nodeZeroCar1: {fileID: 0}
-  nodeZeroWay0: {fileID: 0}
-  nodeZeroWay1: {fileID: 0}
   directConnectSide:
   - {fileID: 2122655125}
   - {fileID: 0}
+  nextWaySide0: 00000000
+  nextWaySide1: 0100000000000000
+  bloked: 0
+  nodeZero0: {fileID: 0}
+  nodeZero1: {fileID: 0}
+  nodeZeroWay0: {fileID: 0}
+  nodeZeroWay1: {fileID: 0}
+  oneway: 0
+  doubleLine: 0
+  width: 2
+  limitNodeDistance: 30
+  doNotConnectTo: []
   wpData:
     tsActive: 010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101
     tf01:
@@ -6733,11 +6731,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1621816067434a244a9dfeb78dfce2ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oneway: 0
-  doubleLine: 0
-  width: 2
-  doNotConnectTo: []
-  limitNodeDistance: 30
   waypoints:
   - {fileID: 1594444599}
   - {fileID: 618228337}
@@ -6747,16 +6740,21 @@ MonoBehaviour:
   - {fileID: 1504476314}
   nextWay1:
   - {fileID: 1921072986}
-  nextWaySide0: 0000000001000000
-  nextWaySide1: 01000000
-  bloked: 0
-  nodeZeroCar0: {fileID: 0}
-  nodeZeroCar1: {fileID: 0}
-  nodeZeroWay0: {fileID: 0}
-  nodeZeroWay1: {fileID: 0}
   directConnectSide:
   - {fileID: 0}
   - {fileID: 1921072986}
+  nextWaySide0: 0000000001000000
+  nextWaySide1: 01000000
+  bloked: 0
+  nodeZero0: {fileID: 0}
+  nodeZero1: {fileID: 0}
+  nodeZeroWay0: {fileID: 0}
+  nodeZeroWay1: {fileID: 0}
+  oneway: 0
+  doubleLine: 0
+  width: 2
+  limitNodeDistance: 30
+  doNotConnectTo: []
   wpData:
     tsActive: 010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101
     tf01:
@@ -6998,11 +6996,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1621816067434a244a9dfeb78dfce2ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oneway: 0
-  doubleLine: 0
-  width: 2
-  doNotConnectTo: []
-  limitNodeDistance: 30
   waypoints:
   - {fileID: 289277677}
   - {fileID: 645083623}
@@ -7013,16 +7006,21 @@ MonoBehaviour:
   nextWay1:
   - {fileID: 284166821}
   - {fileID: 1644175437}
-  nextWaySide0: 0000000001000000
-  nextWaySide1: 0100000001000000
-  bloked: 0
-  nodeZeroCar0: {fileID: 0}
-  nodeZeroCar1: {fileID: 0}
-  nodeZeroWay0: {fileID: 0}
-  nodeZeroWay1: {fileID: 0}
   directConnectSide:
   - {fileID: 0}
   - {fileID: 0}
+  nextWaySide0: 0000000001000000
+  nextWaySide1: 0100000001000000
+  bloked: 0
+  nodeZero0: {fileID: 0}
+  nodeZero1: {fileID: 0}
+  nodeZeroWay0: {fileID: 0}
+  nodeZeroWay1: {fileID: 0}
+  oneway: 0
+  doubleLine: 0
+  width: 2
+  limitNodeDistance: 30
+  doNotConnectTo: []
   wpData:
     tsActive: 010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101
     tf01:
@@ -7395,11 +7393,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1621816067434a244a9dfeb78dfce2ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oneway: 0
-  doubleLine: 0
-  width: 2
-  doNotConnectTo: []
-  limitNodeDistance: 30
   waypoints:
   - {fileID: 2082935851}
   - {fileID: 1425500413}
@@ -7419,16 +7412,21 @@ MonoBehaviour:
   - {fileID: 1413572623}
   nextWay1:
   - {fileID: 260780647}
-  nextWaySide0: 0100000001000000
-  nextWaySide1: 01000000
-  bloked: 0
-  nodeZeroCar0: {fileID: 0}
-  nodeZeroCar1: {fileID: 0}
-  nodeZeroWay0: {fileID: 0}
-  nodeZeroWay1: {fileID: 0}
   directConnectSide:
   - {fileID: 0}
   - {fileID: 0}
+  nextWaySide0: 0100000001000000
+  nextWaySide1: 01000000
+  bloked: 0
+  nodeZero0: {fileID: 0}
+  nodeZero1: {fileID: 0}
+  nodeZeroWay0: {fileID: 0}
+  nodeZeroWay1: {fileID: 0}
+  oneway: 0
+  doubleLine: 0
+  width: 2
+  limitNodeDistance: 30
+  doNotConnectTo: []
   wpData:
     tsActive: 010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101
     tf01:
@@ -7712,6 +7710,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 770182803}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1026320683
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1026320684}
+  m_Layer: 0
+  m_Name: tr (19)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1026320684
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1026320683}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.104969, z: -0, w: 0.9944755}
+  m_LocalPosition: {x: 52.23, y: 0, z: -65.77}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 498274282}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1028305765
 GameObject:
@@ -8188,11 +8217,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1621816067434a244a9dfeb78dfce2ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oneway: 0
-  doubleLine: 0
-  width: 2
-  doNotConnectTo: []
-  limitNodeDistance: 30
   waypoints:
   - {fileID: 1962324374}
   - {fileID: 1122948805}
@@ -8202,16 +8226,21 @@ MonoBehaviour:
   nextWay1:
   - {fileID: 1369109649}
   - {fileID: 1666581324}
-  nextWaySide0: 00000000
-  nextWaySide1: 0100000001000000
-  bloked: 0
-  nodeZeroCar0: {fileID: 0}
-  nodeZeroCar1: {fileID: 0}
-  nodeZeroWay0: {fileID: 0}
-  nodeZeroWay1: {fileID: 0}
   directConnectSide:
   - {fileID: 0}
   - {fileID: 0}
+  nextWaySide0: 00000000
+  nextWaySide1: 0100000001000000
+  bloked: 0
+  nodeZero0: {fileID: 0}
+  nodeZero1: {fileID: 0}
+  nodeZeroWay0: {fileID: 0}
+  nodeZeroWay1: {fileID: 0}
+  oneway: 0
+  doubleLine: 0
+  width: 2
+  limitNodeDistance: 30
+  doNotConnectTo: []
   wpData:
     tsActive: 010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101
     tf01:
@@ -8639,11 +8668,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1621816067434a244a9dfeb78dfce2ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oneway: 0
-  doubleLine: 0
-  width: 2
-  doNotConnectTo: []
-  limitNodeDistance: 30
   waypoints:
   - {fileID: 589167837}
   - {fileID: 2022302475}
@@ -8656,16 +8680,21 @@ MonoBehaviour:
   - {fileID: 1605053235}
   - {fileID: 1644175437}
   - {fileID: 1740720815}
-  nextWaySide0: 000000000000000001000000
-  nextWaySide1: 010000000000000001000000
-  bloked: 0
-  nodeZeroCar0: {fileID: 0}
-  nodeZeroCar1: {fileID: 0}
-  nodeZeroWay0: {fileID: 0}
-  nodeZeroWay1: {fileID: 0}
   directConnectSide:
   - {fileID: 0}
   - {fileID: 0}
+  nextWaySide0: 000000000000000001000000
+  nextWaySide1: 010000000000000001000000
+  bloked: 0
+  nodeZero0: {fileID: 0}
+  nodeZero1: {fileID: 0}
+  nodeZeroWay0: {fileID: 0}
+  nodeZeroWay1: {fileID: 0}
+  oneway: 0
+  doubleLine: 0
+  width: 2
+  limitNodeDistance: 30
+  doNotConnectTo: []
   wpData:
     tsActive: 010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101
     tf01:
@@ -9236,11 +9265,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1621816067434a244a9dfeb78dfce2ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oneway: 0
-  doubleLine: 0
-  width: 2
-  doNotConnectTo: []
-  limitNodeDistance: 30
   waypoints:
   - {fileID: 1280530490}
   - {fileID: 1858796042}
@@ -9250,16 +9274,21 @@ MonoBehaviour:
   - {fileID: 1413572623}
   nextWay1:
   - {fileID: 707570955}
-  nextWaySide0: 0100000001000000
-  nextWaySide1: 01000000
-  bloked: 0
-  nodeZeroCar0: {fileID: 0}
-  nodeZeroCar1: {fileID: 0}
-  nodeZeroWay0: {fileID: 0}
-  nodeZeroWay1: {fileID: 0}
   directConnectSide:
   - {fileID: 0}
   - {fileID: 707570955}
+  nextWaySide0: 0100000001000000
+  nextWaySide1: 01000000
+  bloked: 0
+  nodeZero0: {fileID: 0}
+  nodeZero1: {fileID: 0}
+  nodeZeroWay0: {fileID: 0}
+  nodeZeroWay1: {fileID: 0}
+  oneway: 0
+  doubleLine: 0
+  width: 2
+  limitNodeDistance: 30
+  doNotConnectTo: []
   wpData:
     tsActive: 010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101
     tf01:
@@ -9563,11 +9592,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1621816067434a244a9dfeb78dfce2ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oneway: 0
-  doubleLine: 0
-  width: 2
-  doNotConnectTo: []
-  limitNodeDistance: 30
   waypoints:
   - {fileID: 2103143861}
   - {fileID: 1419118666}
@@ -9579,16 +9603,21 @@ MonoBehaviour:
   - {fileID: 30141626}
   - {fileID: 1436589965}
   - {fileID: 2018238891}
-  nextWaySide0: 0000000000000000
-  nextWaySide1: 000000000000000001000000
-  bloked: 0
-  nodeZeroCar0: {fileID: 0}
-  nodeZeroCar1: {fileID: 0}
-  nodeZeroWay0: {fileID: 0}
-  nodeZeroWay1: {fileID: 0}
   directConnectSide:
   - {fileID: 0}
   - {fileID: 0}
+  nextWaySide0: 0000000000000000
+  nextWaySide1: 000000000000000001000000
+  bloked: 0
+  nodeZero0: {fileID: 0}
+  nodeZero1: {fileID: 0}
+  nodeZeroWay0: {fileID: 0}
+  nodeZeroWay1: {fileID: 0}
+  oneway: 0
+  doubleLine: 0
+  width: 2
+  limitNodeDistance: 30
+  doNotConnectTo: []
   wpData:
     tsActive: 010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101
     tf01:
@@ -9987,11 +10016,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1621816067434a244a9dfeb78dfce2ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oneway: 0
-  doubleLine: 0
-  width: 2
-  doNotConnectTo: []
-  limitNodeDistance: 30
   waypoints:
   - {fileID: 1928992393}
   - {fileID: 1982059665}
@@ -10002,16 +10026,21 @@ MonoBehaviour:
   nextWay1:
   - {fileID: 925409667}
   - {fileID: 1504476314}
-  nextWaySide0: 0000000001000000
-  nextWaySide1: 0100000001000000
-  bloked: 0
-  nodeZeroCar0: {fileID: 0}
-  nodeZeroCar1: {fileID: 0}
-  nodeZeroWay0: {fileID: 0}
-  nodeZeroWay1: {fileID: 0}
   directConnectSide:
   - {fileID: 0}
   - {fileID: 0}
+  nextWaySide0: 0000000001000000
+  nextWaySide1: 0100000001000000
+  bloked: 0
+  nodeZero0: {fileID: 0}
+  nodeZero1: {fileID: 0}
+  nodeZeroWay0: {fileID: 0}
+  nodeZeroWay1: {fileID: 0}
+  oneway: 0
+  doubleLine: 0
+  width: 2
+  limitNodeDistance: 30
+  doNotConnectTo: []
   wpData:
     tsActive: 010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101
     tf01:
@@ -10222,11 +10251,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1621816067434a244a9dfeb78dfce2ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oneway: 0
-  doubleLine: 0
-  width: 2
-  doNotConnectTo: []
-  limitNodeDistance: 30
   waypoints:
   - {fileID: 58472070}
   - {fileID: 1600905815}
@@ -10246,16 +10270,21 @@ MonoBehaviour:
   - {fileID: 30078839}
   - {fileID: 505137834}
   - {fileID: 1800925265}
-  nextWaySide0: 0100000001000000
-  nextWaySide1: 010000000100000000000000
-  bloked: 0
-  nodeZeroCar0: {fileID: 0}
-  nodeZeroCar1: {fileID: 0}
-  nodeZeroWay0: {fileID: 0}
-  nodeZeroWay1: {fileID: 0}
   directConnectSide:
   - {fileID: 0}
   - {fileID: 0}
+  nextWaySide0: 0100000001000000
+  nextWaySide1: 010000000100000000000000
+  bloked: 0
+  nodeZero0: {fileID: 0}
+  nodeZero1: {fileID: 0}
+  nodeZeroWay0: {fileID: 0}
+  nodeZeroWay1: {fileID: 0}
+  oneway: 0
+  doubleLine: 0
+  width: 2
+  limitNodeDistance: 30
+  doNotConnectTo: []
   wpData:
     tsActive: 010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101
     tf01:
@@ -10567,11 +10596,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1621816067434a244a9dfeb78dfce2ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oneway: 0
-  doubleLine: 0
-  width: 2
-  doNotConnectTo: []
-  limitNodeDistance: 30
   waypoints:
   - {fileID: 1249059553}
   - {fileID: 1459483140}
@@ -10581,16 +10605,21 @@ MonoBehaviour:
   - {fileID: 1605053235}
   nextWay1:
   - {fileID: 123583134}
-  nextWaySide0: 0000000000000000
-  nextWaySide1: 00000000
-  bloked: 0
-  nodeZeroCar0: {fileID: 0}
-  nodeZeroCar1: {fileID: 0}
-  nodeZeroWay0: {fileID: 0}
-  nodeZeroWay1: {fileID: 0}
   directConnectSide:
   - {fileID: 0}
   - {fileID: 0}
+  nextWaySide0: 0000000000000000
+  nextWaySide1: 00000000
+  bloked: 0
+  nodeZero0: {fileID: 0}
+  nodeZero1: {fileID: 0}
+  nodeZeroWay0: {fileID: 0}
+  nodeZeroWay1: {fileID: 0}
+  oneway: 0
+  doubleLine: 0
+  width: 2
+  limitNodeDistance: 30
+  doNotConnectTo: []
   wpData:
     tsActive: 010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101
     tf01:
@@ -10894,11 +10923,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1621816067434a244a9dfeb78dfce2ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oneway: 0
-  doubleLine: 0
-  width: 2
-  doNotConnectTo: []
-  limitNodeDistance: 30
   waypoints:
   - {fileID: 1338123211}
   - {fileID: 511473384}
@@ -10910,16 +10934,21 @@ MonoBehaviour:
   - {fileID: 30141626}
   - {fileID: 1334531368}
   - {fileID: 2018238891}
-  nextWaySide0: 000000000100000000000000
-  nextWaySide1: 000000000000000001000000
-  bloked: 0
-  nodeZeroCar0: {fileID: 0}
-  nodeZeroCar1: {fileID: 0}
-  nodeZeroWay0: {fileID: 0}
-  nodeZeroWay1: {fileID: 0}
   directConnectSide:
   - {fileID: 0}
   - {fileID: 0}
+  nextWaySide0: 000000000100000000000000
+  nextWaySide1: 000000000000000001000000
+  bloked: 0
+  nodeZero0: {fileID: 0}
+  nodeZero1: {fileID: 0}
+  nodeZeroWay0: {fileID: 0}
+  nodeZeroWay1: {fileID: 0}
+  oneway: 0
+  doubleLine: 0
+  width: 2
+  limitNodeDistance: 30
+  doNotConnectTo: []
   wpData:
     tsActive: 010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101
     tf01:
@@ -11222,11 +11251,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1621816067434a244a9dfeb78dfce2ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oneway: 0
-  doubleLine: 0
-  width: 2
-  doNotConnectTo: []
-  limitNodeDistance: 30
   waypoints:
   - {fileID: 569922951}
   - {fileID: 1553195105}
@@ -11237,16 +11261,21 @@ MonoBehaviour:
   nextWay1:
   - {fileID: 1791700487}
   - {fileID: 1908327419}
-  nextWaySide0: 0000000000000000
-  nextWaySide1: 0100000000000000
-  bloked: 0
-  nodeZeroCar0: {fileID: 0}
-  nodeZeroCar1: {fileID: 0}
-  nodeZeroWay0: {fileID: 0}
-  nodeZeroWay1: {fileID: 0}
   directConnectSide:
   - {fileID: 0}
   - {fileID: 0}
+  nextWaySide0: 0000000000000000
+  nextWaySide1: 0100000000000000
+  bloked: 0
+  nodeZero0: {fileID: 0}
+  nodeZero1: {fileID: 0}
+  nodeZeroWay0: {fileID: 0}
+  nodeZeroWay1: {fileID: 0}
+  oneway: 0
+  doubleLine: 0
+  width: 2
+  limitNodeDistance: 30
+  doNotConnectTo: []
   wpData:
     tsActive: 010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101
     tf01:
@@ -11519,11 +11548,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1621816067434a244a9dfeb78dfce2ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oneway: 0
-  doubleLine: 0
-  width: 2
-  doNotConnectTo: []
-  limitNodeDistance: 30
   waypoints:
   - {fileID: 1010682709}
   - {fileID: 2017497723}
@@ -11533,16 +11557,21 @@ MonoBehaviour:
   - {fileID: 1369109649}
   nextWay1:
   - {fileID: 171425262}
-  nextWaySide0: 0100000000000000
-  nextWaySide1: 01000000
-  bloked: 0
-  nodeZeroCar0: {fileID: 0}
-  nodeZeroCar1: {fileID: 0}
-  nodeZeroWay0: {fileID: 0}
-  nodeZeroWay1: {fileID: 0}
   directConnectSide:
   - {fileID: 0}
   - {fileID: 0}
+  nextWaySide0: 0100000000000000
+  nextWaySide1: 01000000
+  bloked: 0
+  nodeZero0: {fileID: 0}
+  nodeZero1: {fileID: 0}
+  nodeZeroWay0: {fileID: 0}
+  nodeZeroWay1: {fileID: 0}
+  oneway: 0
+  doubleLine: 0
+  width: 2
+  limitNodeDistance: 30
+  doNotConnectTo: []
   wpData:
     tsActive: 010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101
     tf01:
@@ -11970,14 +11999,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc6c86d7450870a41b0e213b85f9c5d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  noPedestrian: 0
-  oneway: 0
-  doubleLine: 0
-  width: 1
-  doNotConnectTo:
-  - {fileID: 26651368}
-  - {fileID: 1979249841}
-  limitNodeDistance: 30
   waypoints:
   - {fileID: 1111937531}
   - {fileID: 265968367}
@@ -11986,30 +12007,37 @@ MonoBehaviour:
   - {fileID: 603432619}
   nextWay1:
   - {fileID: 498274283}
-  nextWaySide0: 01000000
-  nextWaySide1: 01000000
-  rightHand: 0
-  bloked: 0
-  nodeZeroCar0: {fileID: 0}
-  nodeZeroCar1: {fileID: 0}
-  nodeZeroWay0: {fileID: 0}
-  nodeZeroWay1: {fileID: 0}
   directConnectSide:
   - {fileID: 0}
   - {fileID: 0}
+  nextWaySide0: 01000000
+  nextWaySide1: 01000000
+  bloked: 0
+  nodeZero0: {fileID: 0}
+  nodeZero1: {fileID: 0}
+  nodeZeroWay0: {fileID: 0}
+  nodeZeroWay1: {fileID: 0}
+  oneway: 0
+  doubleLine: 0
+  width: 1
+  limitNodeDistance: 30
+  doNotConnectTo:
+  - {fileID: 26651368}
+  - {fileID: 1979249841}
+  noPedestrian: 0
   wpData:
     tsActive: 01010101010101010101
     tf01:
     - {x: 15.3, y: 0, z: -53.859997}
     - {x: 13.3, y: 0, z: 2.24}
-    - {x: 12.370011, y: 0, z: -63.491386}
-    - {x: -38.46393, y: 0, z: 8.60407}
-    - {x: 5.8999996, y: 0, z: 15.18}
-    - {x: -8.1, y: 0, z: 13.18}
+    - {x: 12.822036, y: 0, z: -57.051216}
+    - {x: -38.769264, y: 0, z: 9.450691}
+    - {x: 5.6067395, y: 0, z: 13.714287}
+    - {x: -8.20674, y: 0, z: 13.185713}
     - {x: -33, y: 0, z: 13.18}
     - {x: -12.8, y: 0, z: 15.18}
-    - {x: 13.211471, y: 0, z: 7.456265}
-    - {x: 7.6685286, y: 0, z: 11.033735}
+    - {x: 11.667148, y: 0, z: 6.9336267}
+    - {x: 7.512853, y: 0, z: 11.656374}
     tsParent:
     - {fileID: 26651368}
     - {fileID: 26651368}
@@ -12399,11 +12427,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1621816067434a244a9dfeb78dfce2ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oneway: 0
-  doubleLine: 0
-  width: 2
-  doNotConnectTo: []
-  limitNodeDistance: 30
   waypoints:
   - {fileID: 937821689}
   - {fileID: 241166283}
@@ -12413,16 +12436,21 @@ MonoBehaviour:
   nextWay1:
   - {fileID: 123583134}
   - {fileID: 660522319}
-  nextWaySide0: 00000000
-  nextWaySide1: 0100000000000000
-  bloked: 0
-  nodeZeroCar0: {fileID: 0}
-  nodeZeroCar1: {fileID: 0}
-  nodeZeroWay0: {fileID: 0}
-  nodeZeroWay1: {fileID: 0}
   directConnectSide:
   - {fileID: 1740720815}
   - {fileID: 0}
+  nextWaySide0: 00000000
+  nextWaySide1: 0100000000000000
+  bloked: 0
+  nodeZero0: {fileID: 0}
+  nodeZero1: {fileID: 0}
+  nodeZeroWay0: {fileID: 0}
+  nodeZeroWay1: {fileID: 0}
+  oneway: 0
+  doubleLine: 0
+  width: 2
+  limitNodeDistance: 30
+  doNotConnectTo: []
   wpData:
     tsActive: 010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101
     tf01:
@@ -12646,11 +12674,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1621816067434a244a9dfeb78dfce2ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oneway: 0
-  doubleLine: 0
-  width: 2
-  doNotConnectTo: []
-  limitNodeDistance: 30
   waypoints:
   - {fileID: 111883685}
   - {fileID: 627296953}
@@ -12662,16 +12685,21 @@ MonoBehaviour:
   nextWay1:
   - {fileID: 215206245}
   - {fileID: 1425946623}
-  nextWaySide0: 000000000000000001000000
-  nextWaySide1: 0000000001000000
-  bloked: 0
-  nodeZeroCar0: {fileID: 0}
-  nodeZeroCar1: {fileID: 0}
-  nodeZeroWay0: {fileID: 0}
-  nodeZeroWay1: {fileID: 0}
   directConnectSide:
   - {fileID: 0}
   - {fileID: 0}
+  nextWaySide0: 000000000000000001000000
+  nextWaySide1: 0000000001000000
+  bloked: 0
+  nodeZero0: {fileID: 0}
+  nodeZero1: {fileID: 0}
+  nodeZeroWay0: {fileID: 0}
+  nodeZeroWay1: {fileID: 0}
+  oneway: 0
+  doubleLine: 0
+  width: 2
+  limitNodeDistance: 30
+  doNotConnectTo: []
   wpData:
     tsActive: 010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101
     tf01:
@@ -13192,11 +13220,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1621816067434a244a9dfeb78dfce2ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oneway: 0
-  doubleLine: 0
-  width: 2
-  doNotConnectTo: []
-  limitNodeDistance: 30
   waypoints:
   - {fileID: 223042990}
   - {fileID: 1690315031}
@@ -13208,16 +13231,21 @@ MonoBehaviour:
   - {fileID: 1251923105}
   - {fileID: 1605053235}
   - {fileID: 1740720815}
-  nextWaySide0: 0100000000000000
-  nextWaySide1: 000000000100000001000000
-  bloked: 0
-  nodeZeroCar0: {fileID: 0}
-  nodeZeroCar1: {fileID: 0}
-  nodeZeroWay0: {fileID: 0}
-  nodeZeroWay1: {fileID: 0}
   directConnectSide:
   - {fileID: 0}
   - {fileID: 0}
+  nextWaySide0: 0100000000000000
+  nextWaySide1: 000000000100000001000000
+  bloked: 0
+  nodeZero0: {fileID: 0}
+  nodeZero1: {fileID: 0}
+  nodeZeroWay0: {fileID: 0}
+  nodeZeroWay1: {fileID: 0}
+  oneway: 0
+  doubleLine: 0
+  width: 2
+  limitNodeDistance: 30
+  doNotConnectTo: []
   wpData:
     tsActive: 010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101
     tf01:
@@ -13490,11 +13518,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1621816067434a244a9dfeb78dfce2ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oneway: 0
-  doubleLine: 0
-  width: 2
-  doNotConnectTo: []
-  limitNodeDistance: 30
   waypoints:
   - {fileID: 2098036045}
   - {fileID: 661862390}
@@ -13505,16 +13528,21 @@ MonoBehaviour:
   nextWay1:
   - {fileID: 770182804}
   - {fileID: 1472298145}
-  nextWaySide0: 0000000001000000
-  nextWaySide1: 0000000001000000
-  bloked: 0
-  nodeZeroCar0: {fileID: 0}
-  nodeZeroCar1: {fileID: 0}
-  nodeZeroWay0: {fileID: 0}
-  nodeZeroWay1: {fileID: 0}
   directConnectSide:
   - {fileID: 0}
   - {fileID: 0}
+  nextWaySide0: 0000000001000000
+  nextWaySide1: 0000000001000000
+  bloked: 0
+  nodeZero0: {fileID: 0}
+  nodeZero1: {fileID: 0}
+  nodeZeroWay0: {fileID: 0}
+  nodeZeroWay1: {fileID: 0}
+  oneway: 0
+  doubleLine: 0
+  width: 2
+  limitNodeDistance: 30
+  doNotConnectTo: []
   wpData:
     tsActive: 010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101
     tf01:
@@ -13818,11 +13846,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1621816067434a244a9dfeb78dfce2ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oneway: 0
-  doubleLine: 0
-  width: 2
-  doNotConnectTo: []
-  limitNodeDistance: 30
   waypoints:
   - {fileID: 1256182655}
   - {fileID: 1028305766}
@@ -13834,16 +13857,21 @@ MonoBehaviour:
   - {fileID: 707570955}
   - {fileID: 1251923105}
   - {fileID: 2045241887}
-  nextWaySide0: 0000000001000000
-  nextWaySide1: 000000000100000001000000
-  bloked: 0
-  nodeZeroCar0: {fileID: 0}
-  nodeZeroCar1: {fileID: 0}
-  nodeZeroWay0: {fileID: 0}
-  nodeZeroWay1: {fileID: 0}
   directConnectSide:
   - {fileID: 0}
   - {fileID: 0}
+  nextWaySide0: 0000000001000000
+  nextWaySide1: 000000000100000001000000
+  bloked: 0
+  nodeZero0: {fileID: 0}
+  nodeZero1: {fileID: 0}
+  nodeZeroWay0: {fileID: 0}
+  nodeZeroWay1: {fileID: 0}
+  oneway: 0
+  doubleLine: 0
+  width: 2
+  limitNodeDistance: 30
+  doNotConnectTo: []
   wpData:
     tsActive: 010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101
     tf01:
@@ -14178,11 +14206,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1621816067434a244a9dfeb78dfce2ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oneway: 0
-  doubleLine: 0
-  width: 2
-  doNotConnectTo: []
-  limitNodeDistance: 30
   waypoints:
   - {fileID: 408345421}
   - {fileID: 323860843}
@@ -14193,16 +14216,21 @@ MonoBehaviour:
   - {fileID: 1644175437}
   nextWay1:
   - {fileID: 1597054778}
-  nextWaySide0: 000000000100000000000000
-  nextWaySide1: 01000000
-  bloked: 0
-  nodeZeroCar0: {fileID: 0}
-  nodeZeroCar1: {fileID: 0}
-  nodeZeroWay0: {fileID: 0}
-  nodeZeroWay1: {fileID: 0}
   directConnectSide:
   - {fileID: 0}
   - {fileID: 1597054778}
+  nextWaySide0: 000000000100000000000000
+  nextWaySide1: 01000000
+  bloked: 0
+  nodeZero0: {fileID: 0}
+  nodeZero1: {fileID: 0}
+  nodeZeroWay0: {fileID: 0}
+  nodeZeroWay1: {fileID: 0}
+  oneway: 0
+  doubleLine: 0
+  width: 2
+  limitNodeDistance: 30
+  doNotConnectTo: []
   wpData:
     tsActive: 010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101
     tf01:
@@ -14501,8 +14529,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1787709894}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 14, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: 0.7438883, z: -0, w: 0.66830397}
+  m_LocalPosition: {x: 13.6, y: 0, z: -1.46}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -14568,11 +14596,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1621816067434a244a9dfeb78dfce2ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oneway: 0
-  doubleLine: 0
-  width: 2
-  doNotConnectTo: []
-  limitNodeDistance: 30
   waypoints:
   - {fileID: 1100955646}
   - {fileID: 1334090268}
@@ -14583,16 +14606,21 @@ MonoBehaviour:
   nextWay1:
   - {fileID: 1334531368}
   - {fileID: 1921072986}
-  nextWaySide0: 0000000000000000
-  nextWaySide1: 0100000000000000
-  bloked: 0
-  nodeZeroCar0: {fileID: 0}
-  nodeZeroCar1: {fileID: 0}
-  nodeZeroWay0: {fileID: 0}
-  nodeZeroWay1: {fileID: 0}
   directConnectSide:
   - {fileID: 0}
   - {fileID: 0}
+  nextWaySide0: 0000000000000000
+  nextWaySide1: 0100000000000000
+  bloked: 0
+  nodeZero0: {fileID: 0}
+  nodeZero1: {fileID: 0}
+  nodeZeroWay0: {fileID: 0}
+  nodeZeroWay1: {fileID: 0}
+  oneway: 0
+  doubleLine: 0
+  width: 2
+  limitNodeDistance: 30
+  doNotConnectTo: []
   wpData:
     tsActive: 010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101
     tf01:
@@ -14865,11 +14893,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1621816067434a244a9dfeb78dfce2ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oneway: 0
-  doubleLine: 0
-  width: 2
-  doNotConnectTo: []
-  limitNodeDistance: 30
   waypoints:
   - {fileID: 1631621553}
   - {fileID: 2077375287}
@@ -14881,16 +14904,21 @@ MonoBehaviour:
   - {fileID: 30078839}
   - {fileID: 505137834}
   - {fileID: 1413572623}
-  nextWaySide0: 000000000000000001000000
-  nextWaySide1: 010000000100000000000000
-  bloked: 0
-  nodeZeroCar0: {fileID: 0}
-  nodeZeroCar1: {fileID: 0}
-  nodeZeroWay0: {fileID: 0}
-  nodeZeroWay1: {fileID: 0}
   directConnectSide:
   - {fileID: 0}
   - {fileID: 0}
+  nextWaySide0: 000000000000000001000000
+  nextWaySide1: 010000000100000000000000
+  bloked: 0
+  nodeZero0: {fileID: 0}
+  nodeZero1: {fileID: 0}
+  nodeZeroWay0: {fileID: 0}
+  nodeZeroWay1: {fileID: 0}
+  oneway: 0
+  doubleLine: 0
+  width: 2
+  limitNodeDistance: 30
+  doNotConnectTo: []
   wpData:
     tsActive: 010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101
     tf01:
@@ -15410,11 +15438,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1621816067434a244a9dfeb78dfce2ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oneway: 0
-  doubleLine: 0
-  width: 2
-  doNotConnectTo: []
-  limitNodeDistance: 30
   waypoints:
   - {fileID: 724324129}
   - {fileID: 573352638}
@@ -15426,16 +15449,21 @@ MonoBehaviour:
   nextWay1:
   - {fileID: 1472298145}
   - {fileID: 1791700487}
-  nextWaySide0: 000000000000000001000000
-  nextWaySide1: 0000000001000000
-  bloked: 0
-  nodeZeroCar0: {fileID: 0}
-  nodeZeroCar1: {fileID: 0}
-  nodeZeroWay0: {fileID: 0}
-  nodeZeroWay1: {fileID: 0}
   directConnectSide:
   - {fileID: 0}
   - {fileID: 0}
+  nextWaySide0: 000000000000000001000000
+  nextWaySide1: 0000000001000000
+  bloked: 0
+  nodeZero0: {fileID: 0}
+  nodeZero1: {fileID: 0}
+  nodeZeroWay0: {fileID: 0}
+  nodeZeroWay1: {fileID: 0}
+  oneway: 0
+  doubleLine: 0
+  width: 2
+  limitNodeDistance: 30
+  doNotConnectTo: []
   wpData:
     tsActive: 010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101
     tf01:
@@ -15770,11 +15798,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1621816067434a244a9dfeb78dfce2ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oneway: 0
-  doubleLine: 0
-  width: 2
-  doNotConnectTo: []
-  limitNodeDistance: 30
   waypoints:
   - {fileID: 885445964}
   - {fileID: 205049962}
@@ -15784,16 +15807,21 @@ MonoBehaviour:
   nextWay1:
   - {fileID: 1334531368}
   - {fileID: 1791700487}
-  nextWaySide0: 00000000
-  nextWaySide1: 0100000000000000
-  bloked: 0
-  nodeZeroCar0: {fileID: 0}
-  nodeZeroCar1: {fileID: 0}
-  nodeZeroWay0: {fileID: 0}
-  nodeZeroWay1: {fileID: 0}
   directConnectSide:
   - {fileID: 925409667}
   - {fileID: 0}
+  nextWaySide0: 00000000
+  nextWaySide1: 0100000000000000
+  bloked: 0
+  nodeZero0: {fileID: 0}
+  nodeZero1: {fileID: 0}
+  nodeZeroWay0: {fileID: 0}
+  nodeZeroWay1: {fileID: 0}
+  oneway: 0
+  doubleLine: 0
+  width: 2
+  limitNodeDistance: 30
+  doNotConnectTo: []
   wpData:
     tsActive: 010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101
     tf01:
@@ -16252,12 +16280,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc6c86d7450870a41b0e213b85f9c5d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  noPedestrian: 0
-  oneway: 0
-  doubleLine: 0
-  width: 1
-  doNotConnectTo: []
-  limitNodeDistance: 30
   waypoints:
   - {fileID: 21310564}
   - {fileID: 1553268790}
@@ -16265,30 +16287,35 @@ MonoBehaviour:
   - {fileID: 603432619}
   nextWay1:
   - {fileID: 26651368}
+  directConnectSide:
+  - {fileID: 603432619}
+  - {fileID: 0}
   nextWaySide0: 00000000
   nextWaySide1: 01000000
-  rightHand: 0
   bloked: 0
-  nodeZeroCar0: {fileID: 0}
-  nodeZeroCar1: {fileID: 0}
+  nodeZero0: {fileID: 0}
+  nodeZero1: {fileID: 0}
   nodeZeroWay0: {fileID: 0}
   nodeZeroWay1: {fileID: 0}
-  directConnectSide:
-  - {fileID: 0}
-  - {fileID: 0}
+  oneway: 0
+  doubleLine: 0
+  width: 1
+  limitNodeDistance: 30
+  doNotConnectTo: []
+  noPedestrian: 0
   wpData:
     tsActive: 01010101010101010101
     tf01:
     - {x: 15.3, y: 0, z: -53.859997}
     - {x: 13.3, y: 0, z: 2.24}
-    - {x: 12.370011, y: 0, z: -63.491386}
-    - {x: -38.46393, y: 0, z: 8.60407}
-    - {x: 5.8999996, y: 0, z: 15.18}
-    - {x: -8.1, y: 0, z: 13.18}
+    - {x: 12.822036, y: 0, z: -57.051216}
+    - {x: -38.769264, y: 0, z: 9.450691}
+    - {x: 5.6067395, y: 0, z: 13.714287}
+    - {x: -8.20674, y: 0, z: 13.185713}
     - {x: -33, y: 0, z: 13.18}
     - {x: -12.8, y: 0, z: 15.18}
-    - {x: 13.211471, y: 0, z: 7.456265}
-    - {x: 7.6685286, y: 0, z: 11.033735}
+    - {x: 11.667148, y: 0, z: 6.9336267}
+    - {x: 7.512853, y: 0, z: 11.656374}
     tsParent:
     - {fileID: 26651368}
     - {fileID: 26651368}
@@ -16312,7 +16339,7 @@ Transform:
   m_GameObject: {fileID: 1979249840}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.44, y: 0, z: 11.67}
+  m_LocalPosition: {x: 7.59, y: 0, z: 11.72}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -16411,11 +16438,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1621816067434a244a9dfeb78dfce2ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oneway: 0
-  doubleLine: 0
-  width: 2
-  doNotConnectTo: []
-  limitNodeDistance: 30
   waypoints:
   - {fileID: 712605776}
   - {fileID: 273782198}
@@ -16427,16 +16449,21 @@ MonoBehaviour:
   - {fileID: 284166821}
   - {fileID: 660522319}
   - {fileID: 1436589965}
-  nextWaySide0: 000000000000000000000000
-  nextWaySide1: 000000000100000001000000
-  bloked: 0
-  nodeZeroCar0: {fileID: 0}
-  nodeZeroCar1: {fileID: 0}
-  nodeZeroWay0: {fileID: 0}
-  nodeZeroWay1: {fileID: 0}
   directConnectSide:
   - {fileID: 0}
   - {fileID: 0}
+  nextWaySide0: 000000000000000000000000
+  nextWaySide1: 000000000100000001000000
+  bloked: 0
+  nodeZero0: {fileID: 0}
+  nodeZero1: {fileID: 0}
+  nodeZeroWay0: {fileID: 0}
+  nodeZeroWay1: {fileID: 0}
+  oneway: 0
+  doubleLine: 0
+  width: 2
+  limitNodeDistance: 30
+  doNotConnectTo: []
   wpData:
     tsActive: 010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101
     tf01:
@@ -16708,11 +16735,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1621816067434a244a9dfeb78dfce2ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oneway: 0
-  doubleLine: 0
-  width: 2
-  doNotConnectTo: []
-  limitNodeDistance: 30
   waypoints:
   - {fileID: 1457729161}
   - {fileID: 1652584812}
@@ -16724,16 +16746,21 @@ MonoBehaviour:
   nextWay1:
   - {fileID: 215206245}
   - {fileID: 260780647}
-  nextWaySide0: 000000000100000000000000
-  nextWaySide1: 0100000000000000
-  bloked: 0
-  nodeZeroCar0: {fileID: 0}
-  nodeZeroCar1: {fileID: 0}
-  nodeZeroWay0: {fileID: 0}
-  nodeZeroWay1: {fileID: 0}
   directConnectSide:
   - {fileID: 0}
   - {fileID: 0}
+  nextWaySide0: 000000000100000000000000
+  nextWaySide1: 0100000000000000
+  bloked: 0
+  nodeZero0: {fileID: 0}
+  nodeZero1: {fileID: 0}
+  nodeZeroWay0: {fileID: 0}
+  nodeZeroWay1: {fileID: 0}
+  oneway: 0
+  doubleLine: 0
+  width: 2
+  limitNodeDistance: 30
+  doNotConnectTo: []
   wpData:
     tsActive: 010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101
     tf01:
@@ -17130,11 +17157,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1621816067434a244a9dfeb78dfce2ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oneway: 0
-  doubleLine: 0
-  width: 2
-  doNotConnectTo: []
-  limitNodeDistance: 30
   waypoints:
   - {fileID: 1435913994}
   - {fileID: 1280985894}
@@ -17144,16 +17166,21 @@ MonoBehaviour:
   - {fileID: 246105608}
   nextWay1:
   - {fileID: 770182804}
-  nextWaySide0: 0100000001000000
-  nextWaySide1: 01000000
-  bloked: 0
-  nodeZeroCar0: {fileID: 0}
-  nodeZeroCar1: {fileID: 0}
-  nodeZeroWay0: {fileID: 0}
-  nodeZeroWay1: {fileID: 0}
   directConnectSide:
   - {fileID: 0}
   - {fileID: 770182804}
+  nextWaySide0: 0100000001000000
+  nextWaySide1: 01000000
+  bloked: 0
+  nodeZero0: {fileID: 0}
+  nodeZero1: {fileID: 0}
+  nodeZeroWay0: {fileID: 0}
+  nodeZeroWay1: {fileID: 0}
+  oneway: 0
+  doubleLine: 0
+  width: 2
+  limitNodeDistance: 30
+  doNotConnectTo: []
   wpData:
     tsActive: 010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101
     tf01:
@@ -17481,7 +17508,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3469180505797300293, guid: 8dd063649ea18604bae9f9e9a5d4fe49, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 3469180505797300293, guid: 8dd063649ea18604bae9f9e9a5d4fe49, type: 3}
       propertyPath: m_LocalPosition.z
@@ -17521,6 +17548,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6898951769677195306, guid: 8dd063649ea18604bae9f9e9a5d4fe49, type: 3}
       propertyPath: player
+      value: 
+      objectReference: {fileID: 112983850}
+    - target: {fileID: 6898951769677195306, guid: 8dd063649ea18604bae9f9e9a5d4fe49, type: 3}
+      propertyPath: <Player>k__BackingField
       value: 
       objectReference: {fileID: 112983850}
     m_RemovedComponents: []
@@ -17603,7 +17634,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 351745734152439409, guid: 46bc74b2cc32a7b488a322df676c715c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 351745734152439409, guid: 46bc74b2cc32a7b488a322df676c715c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -17638,12 +17669,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8129984580839768989, guid: 46bc74b2cc32a7b488a322df676c715c, type: 3}
-      propertyPath: player
+      propertyPath: <Player>k__BackingField
       value: 
       objectReference: {fileID: 112983850}
     - target: {fileID: 9062443454265837279, guid: 46bc74b2cc32a7b488a322df676c715c, type: 3}
       propertyPath: m_Name
       value: Traffic System - Car
+      objectReference: {fileID: 0}
+    - target: {fileID: 9062443454265837279, guid: 46bc74b2cc32a7b488a322df676c715c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
