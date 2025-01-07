@@ -27,6 +27,7 @@ namespace cky.TrafficSystem
         public int node;
         public WaypointsContainer_Pedestrian wayScript;
     }
+
     #endregion
 
     public class TrafficSystem_Pedestrian : TrafficSystem_Abstract
@@ -70,7 +71,7 @@ namespace cky.TrafficSystem
             for (int i = 0; i < n; i++)
             {
                 var _w = _waypointContainers[i];
-                if (_w.noPedestrian) continue;
+                if (_w.noUnit) continue;
 
                 if (!_w.bloked && _w.waypoints.Count > 1)
                 {

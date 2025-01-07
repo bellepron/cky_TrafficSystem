@@ -71,6 +71,7 @@ namespace cky.TrafficSystem
             for (int i = 0; i < n; i++)
             {
                 var _w = _waypointContainers[i];
+                if (_w.noUnit) continue;
 
                 if (!_w.bloked && _w.waypoints.Count > 1)
                 {

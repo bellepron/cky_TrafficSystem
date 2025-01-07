@@ -23,6 +23,7 @@ namespace cky.TrafficSystem
         [HideInInspector] public Transform nodeZeroWay0;
         [HideInInspector] public Transform nodeZeroWay1;
 
+        public bool noUnit;
         public bool oneway = false;
         public bool doubleLine = false;
         [Range(0.5f, 25)] public float width = 2f;

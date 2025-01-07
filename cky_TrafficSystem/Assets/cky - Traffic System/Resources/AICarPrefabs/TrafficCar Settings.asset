@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f025d5b6f89a3ad47a594b93e98dbf30, type: 3}
   m_Name: TrafficCar Settings
   m_EditorClassIdentifier: 
-  rayLength: 10
+  rayLength: 5
   distanceToSelfDestroyDefault: 200
   checkingAwayFromPlayerRepeatRate: 3
   timeToStayStill: 20

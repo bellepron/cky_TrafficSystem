@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEditor;
 
@@ -7,7 +6,7 @@ namespace cky.TrafficSystem
 {
     public class WaypointsContainer_Pedestrian : WaypointsContainer_Abstract
     {
-        public bool noPedestrian;
+        public bool noUnit;
 
         [HideInInspector] public WpData_Pedestrian wpData;
 

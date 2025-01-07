@@ -294,6 +294,7 @@ namespace cky.TrafficSystem
                                 b1 = myOldWayScript.SetNodeZero((myOldSideAtual == 1) ? 0 : 1, myOldWay, transform);
 
                             b2 = CheckBookAllPathOptions(myOldWayScript, myOldSideAtual) && BookAllPathOptions(myOldWayScript, myOldSideAtual, true);
+                            
                             brake2 = (b1 && b2) ? 0 : 4000; // Imdat
                         }
                         else
@@ -303,6 +304,7 @@ namespace cky.TrafficSystem
                     }
                     else
                     {
+                        if (status == StatusCar.waitingForAnotherVehicleToPass) Debug.Log($"{transform.name}:");
                         brake2 = 4000; // Imdat
                     }
                 }
