@@ -180,11 +180,6 @@ namespace cky.TrafficSystem
             bloked = ((!oneway && (nextWay0.Length < 1 || nextWay1.Length < 1)) || (oneway && (nextWay0.Length < 1 && nextWay1.Length < 1)));   // If one of my ends is not linked to another route, ban me
         }
 
-        public override Transform GetNodeZeroOldWay(int side)
-        {
-            return (side == 0) ? nodeZero0.GetComponent<TrafficCar>().myOldWay : nodeZero1.GetComponent<TrafficCar>().myOldWay;
-        }
-
         public override void RefreshAllWayPoints()
         {
             if (Time.time - _timer < 0.2f) return;

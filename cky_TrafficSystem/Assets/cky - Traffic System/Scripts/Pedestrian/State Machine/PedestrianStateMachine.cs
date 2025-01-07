@@ -54,9 +54,30 @@ namespace cky.TrafficSystem
 
         //SoundManager SoundManager;
 
+        int countWays;
+        Transform[] nodes;
+        [HideInInspector] public int currentNode = 0;
+        float distanceToNode;
+        Transform _thisTr;
+        
         public Vector3 Position => transform.position;
-        public int SideAtual => sideAtual;
-        public Transform AtualWay => atualWay;
+        public Transform AtualWay { get; set; }
+        public int SideAtual { get; set; } = 0;
+        public WaypointsContainer_Abstract AtualWayScript { get; set; }
+        public bool NodeSteerCarefully { get; set; } = false;
+        public bool NodeSteerCarefully2 { get; set; } = false;
+        public Transform MyOldWay { get; set; }
+        public int MyOldSideAtual { get; set; } = 0;
+        public WaypointsContainer_Abstract MyOldWayScript { get; set; } = null;
+        public Vector3 AvanceNode { get; set; } = Vector3.zero;
+
+        private Transform behind = null;
+
+        [HideInInspector] public Transform player;
+        Transform cameraTr;
+        Vector3 agentHeight = new Vector3(0, 2.0f, 0);
+
+        float distanceToSelfDestroy = 0; //0 = Do not autodestroy with player distance
 
 
 
@@ -98,7 +119,7 @@ namespace cky.TrafficSystem
 
             IsAlive = true;
 
-            if (atualWay)
+            if (AtualWay)
                 Init();
 
             State = PreSet_State;
@@ -278,7 +299,7 @@ namespace cky.TrafficSystem
 
 
         #region Sort
-        public Vector3 TargetPointFromAtualWayScript() => atualWayScript.Node(sideAtual, currentNode);
+        public Vector3 TargetPointFromAtualWayScript() => AtualWayScript.Node(SideAtual, currentNode);
         private void SortTargetsInView_Pedestrian_Car_Player(Collider[] targetsInViewRadius)
         {
             Transform thisTransform = transform;
@@ -478,46 +499,22 @@ namespace cky.TrafficSystem
 
 
 
-        int countWays;
-        Transform[] nodes;
-        [HideInInspector] public int currentNode = 0;
-        float distanceToNode;
-        Transform _thisTr;
-
-        [HideInInspector] public Transform atualWay;
-        [HideInInspector] public int sideAtual = 0;
-        [HideInInspector] public WaypointsContainer_Abstract atualWayScript;
-        [HideInInspector] public Transform myOldWay;
-        [HideInInspector] public int myOldSideAtual = 0;
-        [HideInInspector] public WaypointsContainer_Abstract myOldWayScript = null;
-
-        private Vector3 _avanceNode = Vector3.zero; //private Position where an additional and momentary node can be added
-
-        private Transform behind = null;
-
-        [HideInInspector] public Transform player;
-        Transform cameraTr;
-        Vector3 agentHeight = new Vector3(0, 2.0f, 0);
-
-        float distanceToSelfDestroy = 0; //0 = Do not autodestroy with player distance
-
-
         public void Init()
         {
-            atualWayScript = atualWay.GetComponent<WaypointsContainer_Pedestrian>();
+            AtualWayScript = AtualWay.GetComponent<WaypointsContainer_Pedestrian>();
 
             DefineNewPath();
 
             if (currentNode == 0) currentNode = 1;
 
-            distanceToNode = Vector3.Distance(atualWayScript.Node(sideAtual, currentNode), transform.position);
+            distanceToNode = Vector3.Distance(AtualWayScript.Node(SideAtual, currentNode), transform.position);
         }
 
         public void TrafficSystemInit(int sideAtual, Transform atualWay, WaypointsContainer_Abstract atualWayScript, int currentNode, float distanceToSelfDestroy, Transform player, TrafficSystem_Abstract trafficSystem)
         {
-            this.sideAtual = sideAtual;
-            this.atualWay = atualWay;
-            this.atualWayScript = atualWayScript;
+            this.SideAtual = sideAtual;
+            this.AtualWay = atualWay;
+            this.AtualWayScript = atualWayScript;
             this.currentNode = currentNode;
             this.distanceToSelfDestroy = distanceToSelfDestroy;
             this.player = player;
@@ -526,7 +523,7 @@ namespace cky.TrafficSystem
             Init();
         }
 
-        private Vector3 GetNodePosition() => atualWayScript.Node(sideAtual, currentNode);
+        private Vector3 GetNodePosition() => AtualWayScript.Node(SideAtual, currentNode);
 
         public void ckyMove()
         {
@@ -551,9 +548,9 @@ namespace cky.TrafficSystem
 
                     if (currentNode == 1)
                     {
-                        atualWayScript.UnSetNodeZero(sideAtual, transform);  // Release the node so that the cars that were waiting for me to pass can proceed
+                        AtualWayScript.UnSetNodeZero(SideAtual, transform);  // Release the node so that the cars that were waiting for me to pass can proceed
 
-                        myOldWayScript.UnSetNodeZero((myOldSideAtual == 1) ? 0 : 1, transform);
+                        MyOldWayScript.UnSetNodeZero((MyOldSideAtual == 1) ? 0 : 1, transform);
                     }
                 }
                 else
@@ -562,39 +559,39 @@ namespace cky.TrafficSystem
                     int t = 0;
 
                     //True if the chosen path was the only option
-                    bool verify = (sideAtual == 0) ? atualWayScript.nextWay0.Length == 1 : atualWayScript.nextWay1.Length == 1;
+                    bool verify = (SideAtual == 0) ? AtualWayScript.nextWay0.Length == 1 : AtualWayScript.nextWay1.Length == 1;
 
-                    myOldWay = atualWay;
-                    myOldSideAtual = sideAtual;
-                    myOldWayScript = atualWayScript;
+                    MyOldWay = AtualWay;
+                    MyOldSideAtual = SideAtual;
+                    MyOldWayScript = AtualWayScript;
 
-                    if (sideAtual == 0 && (!atualWayScript.oneway || atualWayScript.doubleLine))
+                    if (SideAtual == 0 && (!AtualWayScript.oneway || AtualWayScript.doubleLine))
                     {
-                        sideAtual = atualWayScript.nextWaySide0[t];
-                        atualWayScript = atualWayScript.nextWay0[t];
+                        SideAtual = AtualWayScript.nextWaySide0[t];
+                        AtualWayScript = AtualWayScript.nextWay0[t];
                     }
                     else
                     {
-                        sideAtual = atualWayScript.nextWaySide1[t];
-                        atualWayScript = atualWayScript.nextWay1[t];
+                        SideAtual = AtualWayScript.nextWaySide1[t];
+                        AtualWayScript = AtualWayScript.nextWay1[t];
                     }
 
-                    atualWay = atualWayScript.transform;
+                    AtualWay = AtualWayScript.transform;
 
                     DefineNewPath();
 
                     currentNode = 0;
 
-                    _avanceNode = myOldWayScript.AvanceNode(myOldSideAtual, myOldWayScript.waypoints.Count - 1, 7);
+                    AvanceNode = MyOldWayScript.AvanceNode(MyOldSideAtual, MyOldWayScript.waypoints.Count - 1, 7);
                 }
             }
         }
 
         void DefineNewPath()
         {
-            nodes = new Transform[atualWay.childCount];
+            nodes = new Transform[AtualWay.childCount];
             int n = 0;
-            foreach (Transform child in atualWay)
+            foreach (Transform child in AtualWay)
                 nodes[n++] = child;
 
             countWays = nodes.Length;

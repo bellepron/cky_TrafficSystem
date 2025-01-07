@@ -103,7 +103,10 @@ namespace cky.TrafficSystem
             return (side == 0) ? nodeZeroWay0 : nodeZeroWay1;
         }
 
-        public abstract Transform GetNodeZeroOldWay(int side);
+        public virtual Transform GetNodeZeroOldWay(int side)
+        {
+            return (side == 0) ? nodeZero0.GetComponent<ITrafficSystemUnit>().MyOldWay : nodeZero1.GetComponent<ITrafficSystemUnit>().MyOldWay;
+        }
 
         public bool SetNodeZero(int side, Transform nodeWay, Transform nodeUnit, bool force = false)
         {
@@ -258,34 +261,34 @@ namespace cky.TrafficSystem
 
         public bool BookNodeZero(TrafficCar trafficCar)
         {
-            if (trafficCar.sideAtual == 0)
+            if (trafficCar.SideAtual == 0)
             {
-                if (SetNodeZero(0, trafficCar.myOldWay, trafficCar.transform))
+                if (SetNodeZero(0, trafficCar.MyOldWay, trafficCar.transform))
                     return true;
                 else
                 {
-                    if (trafficCar.nodeSteerCarefully2 == false && trafficCar.nodeSteerCarefully == false && nodeZero0.GetComponent<TrafficCar>().Get_avanceNode() && trafficCar.GetBehind() != nodeZero0)
+                    if (trafficCar.NodeSteerCarefully2 == false && trafficCar.NodeSteerCarefully == false && nodeZero0.GetComponent<TrafficCar>().Get_avanceNode() && trafficCar.GetBehind() != nodeZero0)
                     {
-                        SetNodeZero(0, trafficCar.myOldWay, trafficCar.transform, true);
+                        SetNodeZero(0, trafficCar.MyOldWay, trafficCar.transform, true);
                     }
 
                     //The starting node of the path is already reserved for another car. So the car that called this procedure must wait.
-                    return ((nodeZero0 == trafficCar.transform) || (nodeZeroWay0 == trafficCar.myOldWay && trafficCar.myOldSideAtual == nodeZero0.GetComponent<TrafficCar>().myOldSideAtual));
+                    return ((nodeZero0 == trafficCar.transform) || (nodeZeroWay0 == trafficCar.MyOldWay && trafficCar.MyOldSideAtual == nodeZero0.GetComponent<TrafficCar>().MyOldSideAtual));
                 }
             }
             else
             {
-                if (SetNodeZero(1, trafficCar.myOldWay, trafficCar.transform))
+                if (SetNodeZero(1, trafficCar.MyOldWay, trafficCar.transform))
                     return true;
                 else
                 {
-                    if (trafficCar.nodeSteerCarefully == false && nodeZero1.GetComponent<TrafficCar>().Get_avanceNode() && trafficCar.GetBehind() != nodeZero1)
+                    if (trafficCar.NodeSteerCarefully == false && nodeZero1.GetComponent<TrafficCar>().Get_avanceNode() && trafficCar.GetBehind() != nodeZero1)
                     {
-                        SetNodeZero(1, trafficCar.myOldWay, trafficCar.transform, true);
+                        SetNodeZero(1, trafficCar.MyOldWay, trafficCar.transform, true);
                     }
 
                     //The starting node of the path is already reserved for another car. So the car that called this procedure must wait.                
-                    return ((nodeZero1 == trafficCar.transform) || (nodeZeroWay1 == trafficCar.myOldWay && trafficCar.myOldSideAtual == nodeZero1.GetComponent<TrafficCar>().myOldSideAtual));
+                    return ((nodeZero1 == trafficCar.transform) || (nodeZeroWay1 == trafficCar.MyOldWay && trafficCar.MyOldSideAtual == nodeZero1.GetComponent<TrafficCar>().MyOldSideAtual));
                 }
             }
         }

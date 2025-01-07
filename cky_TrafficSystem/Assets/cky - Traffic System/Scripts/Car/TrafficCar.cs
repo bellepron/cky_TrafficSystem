@@ -53,15 +53,16 @@ namespace cky.TrafficSystem
         private float iRC = 0;
         private float brake2 = 0;
 
-        [HideInInspector] public Transform atualWay;
-        [HideInInspector] public int sideAtual = 0;
-        [HideInInspector] public WaypointsContainer_Abstract atualWayScript;
-        [HideInInspector] public bool nodeSteerCarefully = false;
-        [HideInInspector] public bool nodeSteerCarefully2 = false;
-        [HideInInspector] public Transform myOldWay;
-        [HideInInspector] public int myOldSideAtual = 0;
-        [HideInInspector] public WaypointsContainer_Abstract myOldWayScript = null;
-        private Vector3 _avanceNode = Vector3.zero;
+        public Vector3 Position => transform.position;
+        public Transform AtualWay { get; set; }
+        public int SideAtual { get; set; } = 0;
+        public WaypointsContainer_Abstract AtualWayScript { get; set; }
+        public bool NodeSteerCarefully { get; set; } = false;
+        public bool NodeSteerCarefully2 { get; set; } = false;
+        public Transform MyOldWay { get; set; }
+        public int MyOldSideAtual { get; set; } = 0;
+        public WaypointsContainer_Abstract MyOldWayScript { get; set; } = null;
+        public Vector3 AvanceNode { get; set; } = Vector3.zero;
 
         private float countTimeToSignal = 0;
         bool toSignal = false;
@@ -73,7 +74,6 @@ namespace cky.TrafficSystem
         Transform thisTr;
         Transform cameraTr;
 
-
         [HideInInspector] public TrafficSystem_Abstract TrafficSystem { get; set; }
 
         float distanceToSelfDestroy = 0;
@@ -84,10 +84,6 @@ namespace cky.TrafficSystem
         private bool insideSemaphore;
         public bool INSIDE { get { return insideSemaphore; } set { insideSemaphore = value; } }
 
-        public Vector3 Position => transform.position;
-        public int SideAtual => sideAtual;
-        public Transform AtualWay => atualWay;
-
 
 
 
@@ -97,7 +93,7 @@ namespace cky.TrafficSystem
 
             if (currentNode == 0) currentNode = 1;
 
-            distanceToNode = Vector3.Distance(atualWayScript.Node(sideAtual, currentNode), myReference.position + myReference.forward * (Settings.curveAdjustment * 0.5f));
+            distanceToNode = Vector3.Distance(AtualWayScript.Node(SideAtual, currentNode), myReference.position + myReference.forward * (Settings.curveAdjustment * 0.5f));
 
             status = StatusCar.transitingNormally;
 
@@ -119,16 +115,16 @@ namespace cky.TrafficSystem
 
         public void TrafficSystemInit(int sideAtual, Transform atualWay, WaypointsContainer_Abstract atualWayScript, int currentNode, float distanceToSelfDestroy, Transform player, TrafficSystem_Abstract trafficSystem)
         {
-            nodeSteerCarefully = false;
-            nodeSteerCarefully2 = false;
-            myOldWay = null;
-            myOldSideAtual = 0;
-            myOldWayScript = null;
-            _avanceNode = Vector3.zero;
+            NodeSteerCarefully = false;
+            NodeSteerCarefully2 = false;
+            MyOldWay = null;
+            MyOldSideAtual = 0;
+            MyOldWayScript = null;
+            AvanceNode = Vector3.zero;
 
-            this.sideAtual = sideAtual;
-            this.atualWay = atualWay;
-            this.atualWayScript = atualWayScript;
+            this.SideAtual = sideAtual;
+            this.AtualWay = atualWay;
+            this.AtualWayScript = atualWayScript;
             this.currentNode = currentNode;
             this.distanceToSelfDestroy = distanceToSelfDestroy;
             this.player = player;
@@ -146,13 +142,13 @@ namespace cky.TrafficSystem
 
         public bool Get_avanceNode()
         {
-            return (currentNode == 0 && nodeSteerCarefully && _avanceNode != Vector3.zero);
+            return (currentNode == 0 && NodeSteerCarefully && AvanceNode != Vector3.zero);
         }
 
 
         public Vector3 GetNodePosition()
         {
-            return atualWayScript.Node(sideAtual, currentNode);
+            return AtualWayScript.Node(SideAtual, currentNode);
         }
         bool CheckBookAllPathOptions(WaypointsContainer_Abstract wayScript, int side)
         {
@@ -178,7 +174,7 @@ namespace cky.TrafficSystem
 
                 if (wScript)
                 {
-                    if ((wScript.GetNodeZeroUnit(wSide) != null && wScript.GetNodeZeroUnit(wSide) != transform) && wScript.GetNodeZeroOldWay(wSide) != myOldWay && (!Get_avanceNode() || !wScript.GetNodeZeroUnit(wSide).GetComponent<TrafficCar>().Get_avanceNode()))
+                    if ((wScript.GetNodeZeroUnit(wSide) != null && wScript.GetNodeZeroUnit(wSide) != transform) && wScript.GetNodeZeroOldWay(wSide) != MyOldWay && (!Get_avanceNode() || !wScript.GetNodeZeroUnit(wSide).GetComponent<TrafficCar>().Get_avanceNode()))
                         return false;
                 }
                 else
@@ -256,18 +252,18 @@ namespace cky.TrafficSystem
 
             VerificaPoints();
 
-            distanceToNode = Vector3.Distance(atualWayScript.Node(sideAtual, currentNode), myReference.position + myReference.forward * (Settings.curveAdjustment * 0.5f));
+            distanceToNode = Vector3.Distance(AtualWayScript.Node(SideAtual, currentNode), myReference.position + myReference.forward * (Settings.curveAdjustment * 0.5f));
 
-            if (_avanceNode != Vector3.zero)
+            if (AvanceNode != Vector3.zero)
             {
-                relativeVector = transform.InverseTransformPoint(_avanceNode);
+                relativeVector = transform.InverseTransformPoint(AvanceNode);
 
-                if (Vector3.Distance(_avanceNode, myReference.position) < 4)
-                    _avanceNode = Vector3.zero;
+                if (Vector3.Distance(AvanceNode, myReference.position) < 4)
+                    AvanceNode = Vector3.zero;
             }
             else
             {
-                relativeVector = transform.InverseTransformPoint(atualWayScript.Node(sideAtual, currentNode, (currentNode == 0 && nodeSteerCarefully) ? 3 : 0));
+                relativeVector = transform.InverseTransformPoint(AtualWayScript.Node(SideAtual, currentNode, (currentNode == 0 && NodeSteerCarefully) ? 3 : 0));
             }
 
             steer = ((relativeVector.x / relativeVector.magnitude) * Settings.maxSteerAngle);
@@ -283,18 +279,18 @@ namespace cky.TrafficSystem
                 if (currentNode == 0)
                 {
                     // Decide whether I should wait for another car to pass and then proceed
-                    if (behind == null && atualWayScript.BookNodeZero(this))
+                    if (behind == null && AtualWayScript.BookNodeZero(this))
                     {
                         // The way I was was not oneWay, and I'm turning to the side that has opposite traffic
                         // Decide whether I should wait for another car to pass and then proceed
-                        if ((nodeSteerCarefully && !myOldWayScript.oneway) || (nodeSteerCarefully2))
+                        if ((NodeSteerCarefully && !MyOldWayScript.oneway) || (NodeSteerCarefully2))
                         {
                             //Reserve the node next to mine in my previous lane, so as not to come by car in the opposite direction.
-                            if (!nodeSteerCarefully2)
-                                b1 = myOldWayScript.SetNodeZero((myOldSideAtual == 1) ? 0 : 1, myOldWay, transform);
+                            if (!NodeSteerCarefully2)
+                                b1 = MyOldWayScript.SetNodeZero((MyOldSideAtual == 1) ? 0 : 1, MyOldWay, transform);
 
-                            b2 = CheckBookAllPathOptions(myOldWayScript, myOldSideAtual) && BookAllPathOptions(myOldWayScript, myOldSideAtual, true);
-                            
+                            b2 = CheckBookAllPathOptions(MyOldWayScript, MyOldSideAtual) && BookAllPathOptions(MyOldWayScript, MyOldSideAtual, true);
+
                             brake2 = (b1 && b2) ? 0 : 4000; // Imdat
                         }
                         else
@@ -394,17 +390,17 @@ namespace cky.TrafficSystem
 
                     if (currentNode == 1)
                     {
-                        atualWayScript.UnSetNodeZero(sideAtual, transform);  // Release the node so that the cars that were waiting for me to pass can proceed
+                        AtualWayScript.UnSetNodeZero(SideAtual, transform);  // Release the node so that the cars that were waiting for me to pass can proceed
                         status = StatusCar.transitingNormally;
 
-                        if (nodeSteerCarefully || nodeSteerCarefully2)
+                        if (NodeSteerCarefully || NodeSteerCarefully2)
                         {
-                            myOldWayScript.UnSetNodeZero((myOldSideAtual == 1) ? 0 : 1, transform);
-                            BookAllPathOptions(myOldWayScript, myOldSideAtual, false); //Release others nodes so that the cars that were waiting for me to pass can proceed
+                            MyOldWayScript.UnSetNodeZero((MyOldSideAtual == 1) ? 0 : 1, transform);
+                            BookAllPathOptions(MyOldWayScript, MyOldSideAtual, false); //Release others nodes so that the cars that were waiting for me to pass can proceed
                         }
 
-                        nodeSteerCarefully = false;
-                        nodeSteerCarefully2 = false;
+                        NodeSteerCarefully = false;
+                        NodeSteerCarefully2 = false;
 
                         if (lightDirection)
                         {
@@ -420,29 +416,29 @@ namespace cky.TrafficSystem
                     int t = TestWay();
 
                     //True if the chosen path was the only option
-                    bool verify = (sideAtual == 0) ? atualWayScript.nextWay0.Length == 1 : atualWayScript.nextWay1.Length == 1;
+                    bool verify = (SideAtual == 0) ? AtualWayScript.nextWay0.Length == 1 : AtualWayScript.nextWay1.Length == 1;
 
-                    myOldWay = atualWay;
-                    myOldSideAtual = sideAtual;
-                    myOldWayScript = atualWayScript;
+                    MyOldWay = AtualWay;
+                    MyOldSideAtual = SideAtual;
+                    MyOldWayScript = AtualWayScript;
 
-                    if (sideAtual == 0 && (!atualWayScript.oneway || atualWayScript.doubleLine))
+                    if (SideAtual == 0 && (!AtualWayScript.oneway || AtualWayScript.doubleLine))
                     {
-                        sideAtual = atualWayScript.nextWaySide0[t];
-                        atualWayScript = atualWayScript.nextWay0[t];
+                        SideAtual = AtualWayScript.nextWaySide0[t];
+                        AtualWayScript = AtualWayScript.nextWay0[t];
                     }
                     else
                     {
-                        sideAtual = atualWayScript.nextWaySide1[t];
-                        atualWayScript = atualWayScript.nextWay1[t];
+                        SideAtual = AtualWayScript.nextWaySide1[t];
+                        AtualWayScript = AtualWayScript.nextWay1[t];
                     }
 
-                    atualWay = atualWayScript.transform;
+                    AtualWay = AtualWayScript.transform;
 
                     //The road I'm on has no exit, so interdict the previous road that had only this road as an option
-                    if (verify && atualWayScript.bloked)
+                    if (verify && AtualWayScript.bloked)
                     {
-                        myOldWayScript.bloked = true;
+                        MyOldWayScript.bloked = true;
                         brake2 = 6000;
                         status = StatusCar.bloked;
                     }
@@ -451,18 +447,18 @@ namespace cky.TrafficSystem
 
                     currentNode = 0;
 
-                    float a = GetAngulo(transform, atualWayScript.Node(sideAtual, 0));
+                    float a = GetAngulo(transform, AtualWayScript.Node(SideAtual, 0));
 
                     //if (myOldWayScript.oneway) 
-                    if (myOldWayScript.oneway && !myOldWayScript.doubleLine)
+                    if (MyOldWayScript.oneway && !MyOldWayScript.doubleLine)
                     {
-                        if (myOldWayScript.doubleLine)
-                            nodeSteerCarefully2 = (myOldSideAtual == 0 && a > 20 && a < 90) || (myOldSideAtual == 1 && a < 340 && a > 270);
+                        if (MyOldWayScript.doubleLine)
+                            NodeSteerCarefully2 = (MyOldSideAtual == 0 && a > 20 && a < 90) || (MyOldSideAtual == 1 && a < 340 && a > 270);
                         else
-                            nodeSteerCarefully = false;
+                            NodeSteerCarefully = false;
                     }
                     else
-                        nodeSteerCarefully = (a < 340 && a > 270);
+                        NodeSteerCarefully = (a < 340 && a > 270);
 
                     if (lightDirection)
                     {
@@ -470,9 +466,9 @@ namespace cky.TrafficSystem
                         toSignalRight = (a > 20 && a < 90);
                     }
 
-                    if (nodeSteerCarefully)
+                    if (NodeSteerCarefully)
                     {
-                        _avanceNode = myOldWayScript.AvanceNode(myOldSideAtual, myOldWayScript.waypoints.Count - 1, 7);
+                        AvanceNode = MyOldWayScript.AvanceNode(MyOldSideAtual, MyOldWayScript.waypoints.Count - 1, 7);
                     }
                 }
             }
@@ -573,9 +569,9 @@ namespace cky.TrafficSystem
 
         void DefineNewPath()
         {
-            nodes = new Transform[atualWay.childCount];
+            nodes = new Transform[AtualWay.childCount];
             int n = 0;
-            foreach (Transform child in atualWay)
+            foreach (Transform child in AtualWay)
                 nodes[n++] = child;
 
             countWays = nodes.Length;
@@ -586,10 +582,10 @@ namespace cky.TrafficSystem
         {
             int total = 0;
 
-            if (sideAtual == 0)
-                total = atualWayScript.nextWay0.Length;
+            if (SideAtual == 0)
+                total = AtualWayScript.nextWay0.Length;
             else
-                total = atualWayScript.nextWay1.Length;
+                total = AtualWayScript.nextWay1.Length;
 
             int t = Random.Range(0, total); // Sort one of the available paths
 
@@ -627,26 +623,26 @@ namespace cky.TrafficSystem
 
         private Vector3 GetNodeNextWay(int way, int node = 0)
         {
-            if (sideAtual == 0)
-                return atualWayScript.nextWay0[way].Node(atualWayScript.nextWaySide0[way], node);
+            if (SideAtual == 0)
+                return AtualWayScript.nextWay0[way].Node(AtualWayScript.nextWaySide0[way], node);
             else
-                return atualWayScript.nextWay1[way].Node(atualWayScript.nextWaySide1[way], node);
+                return AtualWayScript.nextWay1[way].Node(AtualWayScript.nextWaySide1[way], node);
         }
 
         private bool CheckStoped(int way)
         {
-            if (sideAtual == 0)
-                return atualWayScript.nextWay0[way].bloked;
+            if (SideAtual == 0)
+                return AtualWayScript.nextWay0[way].bloked;
             else
-                return atualWayScript.nextWay1[way].bloked;
+                return AtualWayScript.nextWay1[way].bloked;
         }
 
         bool VerifyNodeSteerCarefully2(int t)
         {
-            if (atualWayScript.oneway && atualWayScript.doubleLine)
+            if (AtualWayScript.oneway && AtualWayScript.doubleLine)
             {
                 float a = GetAngulo(transform, GetNodeNextWay(t, 0));
-                return (sideAtual == 0 && a > 20 && a < 90) || (sideAtual == 1 && a < 340 && a > 270);
+                return (SideAtual == 0 && a > 20 && a < 90) || (SideAtual == 1 && a < 340 && a > 270);
 
             }
 
