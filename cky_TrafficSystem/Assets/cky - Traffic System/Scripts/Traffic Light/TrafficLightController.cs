@@ -35,14 +35,14 @@ namespace cky.TrafficSystem
 
         public override void ReOpen()
         {
-            //base.ReOpen();
+            base.ReOpen();
 
-            //trafficLight_N.ReOpen();
-            //trafficLight_S.ReOpen();
-            //trafficLight_E.ReOpen();
-            //if (trafficLight_W) trafficLight_W.ReOpen();
+            trafficLight_N.ReOpen();
+            trafficLight_S.ReOpen();
+            trafficLight_E.ReOpen();
+            if (trafficLight_W) trafficLight_W.ReOpen();
 
-            //if (extraLight) extraLight.ReOpen();
+            if (extraLight) extraLight.ReOpen();
 
             //if (IsFirstCreation)
             //{

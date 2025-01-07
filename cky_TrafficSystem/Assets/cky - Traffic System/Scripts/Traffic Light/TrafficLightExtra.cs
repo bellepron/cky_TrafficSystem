@@ -14,29 +14,29 @@ namespace cky.TrafficSystem
         [SerializeField] Rigidbody rb;
         [SerializeField] NavMeshObstacle navMeshObstacle;
 
-        bool _isFirstCreation = true;
-        Vector3 _cachedPos;
-        Quaternion _cachedRot;
+        //bool _isFirstCreation = true;
+        //Vector3 _cachedPos;
+        //Quaternion _cachedRot;
 
-        //public void ReOpen()
-        //{
-        //    rb.isKinematic = true;
+        public void ReOpen()
+        {
+            rb.isKinematic = true;
 
-        //    if (_isFirstCreation)
-        //    {
-        //        _isFirstCreation = false;
+            //if (_isFirstCreation)
+            //{
+            //    _isFirstCreation = false;
 
-        //        SoundManager = GameObject.FindWithTag(TagHelper.SOUNDMANAGER).GetComponent<SoundManager>();
+            //    SoundManager = GameObject.FindWithTag(TagHelper.SOUNDMANAGER).GetComponent<SoundManager>();
 
-        //        _cachedPos = transform.localPosition;
-        //        _cachedRot = transform.localRotation;
-        //    }
-        //    else
-        //    {
-        //        transform.localPosition = _cachedPos;
-        //        transform.localRotation = _cachedRot;
-        //    }
-        //}
+            //    _cachedPos = transform.localPosition;
+            //    _cachedRot = transform.localRotation;
+            //}
+            //else
+            //{
+            //    transform.localPosition = _cachedPos;
+            //    transform.localRotation = _cachedRot;
+            //}
+        }
 
         //public void Hited(HitType hitType, Vector3 hitRbCenterOfMass, Vector3 hitPoint, Vector3 hitPower, ForceMode forceMode, bool isCar = false)
         //{
