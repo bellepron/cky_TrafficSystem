@@ -93,7 +93,7 @@ namespace cky.TrafficSystem
             return waypoints.Count - 1;
         }
 
-        public Transform GetNodeZeroCar(int side)
+        public Transform GetNodeZeroUnit(int side)
         {
             return (side == 0) ? nodeZero0 : nodeZero1;
         }
@@ -103,38 +103,35 @@ namespace cky.TrafficSystem
             return (side == 0) ? nodeZeroWay0 : nodeZeroWay1;
         }
 
-        public Transform GetNodeZeroOldWay(int side)
-        {
-            return (side == 0) ? nodeZero0.GetComponent<TrafficCar>().myOldWay : nodeZero1.GetComponent<TrafficCar>().myOldWay;
-        }
+        public abstract Transform GetNodeZeroOldWay(int side);
 
-        public bool SetNodeZero(int side, Transform nodeWay, Transform nodeCar, bool force = false)
+        public bool SetNodeZero(int side, Transform nodeWay, Transform nodeUnit, bool force = false)
         {
             if (side == 0)
             {
                 if (nodeZero0 == null || force)
                 {
                     nodeZeroWay0 = nodeWay;
-                    nodeZero0 = nodeCar;
+                    nodeZero0 = nodeUnit;
                 }
-                return nodeZero0 == nodeCar;
+                return nodeZero0 == nodeUnit;
             }
             else
             {
                 if (nodeZero1 == null || force)
                 {
                     nodeZeroWay1 = nodeWay;
-                    nodeZero1 = nodeCar;
+                    nodeZero1 = nodeUnit;
                 }
-                return nodeZero1 == nodeCar;
+                return nodeZero1 == nodeUnit;
             }
         }
 
-        public bool UnSetNodeZero(int side, Transform carTransform, bool force = false)
+        public bool UnSetNodeZero(int side, Transform unitTransform, bool force = false)
         {
             if (side == 0)
             {
-                if (nodeZero0 == carTransform || force)
+                if (nodeZero0 == unitTransform || force)
                 {
                     nodeZeroWay0 = null;
                     nodeZero0 = null;
@@ -143,7 +140,7 @@ namespace cky.TrafficSystem
             }
             else
             {
-                if (nodeZero1 == carTransform || force)
+                if (nodeZero1 == unitTransform || force)
                 {
                     nodeZeroWay1 = null;
                     nodeZero1 = null;

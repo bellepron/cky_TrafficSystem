@@ -487,13 +487,9 @@ namespace cky.TrafficSystem
         [HideInInspector] public Transform atualWay;
         [HideInInspector] public int sideAtual = 0;
         [HideInInspector] public WaypointsContainer_Abstract atualWayScript;
-        Transform myOldWay;
-
-        [HideInInspector]
-        public int myOldSideAtual = 0;
-
-        [HideInInspector]
-        public WaypointsContainer_Abstract myOldWayScript = null;
+        [HideInInspector] public Transform myOldWay;
+        [HideInInspector] public int myOldSideAtual = 0;
+        [HideInInspector] public WaypointsContainer_Abstract myOldWayScript = null;
 
         private Vector3 _avanceNode = Vector3.zero; //private Position where an additional and momentary node can be added
 

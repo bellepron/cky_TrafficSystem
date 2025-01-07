@@ -178,7 +178,7 @@ namespace cky.TrafficSystem
 
                 if (wScript)
                 {
-                    if ((wScript.GetNodeZeroCar(wSide) != null && wScript.GetNodeZeroCar(wSide) != transform) && wScript.GetNodeZeroOldWay(wSide) != myOldWay && (!Get_avanceNode() || !wScript.GetNodeZeroCar(wSide).GetComponent<TrafficCar>().Get_avanceNode()))
+                    if ((wScript.GetNodeZeroUnit(wSide) != null && wScript.GetNodeZeroUnit(wSide) != transform) && wScript.GetNodeZeroOldWay(wSide) != myOldWay && (!Get_avanceNode() || !wScript.GetNodeZeroUnit(wSide).GetComponent<TrafficCar>().Get_avanceNode()))
                         return false;
                 }
                 else
@@ -214,7 +214,7 @@ namespace cky.TrafficSystem
 
                 if (book)
                 {
-                    bool force = wScript.GetNodeZeroCar(wSide) && wScript.GetNodeZeroCar(wSide).GetComponent<TrafficCar>().Get_avanceNode();
+                    bool force = wScript.GetNodeZeroUnit(wSide) && wScript.GetNodeZeroUnit(wSide).GetComponent<TrafficCar>().Get_avanceNode();
                     if (!wScript.SetNodeZero(wSide, wayScript.transform, transform, force))
                         return false;
                 }
