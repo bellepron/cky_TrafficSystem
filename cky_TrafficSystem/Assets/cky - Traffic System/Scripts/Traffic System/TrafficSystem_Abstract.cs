@@ -17,6 +17,7 @@ public abstract class TrafficSystem_Abstract : MonoBehaviour
     [Header("Creation")]
     [SerializeField] protected float intervalLoad = 1;
     [SerializeField] protected float minNodeDistanceToCreate = 10.0f;
+    [SerializeField] protected float minUnitDistanceToCreate = 10.0f;
     [SerializeField] protected float distanceToRepeat = 40.0f;
     [Range(0, 1000)][SerializeField] protected float aroundMin = 80;
     [Range(0, 1000)][SerializeField] protected float aroundMax = 150;

@@ -3512,7 +3512,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &399376228
 Transform:
   m_ObjectHideFlags: 0
@@ -7317,7 +7317,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4023493554861572, guid: aebe9e114aaacfe419defa7abd65cca4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -37.5
+      value: 29.6
       objectReference: {fileID: 0}
     - target: {fileID: 4023493554861572, guid: aebe9e114aaacfe419defa7abd65cca4, type: 3}
       propertyPath: m_LocalPosition.y
@@ -7325,7 +7325,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4023493554861572, guid: aebe9e114aaacfe419defa7abd65cca4, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -74.7
+      value: 29
       objectReference: {fileID: 0}
     - target: {fileID: 4023493554861572, guid: aebe9e114aaacfe419defa7abd65cca4, type: 3}
       propertyPath: m_LocalRotation.w
@@ -17546,10 +17546,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Traffic System - Pedestrian
       objectReference: {fileID: 0}
+    - target: {fileID: 4760311153090965873, guid: 8dd063649ea18604bae9f9e9a5d4fe49, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6898951769677195306, guid: 8dd063649ea18604bae9f9e9a5d4fe49, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 112983850}
+    - target: {fileID: 6898951769677195306, guid: 8dd063649ea18604bae9f9e9a5d4fe49, type: 3}
+      propertyPath: maxUnitsWithPlayer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 6898951769677195306, guid: 8dd063649ea18604bae9f9e9a5d4fe49, type: 3}
       propertyPath: <Player>k__BackingField
       value: 
@@ -17669,9 +17677,29 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8129984580839768989, guid: 46bc74b2cc32a7b488a322df676c715c, type: 3}
+      propertyPath: aroundMax
+      value: 99
+      objectReference: {fileID: 0}
+    - target: {fileID: 8129984580839768989, guid: 46bc74b2cc32a7b488a322df676c715c, type: 3}
+      propertyPath: aroundMin
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8129984580839768989, guid: 46bc74b2cc32a7b488a322df676c715c, type: 3}
+      propertyPath: checkRadius
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 8129984580839768989, guid: 46bc74b2cc32a7b488a322df676c715c, type: 3}
+      propertyPath: maxUnitsWithPlayer
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 8129984580839768989, guid: 46bc74b2cc32a7b488a322df676c715c, type: 3}
       propertyPath: <Player>k__BackingField
       value: 
       objectReference: {fileID: 112983850}
+    - target: {fileID: 8129984580839768989, guid: 46bc74b2cc32a7b488a322df676c715c, type: 3}
+      propertyPath: minNodeDistanceToCreate
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 9062443454265837279, guid: 46bc74b2cc32a7b488a322df676c715c, type: 3}
       propertyPath: m_Name
       value: Traffic System - Car

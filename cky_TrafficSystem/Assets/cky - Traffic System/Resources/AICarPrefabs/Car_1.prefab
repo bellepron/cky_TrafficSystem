@@ -2261,7 +2261,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.8, y: 1.8, z: 1.8}
+  m_LocalScale: {x: 1.4843196, y: 1.4843196, z: 1.4843196}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4155140859747504728}
@@ -2365,7 +2365,6 @@ MonoBehaviour:
   myOldWayScript: {fileID: 0}
   behind: {fileID: 0}
   player: {fileID: 0}
-  trafficSystem: {fileID: 0}
   lightParent_Ahmet: {fileID: 4080750338468223684}
   carSteer: {fileID: 0}
 --- !u!54 &3554544639666727181
