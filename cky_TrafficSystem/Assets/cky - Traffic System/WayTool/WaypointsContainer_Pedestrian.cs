@@ -6,8 +6,6 @@ namespace cky.TrafficSystem
 {
     public class WaypointsContainer_Pedestrian : WaypointsContainer_Abstract
     {
-        public bool noUnit;
-
         [HideInInspector] public WpData_Pedestrian wpData;
 
         public override void NextWaysCloseOnly()

@@ -214,39 +214,42 @@ namespace cky.TrafficSystem
             }
             else
             {
-                OnCrosswalk = _crosswalkColliders[0].GetComponent<Crosswalk>();
-                Debug.Log($"{_crosswalkColliders[0].name} ,+, {OnCrosswalk}");
-
-                if (!PreviousCrosswalk)
+                if (_crosswalkColliders[0].TryGetComponent<Crosswalk>(out var onCrosswalk))
                 {
-                    if (!OnCrosswalk.PedestrianGreen)
-                    {
-                        ChangeState(PedestrianStates.Idle);
-                        OnCrosswalk = null; // For making PreviousCrosswalk = null. To control !OnCrosswalk.PedestrianGreen
-                    }
-                }
-                else
-                {
-                    OnCrosswalk.PedestrianHere(); // If this on crosswalk...
+                    OnCrosswalk = onCrosswalk;
+                    Debug.Log($"{_crosswalkColliders[0].name} ,+, {OnCrosswalk}");
 
-                    if (OnCrosswalk.PedestrianGreen)
+                    if (!PreviousCrosswalk)
                     {
-                        if (State != PedestrianStates.Walk)
+                        if (!OnCrosswalk.PedestrianGreen)
                         {
-                            ChangeState(PedestrianStates.Walk);
+                            ChangeState(PedestrianStates.Idle);
+                            OnCrosswalk = null; // For making PreviousCrosswalk = null. To control !OnCrosswalk.PedestrianGreen
                         }
                     }
-                    if (!OnCrosswalk.PedestrianGreen)
+                    else
                     {
-                        if (State != PedestrianStates.Run)
+                        OnCrosswalk.PedestrianHere(); // If this on crosswalk...
+
+                        if (OnCrosswalk.PedestrianGreen)
                         {
-                            ChangeState(PedestrianStates.Run);
+                            if (State != PedestrianStates.Walk)
+                            {
+                                ChangeState(PedestrianStates.Walk);
+                            }
+                        }
+                        if (!OnCrosswalk.PedestrianGreen)
+                        {
+                            if (State != PedestrianStates.Run)
+                            {
+                                ChangeState(PedestrianStates.Run);
+                            }
                         }
                     }
                 }
+
+                PreviousCrosswalk = OnCrosswalk;
             }
-
-            PreviousCrosswalk = OnCrosswalk;
         }
 
         private void ClearLists()

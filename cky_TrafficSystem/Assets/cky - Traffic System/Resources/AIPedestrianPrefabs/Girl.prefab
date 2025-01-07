@@ -1908,7 +1908,7 @@ MonoBehaviour:
   <AnimatorController>k__BackingField: {fileID: 3812504517858159073}
   <RagdollToggle>k__BackingField: {fileID: 0}
   <Agent>k__BackingField: {fileID: 4707864133555208636}
-  <PedestrianIKLook>k__BackingField: {fileID: 0}
+  <PedestrianIKLook>k__BackingField: {fileID: -6816555470048259223}
   <NearPedestrian>k__BackingField: {fileID: 0}
   <NearCar>k__BackingField: {fileID: 0}
   PreviousCrosswalk: {fileID: 0}
