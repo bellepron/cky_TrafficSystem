@@ -149,7 +149,7 @@ namespace cky.TrafficSystem
 
             nUnits = currentUnits.Count;
 
-            PedestrianStateMachine p_sm;
+            ITrafficSystemUnit iUnit;
 
             int n = _wpDataSpawn.Count;
             bool invert = (Random.Range(1, 20) < 10);
@@ -179,11 +179,11 @@ namespace cky.TrafficSystem
                     var sa = wpDataSpawn_Side;
                     if (!ThereIsNoUnit_InCheckRadius(wpDataSpawn.position, aw, sa))
                     {
-                        p_sm = CKY_PoolManager.Spawn(prefabs[Random.Range(0, prefabs.Length)], wpDataSpawn.position + Vector3.up * 0.1f, wpDataSpawn.rotation).GetComponent<PedestrianStateMachine>();
+                        iUnit = CKY_PoolManager.Spawn(prefabs[Random.Range(0, prefabs.Length)], wpDataSpawn.position + Vector3.up * 0.1f, wpDataSpawn.rotation).GetComponent<ITrafficSystemUnit>();
 
-                        AddToCurrentUnits(p_sm);
+                        AddToCurrentUnits(iUnit);
 
-                        p_sm.TrafficSystemInit(sa, aw, wpDataSpawn_WayScript, wpDataSpawn_Node + 1, aroundMax, Player, this);
+                        iUnit.TrafficSystemInit(sa, aw, wpDataSpawn_WayScript, wpDataSpawn_Node + 1, aroundMax, Player, this);
 
                         nUnits++;
                     }
