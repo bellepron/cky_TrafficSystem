@@ -35,7 +35,7 @@ namespace cky.TrafficSystem
 
             //stateMachine.ReturnWalkingFromRunning();
 
-            stateMachine.ckyMove();
+            stateMachine.MoveOnTrafficSystem();
         }
 
         public override void Tick(float deltaTime)

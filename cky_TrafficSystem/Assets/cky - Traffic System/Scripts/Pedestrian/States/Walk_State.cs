@@ -37,7 +37,7 @@ namespace cky.TrafficSystem
             //ActionNearPlayer();
             //ActionNearStopLight();
 
-            stateMachine.ckyMove();
+            stateMachine.MoveOnTrafficSystem();
         }
 
         public override void Tick(float deltaTime)

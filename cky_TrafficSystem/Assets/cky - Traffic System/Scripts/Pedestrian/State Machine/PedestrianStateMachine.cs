@@ -59,7 +59,7 @@ namespace cky.TrafficSystem
         [HideInInspector] public int currentNode = 0;
         float distanceToNode;
         Transform _thisTr;
-        
+
         public Vector3 Position => transform.position;
         public Transform AtualWay { get; set; }
         public int SideAtual { get; set; } = 0;
@@ -78,6 +78,8 @@ namespace cky.TrafficSystem
         Vector3 agentHeight = new Vector3(0, 2.0f, 0);
 
         float distanceToSelfDestroy = 0; //0 = Do not autodestroy with player distance
+
+        public Transform whoMakeMeStopTr;
 
 
 
@@ -197,7 +199,6 @@ namespace cky.TrafficSystem
 
 
 
-        public Transform whoMakeMeStopTr;
         #region Vision
 
         #region AI Sight
@@ -525,7 +526,7 @@ namespace cky.TrafficSystem
 
         private Vector3 GetNodePosition() => AtualWayScript.Node(SideAtual, currentNode);
 
-        public void ckyMove()
+        public void MoveOnTrafficSystem()
         {
             VerificaPoints();
 
@@ -536,7 +537,6 @@ namespace cky.TrafficSystem
 
             AgentSetDestination(targetPoint);
         }
-
 
         private void VerificaPoints()
         {

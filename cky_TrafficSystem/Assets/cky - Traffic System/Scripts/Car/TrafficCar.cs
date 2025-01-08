@@ -110,7 +110,7 @@ namespace cky.TrafficSystem
 
         private void FixedUpdate()
         {
-            MoveCar();
+            MoveOnTrafficSystem();
         }
 
         public void TrafficSystemInit(int sideAtual, Transform atualWay, WaypointsContainer_Abstract atualWayScript, int currentNode, float distanceToSelfDestroy, Transform player, TrafficSystem_Abstract trafficSystem)
@@ -146,85 +146,9 @@ namespace cky.TrafficSystem
         }
 
 
-        public Vector3 GetNodePosition()
-        {
-            return AtualWayScript.Node(SideAtual, currentNode);
-        }
-        bool CheckBookAllPathOptions(WaypointsContainer_Abstract wayScript, int side)
-        {
-            int total;
-            int wSide;
-            WaypointsContainer_Abstract wScript;
+        public Vector3 GetNodePosition() => AtualWayScript.Node(SideAtual, currentNode);
 
-            total = (side == 0) ? wayScript.nextWay0.Length : wayScript.nextWay1.Length;
-
-            for (int i = 0; i < total; i++)
-            {
-                if (side == 0)
-                {
-                    wScript = wayScript.nextWay0[i];
-                    wSide = wayScript.nextWaySide0[i];
-
-                }
-                else
-                {
-                    wScript = wayScript.nextWay1[i];
-                    wSide = wayScript.nextWaySide1[i];
-                }
-
-                if (wScript)
-                {
-                    if ((wScript.GetNodeZeroUnit(wSide) != null && wScript.GetNodeZeroUnit(wSide) != transform) && wScript.GetNodeZeroOldWay(wSide) != MyOldWay && (!Get_avanceNode() || !wScript.GetNodeZeroUnit(wSide).GetComponent<TrafficCar>().Get_avanceNode()))
-                        return false;
-                }
-                else
-                {
-                    Debug.LogWarning("wScript Error");
-                }
-            }
-
-            return true;
-        }
-
-        bool BookAllPathOptions(WaypointsContainer_Abstract wayScript, int side, bool book = true)
-        {
-            int total;
-            int wSide;
-            WaypointsContainer_Abstract wScript;
-
-            total = (side == 0) ? wayScript.nextWay0.Length : wayScript.nextWay1.Length;
-
-            for (int i = 0; i < total; i++)
-            {
-
-                if (side == 0)
-                {
-                    wScript = wayScript.nextWay0[i];
-                    wSide = wayScript.nextWaySide0[i];
-                }
-                else
-                {
-                    wScript = wayScript.nextWay1[i];
-                    wSide = wayScript.nextWaySide1[i];
-                }
-
-                if (book)
-                {
-                    bool force = wScript.GetNodeZeroUnit(wSide) && wScript.GetNodeZeroUnit(wSide).GetComponent<TrafficCar>().Get_avanceNode();
-                    if (!wScript.SetNodeZero(wSide, wayScript.transform, transform, force))
-                        return false;
-                }
-                else
-                {
-                    wScript.UnSetNodeZero(wSide, transform);
-                }
-            }
-
-            return true;
-        }
-
-
-        void MoveCar()
+        void MoveOnTrafficSystem()
         {
             if (status == StatusCar.bloked)
                 return;
@@ -379,7 +303,6 @@ namespace cky.TrafficSystem
                 carSteer.localEulerAngles = new Vector3(steerCurAngle.x, steerCurAngle.y, steerCurAngle.z - steer);  //carSetting.carSteer.localEulerAngles = new Vector3(steerCurAngle.x, steerCurAngle.y, steerCurAngle.z + ((steer / 180) * -30.0f));
         }
 
-
         private void VerificaPoints()
         {
             if (distanceToNode < 5)
@@ -474,6 +397,91 @@ namespace cky.TrafficSystem
             }
         }
 
+        void DefineNewPath()
+        {
+            nodes = new Transform[AtualWay.childCount];
+            int n = 0;
+            foreach (Transform child in AtualWay)
+                nodes[n++] = child;
+
+            countWays = nodes.Length;
+        }
+
+
+
+
+        bool CheckBookAllPathOptions(WaypointsContainer_Abstract wayScript, int side)
+        {
+            int total;
+            int wSide;
+            WaypointsContainer_Abstract wScript;
+
+            total = (side == 0) ? wayScript.nextWay0.Length : wayScript.nextWay1.Length;
+
+            for (int i = 0; i < total; i++)
+            {
+                if (side == 0)
+                {
+                    wScript = wayScript.nextWay0[i];
+                    wSide = wayScript.nextWaySide0[i];
+
+                }
+                else
+                {
+                    wScript = wayScript.nextWay1[i];
+                    wSide = wayScript.nextWaySide1[i];
+                }
+
+                if (wScript)
+                {
+                    if ((wScript.GetNodeZeroUnit(wSide) != null && wScript.GetNodeZeroUnit(wSide) != transform) && wScript.GetNodeZeroOldWay(wSide) != MyOldWay && (!Get_avanceNode() || !wScript.GetNodeZeroUnit(wSide).GetComponent<TrafficCar>().Get_avanceNode()))
+                        return false;
+                }
+                else
+                {
+                    Debug.LogWarning("wScript Error");
+                }
+            }
+
+            return true;
+        }
+
+        bool BookAllPathOptions(WaypointsContainer_Abstract wayScript, int side, bool book = true)
+        {
+            int total;
+            int wSide;
+            WaypointsContainer_Abstract wScript;
+
+            total = (side == 0) ? wayScript.nextWay0.Length : wayScript.nextWay1.Length;
+
+            for (int i = 0; i < total; i++)
+            {
+
+                if (side == 0)
+                {
+                    wScript = wayScript.nextWay0[i];
+                    wSide = wayScript.nextWaySide0[i];
+                }
+                else
+                {
+                    wScript = wayScript.nextWay1[i];
+                    wSide = wayScript.nextWaySide1[i];
+                }
+
+                if (book)
+                {
+                    bool force = wScript.GetNodeZeroUnit(wSide) && wScript.GetNodeZeroUnit(wSide).GetComponent<TrafficCar>().Get_avanceNode();
+                    if (!wScript.SetNodeZero(wSide, wayScript.transform, transform, force))
+                        return false;
+                }
+                else
+                {
+                    wScript.UnSetNodeZero(wSide, transform);
+                }
+            }
+
+            return true;
+        }
 
         public Transform GetBehind()
         {
@@ -566,17 +574,6 @@ namespace cky.TrafficSystem
 
 
         #region T T T T T T T
-
-        void DefineNewPath()
-        {
-            nodes = new Transform[AtualWay.childCount];
-            int n = 0;
-            foreach (Transform child in AtualWay)
-                nodes[n++] = child;
-
-            countWays = nodes.Length;
-        }
-
 
         int TestWay()
         {
