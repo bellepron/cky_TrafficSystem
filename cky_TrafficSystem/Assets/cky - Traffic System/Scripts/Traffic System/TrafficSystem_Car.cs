@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using CKY_Pooling;
+using cky.Reuseables.Extension;
 
 namespace cky.TrafficSystem
 {
@@ -150,13 +151,12 @@ namespace cky.TrafficSystem
             ITrafficSystemUnit iUnit;
 
             int n = _wpDataSpawn.Count;
-            bool invert = (Random.Range(1, 20) < 10);
+
+            _wpDataSpawn.Shuffle();
 
             var posPlayer = Player.position; posPlayer.y = 0.0f;
-            for (int j = 0; j < n; j++)
+            for (int i = 0; i < n; i++)
             {
-                int i = (invert) ? n - 1 - j : j;
-
                 if (nUnits >= maxUnitsWithPlayer)
                 {
                     break;
@@ -168,7 +168,14 @@ namespace cky.TrafficSystem
                     var posData = wpDataSpawn.position; posData.y = 0.0f;
                     float dist = Vector3.Distance(posData, posPlayer);
 
-                    if (dist < aroundMin || dist > aroundMax) continue;
+                    if (isOnFirstCreationPart)
+                    {
+                        if (dist > aroundMin) continue;
+                    }
+                    else
+                    {
+                        if (dist < aroundMin || dist > aroundMax) continue;
+                    }
 
                     var wpDataSpawn_Side = wpDataSpawn.side;
                     var wpDataSpawn_Node = wpDataSpawn.node;
@@ -187,6 +194,8 @@ namespace cky.TrafficSystem
                     }
                 }
             }
+
+            isOnFirstCreationPart = false;
         }
 
 

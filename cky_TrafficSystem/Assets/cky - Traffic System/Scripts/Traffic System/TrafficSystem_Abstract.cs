@@ -43,6 +43,8 @@ public abstract class TrafficSystem_Abstract : MonoBehaviour
     [Space(15)]
     [SerializeField] public List<ITrafficSystemUnit> currentUnits = new List<ITrafficSystemUnit>();
 
+    protected bool isOnFirstCreationPart = true;
+
     [Space(15)]
     [Header("Gizmos")]
     [SerializeField] float gizmo_CircleOffset_Y = 0.5f;
